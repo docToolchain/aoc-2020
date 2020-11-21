@@ -1,8 +1,8 @@
     <div class="jumbotron">
       <div class="container">
           <p class="text-center"><img src="/images/banner.png" style="max-width: 60%;"/></p>
-          <p>Welcome to the Advent of Code Community 2019</p>
-          <p>This website is a fan-site for the famous <a href="https://adventofcode.com">Advent of Code 2019</a>.</p>
+          <p>Welcome to the Advent of Code Community 2020</p>
+          <p>This website is a fan-site for the famous <a href="https://adventofcode.com">Advent of Code 2020</a>.</p>
           <p>You might already have experienced that coding together is more fun. So let's solve the AoC riddles together!</p>
           <p>Feel free to contribute - send a pull request with your solution for each day to <a href="https://github.com/docToolchain/aoc-2020"> our github.com/docToolchain/aoc-2020 repository</a>.</p>
           <p>Join our <a href="https://join.slack.com/t/aoc-2020/shared_invite/enQtODUzMTE3MDQzMzM0LTUyYmZjOTg1ZTYxMzEwM2JlMmNjNjE4ZDFkOWM0ZDZhMGRhNGYyMzhiMzFjZGMxNjM4YjM2NDZlNTY3NjA1M2Y">aoc-2020 slack channel</a> and help or be helped when a solution is not too obvious 😎</p>
