@@ -1,0 +1,14 @@
+:jbake-type: page_toc
+:jbake-title: TIL
+:jbake-status: published
+
+:imagesdir: ../images
+
+:toc: left
+
+:icons: font
+
+The stats where moved to the link:../solutions/byCoder.html[Solutions by Coder] section
+
+include::../../../docs/learned.adoc[]
+
