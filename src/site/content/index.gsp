@@ -14,18 +14,22 @@
 <div class="container">
 <!-- Example row of columns -->
 <div class="row">
-<div class="col-md-6 clearfix">
+    <div class="col-md-1">&nbsp;
+            </div>
+<div class="col-md-5 clearfix">
   <p class="text-center"><img src="/images/TheRules.png" alt="The Rules" style="max-width:70%;"/></p>
   <p>The repository structure follows simple rules which enable us to collect solutions in different languages.</p>
   <p>Check out this guide to find your way around.</p>
   <p >&nbsp;<a class="btn btn-primary right" href="rules/" role="button">Rules &raquo;</a></p>
 </div>
-<div class="col-md-6 cleafix" >
+<div class="col-md-5 cleafix" >
   <p class="text-center"><img src="/images/EasySetup.png" alt="Easy Setup" style="max-width:70%;"/></p>
   <p>No development environment at hand?</p>
   <p>Use Gitpod.io with our customized docker image to get your favourite language up and running in minutes.</p>
   <p>&nbsp;<a class="right" href="https://gitpod.io#https://github.com/docToolchain/aoc-2020" alt="Open in Gitpod"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="open in gitpod"></a></p>
 </div>
+    <div class="col-md-1">&nbsp;
+            </div>
 </div>
 
     <div class="container">
