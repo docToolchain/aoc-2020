@@ -6,7 +6,7 @@
           'Rules': 'rules/',
           'Solutions': 'solutions/',
           'TIL': 'til/',
-          'Challenges': 'news/',
+
           'About': 'about/',
         ]
     ]
