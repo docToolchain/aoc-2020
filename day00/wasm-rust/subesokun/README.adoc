@@ -1,0 +1,20 @@
+== Rust + WASM
+
+Runs Rust directly in your browser ✨
+
+> Hint: When running in Codespaces make sure that your terminal is running in a Bash session (just enter "bash" to start it)
+
+=== Run locally
+
+```
+# in a new terminal
+./build-wasm.sh     # auto rebuilds on changes
+
+# in a new terminal
+cd www
+npm start           # auto rebuilds on changes
+
+# In your browser open the localhost:8080 or in Codespaces the provided url
+# -> Have a look in your console for the output
+# Hint: Auto-reload of web page works only on localhost as Codespaces blocks the WebSocket connection for some reason
+```
