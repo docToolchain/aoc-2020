@@ -1,6 +1,10 @@
     <div class="jumbotron">
       <div class="container">
-          <p class="text-center"><img src="/images/banner.png" style="max-width: 60%;"/></p>
+          <p class="text-center" >
+          <h1 class="text-center">Advent of Code</h1>
+          <h2 class="text-center">Community 2020</h2>
+          </p>
+
           <p>Welcome to the Advent of Code Community 2020</p>
           <p>This website is a fan-site for the famous <a href="https://adventofcode.com">Advent of Code 2020</a>.</p>
           <p>You might already have experienced that coding together is more fun. So let's solve the AoC riddles together!</p>
