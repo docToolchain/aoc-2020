@@ -5,7 +5,7 @@
           <p>This website is a fan-site for the famous <a href="https://adventofcode.com">Advent of Code 2020</a>.</p>
           <p>You might already have experienced that coding together is more fun. So let's solve the AoC riddles together!</p>
           <p>Feel free to contribute - send a pull request with your solution for each day to <a href="https://github.com/docToolchain/aoc-2020"> our github.com/docToolchain/aoc-2020 repository</a>.</p>
-          <p>Join our <a href="https://join.slack.com/t/aoc-2020/shared_invite/enQtODUzMTE3MDQzMzM0LTUyYmZjOTg1ZTYxMzEwM2JlMmNjNjE4ZDFkOWM0ZDZhMGRhNGYyMzhiMzFjZGMxNjM4YjM2NDZlNTY3NjA1M2Y">aoc-2020 slack channel</a> and help or be helped when a solution is not too obvious 😎</p>
+          <p>Join our <a href="https://join.slack.com/t/aoc-2020/shared_invite/zt-jpb3ukqo-t5amJownVL82CoRrrPNjEg">aoc-2020 slack channel</a> and help or be helped when a solution is not too obvious 😎</p>
 
       </div>
     </div>
@@ -42,7 +42,7 @@
                 <a href="https://github.com/docToolchain/aoc-2020"><img src="images/githublogo.png" style="max-width: 70%"/></a>
             </div>
             <div class="col-md-4 text-center">
-                <a href="https://join.slack.com/t/aoc-2020/shared_invite/enQtODUzMTE3MDQzMzM0LTUyYmZjOTg1ZTYxMzEwM2JlMmNjNjE4ZDFkOWM0ZDZhMGRhNGYyMzhiMzFjZGMxNjM4YjM2NDZlNTY3NjA1M2Y"><img src="/images/slacklogo.png"  style="max-width: 70%"/></a>
+                <a href="https://join.slack.com/t/aoc-2020/shared_invite/zt-jpb3ukqo-t5amJownVL82CoRrrPNjEg"><img src="/images/slacklogo.png"  style="max-width: 70%"/></a>
             </div>
             <div class="col-md-2">&nbsp;
             </div>
