@@ -37,7 +37,9 @@ SHELL ["/bin/bash", "-c"]
 
 RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && \
     sdk install groovy && \
-    sdk install java
+    sdk install java && \
+    sdk install kotlin && \
+    sdk install asciidoctorj
 
 SHELL ["/bin/sh", "-c"]
 
