@@ -1,5 +1,5 @@
 [package]
-name = "solution"
+name = "day00"
 version = "0.1.0"
 authors = ["Cakemix <mholoch@gmail.com>"]
 edition = "2018"
