@@ -10,7 +10,7 @@
 
 [cols="1,5"]
 |===
-| image:{rdmueller-avatar}[]
+| image:{rdmueller-avatar}[width=100px]
 a| **rdmueller** +
 {rdmueller-realName} +
 Github: https://github.com/rdmueller[rdmueller],
@@ -20,7 +20,7 @@ Blog : {rdmueller-blog}
 
 === About me
 
-More will follow shortly.
+see https://fiveandahalfstars.ninja/rdmueller for more details.
 
 //end::free-form[]
 
