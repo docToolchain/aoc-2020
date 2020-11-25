@@ -5,14 +5,14 @@ ENV PATH=/usr/lib/dart/bin:$PATH
 USER root
 # Install custom tools, runtime, etc.
 RUN apt-get update && apt-get install -y \
-        tcl tk expect \
+        tcl tk expect asciidoctor \
     && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
 # install dart
 RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list && \
     apt-get update && \
-    apt-get -y install  build-essential dart libkrb5-dev gcc make asciidoctor && \
+    apt-get -y install  build-essential dart libkrb5-dev gcc make && \
     apt-get clean && \
     apt-get -y autoremove && \
     apt-get -y clean && \
@@ -33,14 +33,19 @@ USER gitpod
 
 RUN npm install ts-node elm -g 
 
+RUN apt-get update && apt-get install -y \
+        tcl tk expect asciidoctor \
+    && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+
 SHELL ["/bin/bash", "-c"]
 
-RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && \
-    sdk install groovy && \
-    sdk install java && \
-    sdk install kotlin && \
-    sdk install asciidoctorj
-
+RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh \
+             && sdk install java 11.0.5.fx-zulu \
+             && sdk install gradle \
+             && sdk install groovy \
+             && sdk install kotlin \
+             && sdk install asciidoctorj \
+            "
 SHELL ["/bin/sh", "-c"]
 
 # Give back control
