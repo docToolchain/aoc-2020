@@ -35,7 +35,7 @@ RUN npm install ts-node elm -g
 
 RUN apt-get update && apt-get install -y \
         tcl tk expect asciidoctor \
-    && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
+    && apt-get clean 
 
 SHELL ["/bin/bash", "-c"]
 
