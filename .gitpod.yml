@@ -6,7 +6,7 @@ ports:
 - port: 8888
   onOpen: open-browser
 tasks:
-  - command: "echo 'have fun!'"
+  - command: "source /home/gitpod/.sdkman/bin/sdkman-init.sh"
 vscode:
   extensions:
     - mathiasfrohlich.Kotlin@1.7.1:zRxka5i+6/G9r7KC3xmyXQ==
