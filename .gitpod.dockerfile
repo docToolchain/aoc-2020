@@ -36,7 +36,7 @@ RUN npm install ts-node elm -g
 SHELL ["/bin/bash", "-c"]
 
 RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh \
-             && sdk install java \
+             && sdk install java 11.0.9-amzn \
              && sdk install gradle \
              && sdk install groovy \
              && sdk install kotlin \
