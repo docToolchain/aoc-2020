@@ -30,5 +30,11 @@ a|{rdmueller}
 a| as you can clearly see, I just noticed that I am not a web designer - at least not for an X-Mas theme ;-) 🎅 🎄 🤣 +
   you can do test driven development with bash!
 
+a|{RJPlog}
+a|  eagerly waiting for day01, today I tried to use gitpod.io. After some difficulties at staring, I managend to contribute my day00 solution completely via gitpod.io.
+ It's an amazing solution with many features making (my) work more easy.
+ Many thanks to Ralf, how took the time to help me over the first hurdles!
+
+
 |====
 
