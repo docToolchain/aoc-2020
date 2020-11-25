@@ -33,10 +33,6 @@ USER gitpod
 
 RUN npm install ts-node elm -g 
 
-RUN apt-get update && apt-get install -y \
-        tcl tk expect asciidoctor \
-    && apt-get clean 
-
 SHELL ["/bin/bash", "-c"]
 
 RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh \
