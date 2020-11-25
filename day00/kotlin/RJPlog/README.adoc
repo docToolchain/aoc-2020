@@ -1,0 +1,18 @@
+== Hello World
+
+This solution is written in Kotlin.
+
+=== First Star
+
+The solution is generated to do a first try with gitpod.io
+
+Just run kotlin day2000_1.kts
+
+One hint for the naming convention: 
+
+- dayyydd_1_2.kts for part 1 and 2, sometimes I use separate files
+- dayyydd_puzzle_input.txt for puzzle input
+
+=== Second Star
+
+There is no second star.
