@@ -41,6 +41,7 @@ RUN bash -c ". /home/gitpod/.sdkman/bin/sdkman-init.sh \
              && sdk install groovy \
              && sdk install kotlin \
              && sdk install asciidoctorj \
+             && export PATH="/home/gitpod/.sdkman/candidates/asciidoctorj/current/bin:$PATH" \
             "
 SHELL ["/bin/sh", "-c"]
 
