@@ -1,0 +1,13 @@
+== Hello World
+
+This solution is written in Kotlin.
+
+=== First Star
+
+Initial program to try out gitpod and kotlin. 
+
+Run the program using 'kotlinc -script day00.kts'
+
+=== Second Star
+
+There is no second star.
