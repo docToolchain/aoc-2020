@@ -12,7 +12,7 @@
 [cols="1,5"]
 |===
 | image:{swa-ds-avatar}[width=100px]
-a| **swa-ds** +
+| **swa-ds** +
 _{swa-ds-realName}_ +
 Github: https://github.com/{swa-ds-github}[{swa-ds-github}], +
 Twitter: https://twitter.com/{swa-ds-twitter}[@{swa-ds-twitter}] +
