@@ -25,3 +25,9 @@ testify
 .vscode
 /src/site/content/generated/
 /.idea/
+
+# Ignore Cargo stuff (Rust)
+debug/
+target/
+Cargo.lock
+**/*.rs.bk

@@ -1,0 +1,7 @@
+I'll do AoC2020 in Rust again this year.
+AoC2019 served as an excellent introduction to that language for me.
+But I really like coding in Rust, so I'll just use it again.
+
+To spice things up, I might try to get some of the puzzles solved using pair programming techniques. Let's see how it goes.
+
+Run the solution via `cargo run`.
