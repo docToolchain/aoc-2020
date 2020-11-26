@@ -1,0 +1,23 @@
+:jamhocken-avatar: https://avatars.githubusercontent.com/jamhocken
+:jamhocken-twitter: jamhocken
+:jamhocken-realName: James Hockenberry
+:jamhocken-github: jamhocken
+
+:icons: font
+
+//tag::free-form[]
+
+[cols="1,5"]
+|===
+| image:{jamhocken-avatar}[width=100px]
+a| **jamhocken** +
+{jamhocken-realName} +
+Github: https://github.com/{jamhocken-github}[{jamhocken-github}] +
+Twitter: https://twitter.com/{jamhocken-twitter}[{jamhocken-twitter}]
+|===
+
+=== About me
+
+I am participating in 2020 for the first time. I am trying to refresh my Python skills to support my 3 boys to learn how to code. I hope this will help me stay motivated / keep me from procrastinating as much. ;-)
+
+//end::free-form[]
