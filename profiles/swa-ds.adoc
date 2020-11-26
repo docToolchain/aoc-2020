@@ -1,0 +1,26 @@
+
+:swa-ds-avatar: https://avatars3.githubusercontent.com/u/19685926
+:swa-ds-github: swa-ds
+:swa-ds-twitter: waldmann42
+:swa-ds-realName: Stefan Waldmann
+:swa-ds-blog: https://blog.doubleslash.de/author/swaldmann/
+
+:icons: font
+
+//tag::free-form[]
+
+[cols="1,5"]
+|===
+| image:{swa-ds-avatar}[width=100px]
+a| **swa-ds** +
+_{swa-ds-realName}_ +
+Github: https://github.com/{swa-ds-github}[{swa-ds-github}], +
+Twitter: https://twitter.com/{swa-ds-twitter}[@{swa-ds-twitter}] +
+Blog : {swa-ds-blog}
+|===
+
+=== About me
+
+Software & Quality Enthusiast, Nerd & Family Man, Trombonist & Geocacher.
+
+//end::free-form[]
