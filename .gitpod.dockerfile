@@ -12,7 +12,8 @@ RUN apt-get update && apt-get install -y \
 RUN curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
     curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list > /etc/apt/sources.list.d/dart_stable.list && \
     apt-get update && \
-    apt-get -y install  build-essential dart libkrb5-dev gcc make && \
+    apt-get -y install --no-install-recommends apt-utils && \
+    apt-get -y install --no-install-recommends pkg-config build-essential libssl-dev dart libkrb5-dev gcc make curl && \
     apt-get clean && \
     apt-get -y autoremove && \
     apt-get -y clean && \
@@ -30,6 +31,11 @@ RUN mv lein /usr/local/bin
 USER gitpod
 # Apply user-specific settings
 #ENV ...
+
+# Install Rust + WASM
+ENV PATH="/home/vscode/.cargo/bin:${PATH}"
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
+    && cargo install wasm-pack cargo-watch
 
 RUN npm install ts-node elm -g 
 
