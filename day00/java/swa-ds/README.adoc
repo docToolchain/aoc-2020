@@ -14,6 +14,8 @@ The solutions shall print out a greeting.
 The greeting includes the _"Advent of Code 2020"_ part which is read from `input.txt`.
 The file content is formatted into the greeting string via `System.out.printf(...)`.
 
+This example demonstrates that Java code can be similarly short as Kotlin when it comes to reading the contents of a file and printing a message ;-)
+
 === Second Star
 
 There is no second star.
