@@ -2,9 +2,11 @@
 
 Runs Rust directly in your browser ✨
 
-> Hint: When running in Codespaces make sure that your terminal is running in a Bash session (just enter "bash" to start it)
+Try it live in your browser, https://subesokun.github.io/aoc-2020/day00/wasm-rust/subesokun/[day00]
 
 === Run locally
+
+> Hint: When running in Codespaces make sure that your terminal is running in a Bash session (just enter "bash" to start it)
 
 ```
 # in a new terminal
@@ -12,6 +14,7 @@ Runs Rust directly in your browser ✨
 
 # in a new terminal
 cd www
+npm ci
 npm start           # auto rebuilds on changes
 
 # In your browser open the localhost:8080 or in Codespaces the provided url

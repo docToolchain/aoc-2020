@@ -17,7 +17,9 @@
   "license": "MIT",
   "devDependencies": {
     "copy-webpack-plugin": "^5.0.0",
+    "css-loader": "^5.0.1",
     "raw-loader": "^4.0.2",
+    "style-loader": "^2.0.0",
     "wasm-aoc": "file:../pkg",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.1.0",

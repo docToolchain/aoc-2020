@@ -2,7 +2,6 @@ mod utils;
 mod solution;
 
 use wasm_bindgen::prelude::*;
-use web_sys::console;
 
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -12,6 +11,12 @@ use web_sys::console;
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 #[wasm_bindgen]
-pub fn run_solution(input_txt_string: String) {
-    solution::run(input_txt_string);
+pub fn run_solution_star1(input_txt_string: String) -> f64 {
+    return solution::run_star1(input_txt_string);
 }
+
+#[wasm_bindgen]
+pub fn run_solution_star2(input_txt_string: String) -> f64 {
+    return solution::run_star2(input_txt_string);
+}
+
