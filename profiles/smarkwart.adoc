@@ -1,0 +1,25 @@
+
+:smarkwart-avatar: https://avatars.githubusercontent.com/smarkwart
+:smarkwart-realName: Sven Markwart
+:smarkwart-github: smarkwart
+:smarkwart-instagram: s.markw
+
+:icons: font
+
+//tag::free-form[]
+
+[cols="1,5"]
+|===
+| image:{smarkwart-avatar}[width=100px]
+a| **smarkwart** +
+{smarkwart-realName} +
+Github: https://github.com/smarkwart[smarkwart],
+Instagram: http://instagram.com/{smarkwart-instagram}[{smarkwart-instagram}] +
+|===
+
+=== About me
+
+I'm joining the Aoc for the first time and use the chance to advance my python skills from the level of c-coder style python ;-)
+
+//end::free-form[]
+

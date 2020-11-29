@@ -1,0 +1,1 @@
+print("Hello world of Aoc 2020!")
