@@ -30,6 +30,9 @@ wee_alloc = { version = "0.4.5", optional = true }
 version = "0.3"
 features = ["console"]
 
+[dependencies.js-sys]
+version = "0.3.45"
+
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"
 
