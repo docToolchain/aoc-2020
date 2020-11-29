@@ -1,0 +1,10 @@
+Joining for my first Aoc experience.
+
+== Day 0
+
+Just a simple "Hello World" in python.
+
+[source, python]
+....
+include::solution.py[]
+....
