@@ -1,7 +1,7 @@
 
 :sancho1241-avatar: https://avatars0.githubusercontent.com/u/24798802?s=40
 :sancho1241-twitter: -
-:sancho1241-realName: []
+:sancho1241-realName: [Sven-Oliver Neeb]
 :sancho1241-blog: -
 
 
@@ -23,7 +23,7 @@ endif::[]
 
 === About me
 
-Nothing here yet. Update your profile at https://github.com/docToolchain/aoc-2020/blob/master/profiles/sancho1241.adoc[/profiles/sancho1241.adoc]
+Started with PHP and Java in the early 2000s. Then got into the BFA and later PM track rather than engineering. Nowadays just scripting/programming occasionally, however eager to learn some Python.
 
 //end::free-form[]
 
