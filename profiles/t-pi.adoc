@@ -1,0 +1,24 @@
+
+:t-pi-avatar: https://avatars3.githubusercontent.com/u/33703265?v=4
+:t-pi-twitter: ti_31415
+:t-pi-realName: T. Pirk
+:t-pi-blog: 
+
+:icons: font
+
+//tag::free-form[]
+
+[cols="1,5"]
+|===
+| image:{t-pi-avatar}[width=100px]
+a| **t-pi** +
+{t-pi-realName} +
+Github: https://github.com/t-pi[t-pi] +
+Twitter: https://twitter.com/{t-pi-twitter}[{t-pi-twitter}]
+|===
+
+=== About me
+
+Babystepping into the world of SW development, coming from years of code-bending only...
+
+//end::free-form[]
