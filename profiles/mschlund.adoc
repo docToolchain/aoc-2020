@@ -1,0 +1,30 @@
+
+:mschlund-avatar: https://avatars2.githubusercontent.com/u/3297755
+:mschlund-twitter: -
+:mschlund-realName: Maximilian Schlund
+:mschlund-blog: -
+
+
+//tag::free-form[]
+
+[cols="1,5"]
+|===
+| image:{mschlund-avatar}[]
+a| **mschlund** +
+{mschlund-realName} +
+icon:github[]: https://github.com/mschlund
+ifeval::[{mschlund-twitter} != -]
+  icon:twitter[] : https://twitter.com/{mschlund-twitter}[mschlund-twitter] +
+endif::[]
+ifeval::[{mschlund-blog} != -]
+  Blog : {mschlund-blog} 
+endif::[]
+|===
+
+=== About me
+
+
+Find more info on https://maximilianschlund.wordpress.com/.
+
+//end::free-form[]
+
