@@ -1,0 +1,13 @@
+Day 1: Report Repair 
+== Python
+
+=== Today I learned
+ . that I should not copy the puzzle input from someone else since it is personalized.
+ . lists in Python use references. I have to explicitly create a copy if I want to manipulate at list without impacting the original message.
+Run the solution with `python solution.py`
+ . That I can learn a lot by looking at the solutions of others
+
+[source, python]
+....
+include::solution.py[]
+....
