@@ -1,0 +1,18 @@
+== Day 01
+
+This solution is written in python.
+
+The problem is (almost) the k-sum problem for k=2,3 (https://en.wikipedia.org/wiki/3SUM) but we search numbers that hit the target of 2020.
+
+Run using:
+$ python solution.py
+
+=== First Star
+
+This can be solved easily via a set that contains the "still missing amounts to reach the target", for each number we read, we check
+if it is in the "missing amounts" (target - number), if so we have found our two numbers: the current number, and the "missing amount".
+
+=== Second Star
+
+The simplest solution is similar to the one looking for two numbers, but this time we iterate through all pairs of numbers in the input (this could be optimized still -- but there is a quadratic lower bound on the runtime so quadratic is ok ^^).
+
