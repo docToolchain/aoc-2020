@@ -18,7 +18,7 @@ def search_expenses(expenses):
                     product = int(first_expense) * int(second_expense) * int(third_expense)
                     print(f"Hey, found a match:\n {first_expense} * {second_expense} * {third_expense} = {product}")
                     match_of_three_found = True
-                    
+
         if match_of_two_found & match_of_three_found:
             return
     print("Sorry, but no match found :-(")
@@ -26,8 +26,6 @@ def search_expenses(expenses):
 
 with open('expenseReport.txt') as expense_report:
     expenses = expense_report.readlines()
-
-#search_two_expenses(expenses)
 
 search_expenses(expenses)
 
