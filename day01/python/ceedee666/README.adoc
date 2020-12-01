@@ -1,0 +1,11 @@
+== Day 01
+
+This solution is written in python.
+
+The following libraries are used to implement the solution:
+- Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+- itertools (https://docs.python.org/3/library/itertools.html)
+- pathlib (https://docs.python.org/3/library/pathlib.html)
+
+Run using:
+$ python day01.py --help
