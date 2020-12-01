@@ -3,5 +3,28 @@
 To run the program, you need JDK 11.
 Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java Day01.java`.
 
-The brute force solution is  straightforward, using two i.e. three nested for loops.
+== Reading the input file
+
+----
+include::Day01.java[tags=readFile]
+----
+
+Reading files isn't a big deal in Java anymore.
+From `Files.lines(...)` we get a Stream of Strings which we then can easily turn into an int array.
+
+== The solution
+
+The brute force solution is straightforward, using nested for loops.
 It is quite fast nevertheless.
+
+=== Part 1
+----
+include::Day01.java[tags=part1]
+----
+Two nested `foreach` loops do the trick.
+
+=== Part 2
+----
+include::Day01.java[tags=part2]
+----
+Same as before, but with three nested loops instead.
