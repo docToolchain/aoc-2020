@@ -13,9 +13,11 @@ println "\n"
 part2(inputNumbers)
 
 void part1(ArrayList<Integer> inputNumbers) {
+    // tag::loopsPart1[]
     for(int i = 0; i < inputNumbers.size(); i++) {
         for(int j = i + 1; j < inputNumbers.size(); j++) {
             int sum = inputNumbers[i] + inputNumbers[j]
+    // end::loopsPart1[]
             if(sum == 2020) {
                 int solution = inputNumbers[i] * inputNumbers[j]
                 println "Solution Part 1:"
@@ -28,10 +30,12 @@ void part1(ArrayList<Integer> inputNumbers) {
 }
 
 void part2(ArrayList<Integer> inputNumbers) {
+    // tag::loopsPart2[]
     for(int i = 0; i < inputNumbers.size(); i++) {
         for(int j = i + 1; j < inputNumbers.size(); j++) {
             for(int k = j + 1; k < inputNumbers.size(); k++) {
                 int sum = inputNumbers[i] + inputNumbers[j] + inputNumbers[k]
+    // end::loopsPart2[]
                 if(sum == 2020) {
                     int solution = inputNumbers[i] * inputNumbers[j] * inputNumbers[k]
                     println "Solution Part 2:"
