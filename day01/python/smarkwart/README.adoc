@@ -1,0 +1,17 @@
+Joining for my first Aoc experience.
+
+== Day 01
+
+== Usage
+
+Data is read from the file 'expenseResport.txt' which shall contain one expense value per line
+
+== How does it work
+
+The expenses are read into a list expenses. The outer loop grabs an expense value from the list and iterates with the inner loops through all subsequent values searching for a match according to the day01 task.
+
+
+[source, python]
+....
+include::solution.py[]
+....
