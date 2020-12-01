@@ -14,7 +14,7 @@ I parse the file to a map which makes it easy and fast to iterate over it.
 
 [source,groovy, linenums]
 ----
-include::solution.groovy[tags=ReadInput]
+include::solution.groovy[tags=readInput]
 ----
 
 === First Star
