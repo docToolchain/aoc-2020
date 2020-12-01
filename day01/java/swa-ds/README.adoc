@@ -1,0 +1,7 @@
+= Day 01
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java Day01.java`.
+
+The brute force solution is  straightforward, using two i.e. three nested for loops.
+It is quite fast nevertheless.
