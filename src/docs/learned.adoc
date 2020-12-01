@@ -38,3 +38,12 @@ a|  eagerly waiting for day01, today I tried to use gitpod.io. After some diffic
 
 |====
 
+=== Day 01
+
+[cols="1,10"]
+|====
+
+a|{rdmueller}
+a| http://openjdk.java.net/jeps/330[JEP330] lets you execute Java like a script... finally, we've got Java-Script :-D
+
+|====
