@@ -32,41 +32,32 @@ def part2(input)
     .filter { |val| val < 2020 }
     .sort
 
-  sorted
-    .reverse
-    .each { |bigVal|
-      puts "new val: %d" % bigVal
-      ix1 = 0
-      ix2 = 1
-      sum = bigVal + sorted[ix1] + sorted[ix2]
-      while ix1 < sorted.size do
-        ix2 = 0
-        ix1 += 1
-        while sum < 2020 do
+  for bigVal in sorted.reverse do
+    ix1 = 0
+    ix2 = 0
+    sum = 0
+    loop do
+      loop do
+        ix2 += 1
+        if ix2 == ix1
           ix2 += 1
-          if ix2 == ix1
-            ix2 += 1
-          end
-          puts "ix1: %d, ix2: %d" % [ix1, ix2]
-          sum = bigVal + sorted[ix1] + sorted[ix2]
-          if ix2 == sorted.size-1
-            puts "breaking inner loop"
-            break
-          end
         end
-        #puts "ix1: %d, ix2: %d" % [ix1, ix2]
-        
-        puts "%d for %d + %d+%d (%d|%d)" % [sum, bigVal, sorted[ix1], sorted[ix2], ix1, ix2]
-        # if ix2 == 0
-        #   puts "breaking outer loop at sum:%d w/ ix2:%d" % [sum, ix2]
-        #   break
-        # end
-        if sum == 2020
-          return bigVal * sorted[ix1] * sorted[ix2]
+        sum = bigVal + sorted[ix1] + sorted[ix2]
+        if ix2 >= sorted.size or sum >= 2020
+          break
         end
       end
-    }
-    return -1
+      if sum >= 2020
+        break
+      end
+      ix1 += 1
+      ix2 = 0
+    end
+    if sum == 2020
+      return bigVal * sorted[ix1] * sorted[ix2]
+    end
+  end
+  return -1
 end
 
 if caller.length == 0
@@ -74,6 +65,6 @@ if caller.length == 0
 
   expenses = input.split("\n").map(&:to_i)
 
-  #puts "Solution for part1: %d" % part1(expenses)
+  puts "Solution for part1: %d" % part1(expenses)
   puts "Solution for part2: %d" % part2(expenses)
 end
