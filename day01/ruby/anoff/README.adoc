@@ -1,0 +1,20 @@
+Puzzle: https://adventofcode.com/2020/day/1[Report Repair]
+
+== Part 1
+
+== Part 2
+
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
