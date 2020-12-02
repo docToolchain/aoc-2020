@@ -1,5 +1,5 @@
 
-:mschlund-avatar: https://avatars2.githubusercontent.com/u/3297755
+:mschlund-avatar: https://avatars1.githubusercontent.com/u/3297755
 :mschlund-twitter: -
 :mschlund-realName: Maximilian Schlund
 :mschlund-blog: -
