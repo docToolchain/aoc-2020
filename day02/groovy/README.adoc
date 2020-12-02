@@ -1,0 +1,38 @@
+== Day 2: Password Philosophyr  ==
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/2 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day02/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Read File
+
+To read and parse the file in groovy is not as trivial as yesterday.
+I parse the file to a map which makes it easy and fast to iterate over it.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=readInput]
+----
+
+=== First Star
+
+Let's iterate over the given input, count the given letter and check the rule.
+I use the spread operator `*` to turn the list from the parsed input into a parameter list.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Second Star
+
+Same as the first star, with an updated rule.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----
