@@ -49,8 +49,9 @@ func FindTwo(numbers []int, target int) (int, int, error) {
 
 // FindThree numbers
 func FindThree(input []int, target int) (int, int, int, error) {
-	for i := range input[:len(input)-2] {
+	for i, _ := range input[:len(input)-2] {
 		start, end := i+1, len(input)-1
+		fmt.Println("-", i, start, end)
 
 		for start < end {
 			sum := input[i] + input[start] + input[end]
@@ -69,13 +70,12 @@ func FindThree(input []int, target int) (int, int, int, error) {
 
 // main function for aoc day01
 func main() {
-	var filename string
-	flag.StringVar(&filename, "f", "example", "Filename to get input from")
+	var filename = flag.String("f", "example", "Filename to get input from")
+	var year = flag.Int("y", 2020, "Year for expense reports")
+
 	flag.Parse()
 
-	year := 2020
-
-	input, err := GetInput(filename)
+	input, err := GetInput(*filename)
 	if err != nil {
 		return
 	}
@@ -85,10 +85,10 @@ func main() {
 	var n3 int
 
 	start := time.Now()
-	n1, n2, _ = FindTwo(input, year)
+	n1, n2, _ = FindTwo(input, *year)
 	fmt.Println("FindTwo", time.Since(start), n1*n2)
 
 	start = time.Now()
-	n1, n2, n3, _ = FindThree(input, year)
+	n1, n2, n3, _ = FindThree(input, *year)
 	fmt.Println("FindThree", time.Since(start), n1*n2*n3)
 }
