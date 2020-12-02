@@ -7,6 +7,8 @@ Added some tests to be sure :)
 
 == Part 2
 
+I am happy this was straightforward too.
+
 == Solution
 
 [source, ruby]
