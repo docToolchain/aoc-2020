@@ -1,0 +1,19 @@
+== Day 02
+
+== Parsing
+
+Need to do some more parsing, like removing unnecessary characters, split the lines and cast the numbers to int
+
+== Algorithm
+
+Star1: Count the occurences of the char in each password and check if it's within boundaries
+Star2: Apply XOR condition
+
+
+== Today I learned
+- Got confused with list indexes, maybe should've used dictionary for better readability of the code
+- that the enumerate function in Python iterates through the list and also provides the list index, so no need for an extra counter
+- I can make my code script shorter by concatenate method calls
+- I can have multiple operators in a row in an if condition
+- Recalled the boolean XOR operation for Part 2
+- Gitpod Debugger does not work since input file not found. I assume it's a configuration issue in the JSON 
