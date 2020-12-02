@@ -12,7 +12,7 @@
 | image:{mschlund-avatar}[]
 a| **mschlund** +
 {mschlund-realName} +
-icon:github[]: https://github.com/mschlund
+icon:github[]: https://github.com/mschlund[mschlund]
 ifeval::[{mschlund-twitter} != -]
   icon:twitter[] : https://twitter.com/{mschlund-twitter}[mschlund-twitter] +
 endif::[]
