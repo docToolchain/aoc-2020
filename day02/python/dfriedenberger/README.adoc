@@ -1,0 +1,34 @@
+Day 2 of year 2020
+https://adventofcode.com/2020/day/2
+
+TIP: Use `pytest` to do unit tests.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
+
+=== Unit Tests
+- use https://pytest.org[pytest] (`pip3 install pytest`)
+
+[source, bash]
+....
+root@docker-desktop:~/aoc2020# pytest
+== test session starts ==
+platform linux -- Python 3.9.0, pytest-6.1.2, py-1.9.0, pluggy-0.13.1
+rootdir: /root/aoc2020
+collected 2 items
+
+src/util_test.py ..  [100%]
+
+== 2 passed in 0.15s ==
+....
