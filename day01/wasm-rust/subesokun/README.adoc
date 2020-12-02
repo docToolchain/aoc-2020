@@ -21,3 +21,17 @@ npm start           # auto rebuilds on changes
 # -> Have a look in your console for the output
 # Hint: Auto-reload of web page works only on localhost as Codespaces blocks the WebSocket connection for some reason
 ```
+
+=== First Star
+
+[source,rust, linenums]
+----
+include::src/solution.rs[tags=star1]
+----
+
+=== Second Star
+
+[source,rust, linenums]
+----
+include::src/solution.rs[tags=star2]
+----
