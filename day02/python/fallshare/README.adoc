@@ -1,0 +1,12 @@
+== Day 2: Password Philosophy
+
+After I had a look how others solved Day01 in Python using functional programming I decided to also give this a try.
+Hence I did my first functional programming baby steps today.
+
+I could have turned the information per line into a dictionary but decided to go  with a simple list.
+I also realized that read_input_file() should not rely on extractPasswordInformation() but decided to keep this as it is. 
+
+[source, python]
+....
+include::solution.py[]
+....
