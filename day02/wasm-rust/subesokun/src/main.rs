@@ -5,13 +5,12 @@ use std::path::Path;
 
 mod solution;
 
-fn read_puzzle_input(path: &Path) -> std::vec::Vec<u32> {
+fn read_puzzle_input(path: &Path) -> std::vec::Vec<String> {
     let file = File::open(path).unwrap();
     let content = BufReader::new(&file);
     let mut vec = Vec::new();
     for line in content.lines() {
-        let number: u32 = line.unwrap().parse().unwrap();
-        vec.push(number);
+        vec.push(line.unwrap());
     }
     return vec
 }
