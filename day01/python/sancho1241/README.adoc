@@ -1,0 +1,10 @@
+== Day 01
+
+== Parsing
+
+Data is read from file 'input.txt', converted to a list and then casted to integer values for calculation
+
+== Algorithm
+
+Using multiple nested list iterations and just brute forcing all combinations. Printed and flagged once found. 
+Neither elegant nor optimized but working for this small data set. Decided to integrate Star2 steps into Star 1 solution. Wanted to use list comprehension but had no time for research.

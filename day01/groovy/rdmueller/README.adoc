@@ -1,0 +1,40 @@
+== Day 1: Report Repair  ==
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/1 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day01/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Read File
+
+To read and parse the file in groovy is a one-liner.
+I parse the file to a map which makes it easy and fast to iterate over it.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=readInput]
+----
+
+=== First Star
+
+Let's do this brute force.
+I iterate over the input and do `input.size()^2` calculations.
+Since this is quite fast, I don't care to break when I found the right solution.
+Just print it out.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Second Star
+
+Same as the first star, but this time I do `imput.size()^3` calculations, because I added a third loop.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----

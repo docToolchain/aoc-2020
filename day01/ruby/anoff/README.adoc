@@ -1,0 +1,25 @@
+Puzzle: https://adventofcode.com/2020/day/1[Report Repair]
+
+== Part 1
+
+This was fairly straight forward..
+
+== Part 2
+
+Had a lot of issues with the loop thinking.
+Ruby gave me a few extra headaches because I was not 100% sure how scoping works.
+First implementation using a `.foreach` array loop did not work for some reason :(
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
