@@ -1,0 +1,22 @@
+Puzzle: https://adventofcode.com/2020/day/2[Password Philosophy]
+
+== Part 1
+
+Apart from reading a lot about ruby syntax (again) this was an easy one.
+Added some tests to be sure :)
+
+== Part 2
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
