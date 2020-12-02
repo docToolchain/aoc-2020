@@ -1,0 +1,24 @@
+
+
+Java ist abgelöst von Python in dr Rangliste
+
+This solution is written in Python.
+
+Example from day1 of year 2018
+
+https://adventofcode.com/2018/day/1
+
+== First Star
+
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
