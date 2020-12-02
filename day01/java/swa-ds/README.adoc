@@ -18,12 +18,17 @@ The brute force solution is straightforward, using nested for loops.
 It is quite fast nevertheless.
 
 === Part 1
+
+[source,java, linenums]
 ----
 include::Day01.java[tags=part1]
 ----
 Two nested `foreach` loops do the trick.
 
 === Part 2
+
+[source,java, linenums]
+
 ----
 include::Day01.java[tags=part2]
 ----
