@@ -1,0 +1,46 @@
+== Day 2: Password Philosophy  ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/2
+
+For execution enter _kotlin day2002_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+First invoke a function:
+[source, kotlin, numbered]
+....
+include::day2002_1_2.kts[tags=part_1]
+....
+
+
+This function is reading puzzle_input and splits the input string into the necessary information for the given passwd, the letter which has to be part of it, and the numbers of min and max occurency. Then for each entry it is checked, if the passwd fits to the policy by comparing its length with the length of the passwd with removed letters, if this is between the given ranges, the passwd is valid and will be counted:
+[source, kotlin, numbered]
+....
+include::day2002_1_2.kts[tags=passwd_list]
+....
+
+=== Second Star
+
+How does it work: +
+
+Here also invoke a function:
+[source, kotlin, numbered]
+....
+include::day2002_1_2.kts[tags=part_2]
+....
+
+The function works similar, but with a different policy applied. Here it is checked, if the letter at the given indices are following the new policy:
+[source, kotlin, numbered]
+....
+include::day2002_1_2.kts[tags=passwd_list_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2002_1_2.kts[tags=output]
+....
