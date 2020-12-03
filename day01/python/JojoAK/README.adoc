@@ -1,0 +1,21 @@
+
+
+This solution is written in Python.
+
+Example from day1 of year 2020
+
+https://adventofcode.com/2020/day/1
+
+== First Star
+
+
+
+
+First star reached
+
+
+== Second Star
+
+
+Second star reached
+
