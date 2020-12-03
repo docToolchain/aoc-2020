@@ -1,31 +1,35 @@
-correct_passwords_rule_1 = 0
-correct_passwords_rule_2 = 0
-
-with open("password_file.txt",'r') as password_file: 
-    for line in password_file:
-
-        step_0 = line.split()
-        step_1 = step_0[0].split('-')
-        
-        min_number = int(step_1[0])
-        max_number = int(step_1[1])
-        necessary_character = step_0[1].strip(':')
-        string_to_check = step_0[2]
-
-        # Check Rule 1
-        txt_count = string_to_check.count(necessary_character)
-        if min_number <= txt_count <= max_number: correct_passwords_rule_1 += 1 
-        
-        #Check Rule 2
-        if string_to_check[min_number-1] == necessary_character:
-            if string_to_check[max_number-1] != necessary_character:
-                correct_passwords_rule_2 += 1
+def collision(horizontal, vertical, width, row, pattern):
+    if row % vertical == 0:
+        if pattern[((horizontal*row) // vertical) % width] == '#':
+            return True
         else:
-            if string_to_check[max_number-1] == necessary_character:
-                correct_passwords_rule_2 += 1
-        
-print('There are', correct_passwords_rule_1, 'correct passwords \
-according to rule 1.')
+            return False
 
-print('There are', correct_passwords_rule_2, 'correct passwords \
-according to rule 2.')
+crashes_0 = 0
+crashes_1 = 0
+crashes_2 = 0
+crashes_3 = 0
+crashes_4 = 0
+
+count = 0
+
+with open("trees.txt",'r') as map_file: 
+    throwaway_first_line = map_file.readline()
+
+    for line in map_file:
+        line_stripped = line.rstrip()
+        width = len(line_stripped)
+        count += 1
+        
+        if collision(1,1,width,count,line_stripped): crashes_0 += 1
+        if collision(3,1,width,count,line_stripped): crashes_1 += 1
+        if collision(5,1,width,count,line_stripped): crashes_2 += 1
+        if collision(7,1,width,count,line_stripped): crashes_3 += 1
+        if collision(1,2,width,count,line_stripped): crashes_4 += 1
+
+print('With the pattern Right 1, Down 1, there were', crashes_0, 'trees.')
+print('With the pattern Right 3, Down 1, there were', crashes_1, 'trees.')
+print('With the pattern Right 5, Down 1, there were', crashes_2, 'trees.')
+print('With the pattern Right 7, Down 1, there were', crashes_3, 'trees.')
+print('With the pattern Right 1, Down 2, there were', crashes_4, 'trees.')
+print('The product is:', crashes_0*crashes_1*crashes_2*crashes_3*crashes_4)
