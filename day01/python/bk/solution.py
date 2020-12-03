@@ -1,49 +1,59 @@
 #!/usr/bin/env python3
-class Policy:
-    def __init__(self, lowestNumber, highestNumber, letter):
-        self.lowestNumber = lowestNumber
-        self.highestNumber = highestNumber
-        self.letter = letter
 
-class ParsedEntry:
-    def __init__(self, entryAsString):
-        self.policy = self.__parsePolicy(entryAsString)
-        self.password = self.__parsePassword(entryAsString)
-        #print("{}-{} {}: {}".format(self.policy.lowestNumber, self.policy.highestNumber, self.policy.letter, self.password))
-    def __parsePolicy(self, entryAsString):
-        pos1 = entryAsString.find('-')
-        lowestNumber = int(entryAsString[:pos1])
-        pos2 = entryAsString.find(' ')
-        highestNumber = int(entryAsString[pos1+1:pos2+1])
-        letter = entryAsString[pos2+1:pos2+2]
-        p = Policy(lowestNumber, highestNumber, letter)
-        return p
-    def __parsePassword(self, entryAsString):
-        pos = entryAsString.find(':')
-        password = entryAsString[pos+2:]
-        return password
+# tag::starOne[]
+def searchAnswer(Lines, startFromLine, searchedAmount):
+    currentLine = startFromLine
+    found = False
+    secondSummand=int(Lines[startFromLine])
+    while currentLine < len(Lines)+1:
+        firstSummand = int(Lines[currentLine-1])
+        currentAmount = firstSummand + secondSummand
+        if currentAmount == searchedAmount:
+            found = True
+            break
+        currentLine+=1
 
-class Validtor:
-    def __init__(self, entries):
-        self.entries = entries
-        self.numberOfValidPasswords = 0
-    def validate(self):
-        for e in entries:
-            pE = ParsedEntry(e)
-            isValid = self.__validatePassword(pE.policy, pE.password)
-            if isValid:
-                self.numberOfValidPasswords+=1
-    def __validatePassword(self, policy, password):
-        count = 0
-        for i in password:
-            if i == policy.letter:
-                count+=1
-        if count >= policy.lowestNumber and count <= policy.highestNumber:
-            return True
-        return False
+    if(found!=True):
+        return searchAnswer(Lines, startFromLine+1, searchedAmount)
+    else:        
+        return firstSummand*secondSummand
+    
+f = open("input.txt", "r")
+Lines = f.readlines()
+answer = searchAnswer(Lines, 1,2020)
+print("Answer 1: {}".format(answer))
+# end::starOne[]
+
+# tag::starTwo[]
+def searchAnswer2(Lines, searchedAmount):
+    firstIndex = 0
+    found=False  
+    while firstIndex < len(Lines):
+        secondIndex=firstIndex+1
+        while secondIndex < len(Lines):
+            thirdIndex=secondIndex+1
+            while thirdIndex < len(Lines):
+                currentAmount = int(Lines[firstIndex]) + int(Lines[secondIndex]) + int(Lines[thirdIndex])     
+                if currentAmount == searchedAmount:
+                    found = True
+                    break
+                thirdIndex+=1
+            if found:
+                break
+            secondIndex+=1
+        if found:
+            break
+        firstIndex+=1
+
+    result = 0
+    if found:
+        #print("{}+{}+{}={}".format(Lines[firstIndex], Lines[secondIndex], Lines[thirdIndex], currentAmount))
+        result = int(Lines[firstIndex]) * int(Lines[secondIndex]) * int(Lines[thirdIndex])
+    return result
 
 f = open("input.txt", "r")
-entries = f.readlines()
-v = Validtor(entries)
-v.validate()
-print(v.numberOfValidPasswords)
+Lines = f.readlines()
+answer = searchAnswer2(Lines, 2020)
+print("Answer 2: {}".format(answer))
+# end::starTwo[]
+   
