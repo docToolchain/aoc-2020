@@ -1,0 +1,25 @@
+== Day 03
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html)
+
+=== Main idea
+
+The main idea of this solution is to use modular arithmetics to calculate the
+y coordinate of the trajectory. The calculation of the x coordinate is performed
+using the `range` function and an optional `step`. 
+
+To calculate the and y coordinates it is important to note, that it is not dependant 
+on the x coordinate but rather on the iteration step. Therefore, I use 
+the `enumerate` function to associate each x coordinate to count of the iteration.
+For this, the y coordinates can simply be calculates as 
+of each trajectory can easily be calculate from the step size, the iteration count and
+the length of one row.
+
+=== How to run
+
+Run using:
+`$ python day03.py --help`
