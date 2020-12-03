@@ -1,0 +1,13 @@
+Day 1: Report 
+== C++
+
+- Source was compiled with clang
+- used clang-format and clang-tidy
+- Solution is for both stars straight forward using nested loops
+- For the first star I used iterators while for the second star I used pure for-loops to get a better
+feeling what lokks nicer and cleaner
+
+=== Today I learned
+- to love clang-tidy again
+- the default of clang-tidy is not optimal for all users (and not compliant to MISRA-C++ ;-) )
+- iterators are fine but unhandy when not starting at the end or begin of a container

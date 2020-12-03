@@ -2,7 +2,7 @@
 
 Runs Rust directly in your browser ✨
 
-Try it live in your browser, https://subesokun.github.io/aoc-2020/day01/wasm-rust/subesokun/[day01]
+Try it live in your browser, https://subesokun.github.io/aoc-2020/day02/wasm-rust/subesokun/[day02]
 
 === Run locally
 

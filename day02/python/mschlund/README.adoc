@@ -1,0 +1,19 @@
+== Day 02
+
+This solution is written in python.
+
+Run using:
+$ python solution.py
+
+=== First Star
+We parse the input line by line using String.split
+(yeah this is very brittle .. and we do no error-handling etc.)
+after having parsed the input we delegate the checking to
+a function "is_valid_first" and count how many times this function returns True.
+
+=== Second Star
+The check is implemented in the function "is_valid_second" --
+otherwise the behaviour is exactly like for the first exercise.
+Exactly one of the positions must equal the letter so we take the
+logical 'xor' of the two comparisions.
+Further note that 'xor' is logically equivalent to '!='.

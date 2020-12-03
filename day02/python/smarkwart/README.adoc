@@ -1,0 +1,41 @@
+== Day 02
+
+=== Usage
+
+day02.py <filename>
+
+filename: name of file containing the data to validate
+
+=== Used Regular Expression explained
+
+With help of regex101.com
+
+....
+(?P<minimum>\d*)-(?P<maximum>\d*) (?P<letter>.): (?P<password>.*)
+
+Named Capture Group minimum (?P<minimum>\d*)
+\d* matches a digit (equal to [0-9])
+* Quantifier — Matches between zero and unlimited times, as many times as possible, giving back as needed (greedy)
+
+- matches the character - literally (case sensitive)
+
+Named Capture Group maximum (?P<maximum>\d*)
+\d* matches a digit (equal to [0-9])
+* Quantifier — Matches between zero and unlimited times, as many times as possible, giving back as needed (greedy)
+
+  matches the character   literally (case sensitive)
+
+Named Capture Group letter (?P<letter>.)
+. matches any character (except for line terminators)
+
+:  matches the characters :  literally (case sensitive)
+
+Named Capture Group password (?P<password>.*)
+.* matches any character (except for line terminators)
+* Quantifier — Matches between zero and unlimited times, as many times as possible, giving back as needed (greedy)
+....
+
+[source, python]
+....
+include::day02.py[]
+....
