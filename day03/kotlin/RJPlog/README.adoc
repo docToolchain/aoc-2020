@@ -1,0 +1,59 @@
+== Day 3: Toboggan Trajectory  ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/3
+
+For execution enter _kotlin day2003_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+First of all the puzzle input has to be prepared. I need to setup a grid and need to know its width and depth, therefore I invoke some  functions:
+
+function for identifing width:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=identify_wood_width]
+....
+
+and for identifing depth:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=identify_wood_width]
+....
+
+and finally setting up the grid:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=setup_wood_grid]
+....
+
+After preparing the puzzle input, I need a function to really slide through with my toboggan, this is made here:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=toboggan_wood_grid]
+....
+
+For calculation of the solution, you just have to set the parameters of the slope and invoke the toboggan function:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=part_1]
+....
+
+=== Second Star
+
+How does it work: +
+
+This works pretty much the same way, since there are several slopes to cover I lazyly just invoked the toboggan function several times with different slope paramteres and multiplied the results, here I had to recognise that `Int` is not enough, I had to use a `Long` variable:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=part_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2003_1_2.kts[tags=output]
+....

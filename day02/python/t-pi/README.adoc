@@ -1,0 +1,19 @@
+Walking a little bit more confidently into the second day...
+
+== Day 02
+
+=== Info
+
+Day 02 of 2020 AoC: Verify passwords against line based policy
+
+=== HowTo
+
+Data is read from the file 'input.txt' line by line.
+Every line is parsed for min / max count and required letter.
+Star1: Old policy: Password is analyzed for valid count of said letter
+Star2: Current policy: While parsing the password, the crucial positions are equally checked for single letter match only
+
+[source, python]
+....
+include::solution.py[]  
+....

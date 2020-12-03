@@ -1,0 +1,26 @@
+
+
+Day 1 of year 2020
+https://adventofcode.com/2020/day/1
+
+TIP: The first day riddle can usually still be solved with bruteforce.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
+
+=== Run script
+[source, bash]
+....
+python soution.py
+....
