@@ -15,6 +15,7 @@ let check = (): number => {
             }
         } 
     };
+    return -1
 }
 
 let result = check()

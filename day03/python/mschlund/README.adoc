@@ -1,0 +1,20 @@
+== Day 03
+
+This solution is written in python.
+
+Run using:
+$ python solution.py
+
+We read in the map rowwise into a simple list-of-lists
+(each row is already a list, since strings are lists of chars).
+
+=== First Star
+The function is parametrized by the slope,
+determined by the two parameters stride_x and stride_y.
+We simply loop from top to bottom over the map starting from
+the position (0,0). In each step we add the slope to the current position,
+calculating the x-position modulo the length of a line.
+
+=== Second Star
+Using th parametrized function from the first star as subroutine,
+this exercise is simplified -- we just call it for each slope and multiply the results.
