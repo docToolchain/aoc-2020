@@ -25,8 +25,6 @@ def main():
     input_filename = 'input.txt'
     star_number = 2
     with open(input_filename, 'r') as input:
-        nr_of_lines = sum([1 for line in input])
-        input.seek(0) # rewind the file to the start
         board = []
         cnt = 0
         for line in input:
