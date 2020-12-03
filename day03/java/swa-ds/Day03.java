@@ -30,10 +30,7 @@ public class Day03 {
             if (map[down][right] == '#') {
                 treeCount++;
             }
-            right += stepsRight;
-            if (right >= mapWidth) { // <1>
-                right = right % mapWidth;
-            }
+            right = (right + stepsRight) % mapWidth; // <1>
             down += stepsDown;
         }
         return treeCount;
