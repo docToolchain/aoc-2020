@@ -1,0 +1,22 @@
+
+Day 2 of year 2020
+https://adventofcode.com/2020/day/2
+
+
+== What I learned
+
+. Actually, this one was pretty straightforward for me. Yoohoo!
+
+== Approach
+
+Brute force. I just read in each line of the file and decompose that line
+into the constituent parts: First number, second number, character to check,
+password candidate. And then I implement an if statement to check the rule.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
