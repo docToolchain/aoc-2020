@@ -25,7 +25,8 @@ def run_course(terrain_list, right, down):
         if check_treechecks(line, position):
             tree_count += 1
         position = (position + right) % (len(line)-1)
-    print("Trees hit @R{}D{}: {}".format(right, down, tree_count))
+    #print("Trees hit @R{}D{}: {}".format(right, down, tree_count))
+    print(f"Trees hit @R{right}D{down}: {tree_count}")
     return tree_count
 
 daily_list = read_daily_input('input03.txt')
@@ -35,7 +36,7 @@ results = list()
 for course in courses:
     results.append(run_course(daily_list, course[0], course[1]))
 
-print("Puzzle result: {}".format(math.prod(results)))
+print(f"Puzzle result: {math.prod(results)}")
 
 
 
