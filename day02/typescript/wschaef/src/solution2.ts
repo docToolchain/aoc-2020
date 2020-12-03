@@ -7,8 +7,8 @@ let check = (line: string):boolean => {
     const [validPositions,letter] = rule.split(' ')
     const passwordArray = password.split('')
     const numberOfLetters = validPositions.split('-')
-        .map(pos => password.charAt(pos)===letter?1:0)
-        .reduce((sum,elem)=>sum+elem,0) 
+        .map(pos => password.charAt(parseInt(pos))===letter?1:0)
+        .reduce((sum:number,elem:number) => sum + elem,0) 
     return numberOfLetters === 1
 }
 

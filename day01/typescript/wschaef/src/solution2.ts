@@ -12,11 +12,12 @@ let check = (): number => {
         for (let m of valueList){
             for (let l of valueList){
                 if(n+m+l===2020){
-                    return = n*m*l;
+                    return n*m*l;
                 }
             }
         } 
     };
+    return -1;
 }
 
 let result = check()
