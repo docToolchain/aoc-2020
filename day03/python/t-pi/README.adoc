@@ -1,0 +1,17 @@
+== Day 03
+
+=== Info
+
+Day 03 of 2020 AoC: Ride the slide through hashy terrain with a twisted tobbogan
+
+=== HowTo
+
+Data is read from the file 'input03.txt' line by line to create a modulo terrain map (list of lists). 
+
+Star1: How many trees are hit? Toboggan slides down 1 and 3 right.
+Star2: How many trees are hit? Toboggan errs along different paths. Multiply trees hit.
+
+[source, python]
+....
+include::solution.py[]  
+....
