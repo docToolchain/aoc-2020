@@ -1,0 +1,30 @@
+
+Day 3 of year 2020
+https://adventofcode.com/2020/day/3
+
+
+== What I learned
+
+. It took me a while to get the modulo and integer division right for
+problem 1. The breakthrough was to make a simple example with 4 columns and
+then it became quite clear. I should have done that earlier and made a simple
+test...
+. Read the problem statement. I lost a good bit of time by not realizing
+the the first line of the file is never evaluated.
+. If you give the wrong answer (which I did), there is a one minute time-out
+before you can try again. Tested for you! :-)
+. Problem 2 was trivial after solving problem 1.
+
+== Approach
+
+I created a function to check whether there was a tree or not. I basically
+throw away the first line of the file and then iterate throw the other lines,
+checking each of the slopes from Problem 2 (which includes problem 1).
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
