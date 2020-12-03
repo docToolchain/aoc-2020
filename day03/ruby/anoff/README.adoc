@@ -1,0 +1,23 @@
+Puzzle: https://adventofcode.com/2020/day/3[Toboggan Trajectory]
+
+== Part 1
+
+Had some issues because I did not think enough about the correct index counting (when to does the toboggan reach the end of the map).
+
+== Part 2
+
+After having implemented a treecounting function for part1 this was just calling it multiple times and multiplying the results.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
