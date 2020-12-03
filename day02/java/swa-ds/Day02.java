@@ -45,23 +45,24 @@ public class Day02 {
 
     public static void main(String[] args) throws IOException {
         Day02 solver = new Day02();
-        List<String> passwordList = Files.readAllLines(Paths.get("day02.txt"));
 
-        // Part 1
+//tag::part1Eval[]
+        List<String> passwordList = Files.readAllLines(Paths.get("day02.txt")); // <1>
+
         long validPasswords = passwordList.stream()
-                .filter(solver::isValidPasswordPart1)
+                .filter(solver::isValidPasswordPart1) // <2>
                 .count();
 
         System.out.println("Part I - number of valid passwords: " + validPasswords);
+//end::part1Eval[]
 
-        // Part 2
+//tag::part2Eval[]
         validPasswords = passwordList.stream()
                 .filter(solver::isValidPasswordPart2)
                 .count();
 
         System.out.println("Part II - number of valid passwords: " + validPasswords);
+//end::part2Eval[]
     }
-
-
 
 }
