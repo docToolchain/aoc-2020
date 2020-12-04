@@ -10,8 +10,7 @@ This is possible because I looked up the right shebang for the first line of the
 
 === Read File
 
-To read and parse the file in groovy is not as trivial as yesterday.
-I parse the file to a map which makes it easy and fast to iterate over it.
+This time, I simply split the input into lines.
 
 [source,groovy, linenums]
 ----
@@ -20,6 +19,10 @@ include::solution.groovy[tags=readInput]
 
 === First Star
 
+I need a method to read a map entry.
+Then I iterate through the map long enough to get to the bottom.
+As a trick, I modified the `readMap` to add virtual space at the bottom.
+This allows me to go further down without getting exceptions.
 
 [source,groovy, linenums]
 ----
@@ -28,6 +31,7 @@ include::solution.groovy[tags=star1]
 
 === Second Star
 
+Now, do the same for the different sloopes.
 
 [source,groovy, linenums]
 ----
