@@ -22,7 +22,6 @@ def check_passport_field_valid(field_type, field_content):
     - cid (Country ID) - ignored, missing or not.
     '''
     field_valid = False
-    print(field_type, field_content)
     if (field_type == 'byr'):
         if (field_content.isnumeric()): 
             field_valid = (int(field_content)>=1920) and (int(field_content)<=2002)
@@ -52,7 +51,6 @@ def check_passport_field_valid(field_type, field_content):
     if (field_type == 'pid'):
         if (field_content.isnumeric()): 
             field_valid = (len(field_content) == 9)
-    print(field_valid)
     return field_valid
 
 def count_valid_passports_in_list(passport_list):
