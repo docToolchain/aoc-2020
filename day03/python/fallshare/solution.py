@@ -2,7 +2,6 @@ from pathlib import Path
 import re
 
 
-
 def read_input_file(input_file_path):
     p = Path(input_file_path)
 
@@ -29,9 +28,6 @@ def enhance_map(data, x_step, y_step):
     return data
 
 def traverse_map(data, x_step, y_step):
-    #algorithm
-    # traverse 
-    
     x = 0
     y = 0
     height = len(data) - 1
@@ -46,7 +42,7 @@ def traverse_map(data, x_step, y_step):
     return tree_count
     
 
-def analyze_slops(map, x_step, y_step):
+def analyze_slope(map, x_step, y_step):
     fullMap = enhance_map(data, x_step, y_step)
     return traverse_map(fullMap, x_step, y_step)
 
@@ -54,20 +50,17 @@ def analyze_slops(map, x_step, y_step):
 
 if __name__ == "__main__":
   
-    data = read_input_file('input.txt')
+    mapTile = read_input_file('input.txt')
+
+    tree_star1 = analyze_slope(mapTile, 3, 1)
+    print(f"Star 1 - Number of trees is: {tree_star1}")
 
     slopes = ((1,1),(3,1),(5,1),(7,1),(1,2))
     tree_product = 1
 
     for slope in slopes:
-        tree_count = analyze_slops(data,slope[0],slope[1])
+        tree_count = analyze_slope(mapTile, slope[0], slope[1])
         print(f"slope: {slope} - trees: {tree_count}")
         tree_product *= tree_count
 
-    print(tree_product)
-
-    
-
-    
-
-    
+    print(f"Star 2 - Number of trees is: {tree_product}")
