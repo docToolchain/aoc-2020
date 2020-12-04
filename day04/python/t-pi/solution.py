@@ -88,6 +88,8 @@ def count_valid_passports_in_list(passport_list):
     return valid_count
 
 def count_total_passports_in_list(passport_list):
+    ''' Count total number of passports, just for completeness
+    '''
     total_count = 0
     for line in passport_list:
         if (len(line) < 3):
