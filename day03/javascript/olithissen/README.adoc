@@ -1,0 +1,48 @@
+== Day 3: Toboggan Trajectory  ==
+
+This solution is written in JavaScript with NodeJS.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/3 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day03/javascript/olithissen .
+
+For execution enter `./solution.js` in the command line.
+
+=== Read File
+
+I'm reading the input file line by line. 
+I thought about interpreting everything as a 2D-array, but that's not really necessary in the end.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=readInput]
+----
+
+=== Main algorithm for Star 1 & 2
+
+The main algorithm is easier than I initially thought: 
+Initially I get the width of the unrepeated grid and initialize all variables.
+The only real trick while increasing `row` and `column` is applying the modulo operator to the new `column` to emulate the repetition on the x-axis.
+`hits` are simply incremented and returned at the end.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=walk]
+----
+
+=== First Star
+
+Call `walk(data, 3, 1)` and return the result ...
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star1]
+----
+
+=== Second Star
+
+Call `walk(data, x, y)` according to the puzzle input and multiply the results.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star2]
+----
