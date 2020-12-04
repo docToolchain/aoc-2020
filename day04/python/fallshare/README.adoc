@@ -1,0 +1,15 @@
+== Day 4: Passport Processing
+
+For Star 1 I started to parse the input into dictionaries. One dictionary repesenting the data of one passport.
+Afterwards I could simply check if all required keys are being present in a dictionary by creating a list of all available keys using the getKeys() method.
+Then I could check if all required keys are in this set by using the issubset() method.
+
+Star 2 was a lot of work due to the amount of checks to be implemented.
+I put all the checks in one big if statements. The more complex checks have been outsourced in dedicated functions.
+In the end I of by one error because a poorly crafted RegEx captured one object too much.
+Looking back I should have decomposed the problem better and could have used TDD to verify smaller units.
+
+[source, python]
+....
+include::solution.py[]
+....
