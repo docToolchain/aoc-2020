@@ -1,0 +1,27 @@
+Trying to get back up to speed with basic programming...
+
+Day 1 of year 2020
+https://adventofcode.com/2020/day/1
+
+
+== What I learned
+
+. That you cannot just copy a list to another list (you just make a new
+reference to the same list.)
+. That you have to be careful if you start removing values from a list
+that you are enumerating with.
+. Probably all of that is obvious, but it cost me some time to figure out.
+
+== Approach
+
+Brute force. I just take the first value and enumerate over the rest of the
+values to check for the match. With a 2nd nested loop for the check of the
+sum of three values. That's it.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

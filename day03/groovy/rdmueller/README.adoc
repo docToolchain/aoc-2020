@@ -1,0 +1,39 @@
+== Day 3: Toboggan Trajectory  ==
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/3 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day03/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Read File
+
+This time, I simply split the input into lines.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=readInput]
+----
+
+=== First Star
+
+I need a method to read a map entry.
+Then I iterate through the map long enough to get to the bottom.
+As a trick, I modified the `readMap` to add virtual space at the bottom.
+This allows me to go further down without getting exceptions.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Second Star
+
+Now, do the same for the different sloopes.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----
