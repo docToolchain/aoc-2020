@@ -1,0 +1,35 @@
+== Day 4: Passport Processing  ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/4
+
+For execution enter _kotlin day2004_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+I wrote a function reading the puzzle input, splitting the input line by line into fields and data. All fields are added to a list. If after a blank line all 7 necessary fields are in the list, count up and delete list for new turn. I had to add two blank lines at the end of the puzzle input, otherwise the algorithm would not count the last entry
+
+[source, kotlin, numbered]
+....
+include::day2004_1_2.kts[tags=count_valid]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+This works pretty much the same way, but before adding the field to the list, the data field is checked if it fits to the rules. For "hcl" I made a simple check, could be that you have different input and need a more precise rule. I simply checked if the length is 7, which was fitting after looking at the given input
+[source, kotlin, numbered]
+....
+include::day2004_1_2.kts[tags=count_valid_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2004_1_2.kts[tags=output]
+....
