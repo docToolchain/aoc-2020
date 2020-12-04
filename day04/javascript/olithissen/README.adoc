@@ -1,0 +1,53 @@
+== Day 4: Passport Processing  ==
+
+This solution is written in JavaScript with NodeJS.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/4 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day04/javascript/olithissen .
+
+For execution enter `./solution.js` in the command line.
+
+=== Read File
+
+Reading the input is a bit more complex this time.
+I do all the splitting and tokenizing in this function so I end up with passport objects.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=readInput]
+----
+
+=== First Star
+
+Simply check, if all required properties exist on the passport object.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star1]
+----
+
+=== Second Star
+
+Get all check methods from the `check` object and apply them to the corresponding property of the `passport` object.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star2]
+----
+
+=== Check functions as lookup
+
+I like the idea of simply using the property name to look up the corresponding function to validate its contents.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=checks]
+----
+
+Too bad I spent the better part of my lunch break with false positive passports because of one evil RegEx.
+Remember that `/\d{9}/` will match any number of digits > 9 so it should have been `/^\d{9}$/`.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=evilRegex]
+----
