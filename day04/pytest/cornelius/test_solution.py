@@ -140,7 +140,7 @@ def test_is_valid_field():
     assert not is_valid_field("","0123456789")
 #end::test_star2[]
 
-#end::check_fields[]
+#tag::check_fields[]
 def parse_year(string):
     m = re.search(r"^(\d\d\d\d)$", string)
     if not m:
