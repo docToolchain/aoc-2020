@@ -45,16 +45,25 @@ def part1 (input)
 end
 
 def part2 (input)
-  route(input, [0, 0], [1, 1]) * \
-  route(input, [0, 0], [3, 1]) * \
-  route(input, [0, 0], [5, 1]) * \
-  route(input, [0, 0], [7, 1]) * \
-  route(input, [0, 0], [1, 2])
+  seatMap = input
+    .map{|binSpace| binSpace2seatId(binSpace)}
+  freeSeats = []
+  for seat in (0..seatMap.max).to_a
+    if not seatMap.include?(seat)
+      freeSeats.append(seat)
+    end
+  end
+  
+  for freeSeat in freeSeats
+    if seatMap.include?(freeSeat -1 ) && seatMap.include?(freeSeat -1 )
+      return freeSeat
+    end
+  end
 end
 
 if caller.length == 0
   input = readInput("./input.txt")
 
   puts "Solution for part1: %d" % part1(input)
-  #puts "Solution for part2: %d" % part2(input)
+  puts "Solution for part2: %d" % part2(input)
 end
