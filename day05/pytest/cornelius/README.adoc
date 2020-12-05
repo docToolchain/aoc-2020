@@ -21,7 +21,7 @@ After realizing that the code on the boarding pass is just a complicated way to 
 
 [source,python, linenums]
 ----
-include::test_solution.py[tags=parse_boarding_pass]
+include::test_solution.py[tags=decode_boarding_pass]
 ----
 
 === First Star
