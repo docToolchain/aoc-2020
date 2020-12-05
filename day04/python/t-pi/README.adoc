@@ -1,3 +1,13 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
 == Advent of Code - Day 04
 https://adventofcode.com/2020/day/4
 
@@ -8,16 +18,18 @@ Check passport batches for completeness
 === HowTo
 
 Data is read from the file 'input04.txt' line by line.
-Every empty line, the batch is evaluiated for all required fields: +
- - byr (Birth Year) +
- - iyr (Issue Year) +
- - eyr (Expiration Year) +
- - hgt (Height) +
- - hcl (Hair Color) +
- - ecl (Eye Color) +
- - pid (Passport ID) +
+Every empty line, the batch is evaluated for all required fields:
+ 
+ - byr (Birth Year)
+ - iyr (Issue Year)
+ - eyr (Expiration Year)
+ - hgt (Height)
+ - hcl (Hair Color)
+ - ecl (Eye Color)
+ - pid (Passport ID)
 
-and an optional +
+and an optional
+
  - cid (Country ID)
 
 .Star1: How many valid passports are found?
@@ -35,11 +47,14 @@ and an optional +
 
 === Not learned today
 
-Sorry for the soft-linebreak hack in the adoc-README, I just don't like space waste.
-Any hint on how to locally change the theming of 
+Sorry for the soft-linebreak hack in the adoc-README, I just don't like space waste. Any hint on how to locally change the theming of 
 `outline_list:
   item_spacing: 1.0`
 is appreciated!
+
+==== Update 2020-12-05:
+
+Thanks, Ralf.D.Müller for helping me out! Applied the local CSS style for Dec, 05 and transferred it back to here :)
 
 === Source
 
