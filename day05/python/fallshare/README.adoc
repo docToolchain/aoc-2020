@@ -1,0 +1,15 @@
+== Day 5: Binary Boarding
+
+Day 5 is pretty much about handling binary numbers.
+Theoretically one could just ignore the information about rows and columns for this day.
+But based on my last year experience with AoC I decided to spent some time to also decode the row and column information.
+
+By replacing the characters with their binary representation (e.g. B = 1, F = 0) and converting the result strings into integers
+the required numbers could easily be retrieved.
+
+The rest of the tasks is solved by storing all seat ids in set object and using set object methods to extract the required information.
+
+[source, python]
+....
+include::solution.py[]
+....

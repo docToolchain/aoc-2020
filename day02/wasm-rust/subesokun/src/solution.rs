@@ -1,4 +1,4 @@
-atuse regex::Regex;
+use regex::Regex;
 
 struct Password {
     min: usize,

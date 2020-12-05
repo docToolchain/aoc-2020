@@ -1,0 +1,45 @@
+:day: Day04
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `{day}.java`.
+
+== Part 1
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part1]
+----
+<1> Create a list of passports using a dedicated `parsePassports(...)` method.
+<2> Count all valid passports with help of `isValidPart1` function
+
+=== Parse the passports
+
+[source,java, linenums]
+----
+include::{day}.java[tags=parsePassports]
+----
+Add all lines into a `StringBuilder` until a blank line (or the end of the file) occurs.
+Then create a new Passport from the contents of the `StringBuilder` and add it to the passports list.
+
+[source,java, linenums]
+----
+include::{day}.java[tags=initPassport]
+----
+In Pasport's constructor the passport entries are split apart, and then stored as key and value (e.g. `"byr" -> "2000"`) in the `passwordData` map.
+
+=== Passport validation (Part 1)
+
+[source,java, linenums]
+----
+include::{day}.java[tags=isValidPart1]
+----
+
+== Part 2
+
+=== Passport validation (Part 2)
+
+[source,java, linenums]
+----
+include::{day}.java[tags=isValidPart2]
+----
