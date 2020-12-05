@@ -1,0 +1,26 @@
+
+Day 5 of year 2020
+https://adventofcode.com/2020/day/5
+
+
+== What I learned
+
+. It is actually easier to work with indices that start with 0 then ones that start with 1.
+. I need to remember that all of the ':' operations are not inclusive on the upper end.
+. Really check the answer in detail for a simple example and not just look if it is approximately right. ;-)
+
+== Approach
+
+. I read the file in using .readlines.
+. I created a function that recursively traverses the binary space partition and returns the correct range for the row or column until you arrive at the position.
+. I created a function to find the missing seat by comparing the list of seat codes to a full list in it's range using a list comprehension and returns the only missing number in the list.
+. Then I iterate over the seat codes, find the row, column and seat code. 
+. Print the max seat code. And find the missing seat and print it.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
