@@ -1,0 +1,33 @@
+Puzzle: https://adventofcode.com/2020/day/4[Passport Processing]
+
+== Part 1
+
+First wanted to split all passports into a hashmap of attributes but decided to go the easy way and just work with strings.
+Was easy to implement.
+
+== Part 2
+
+At first I regretted not having built a hashmap of fields for each passport, but turns out it also works based on strings.
+For two fields I used regex for validation, for the numeric validations just plain integer comparisons.
+
+Took me ~4 tries to get it right even though the test input worked.
+Had the following problems:
+* did not check for "cm" / "in" presence in the height field
+* because the logic for height is not inverted (the others are) I forgot to add `=` to the int comparisons (correct is `>=` instead of just `>`)
+* my regex for the passport ID was `/[0-9]{9}/` which also matched a 10-digit number, so I made sure the regex matches the complete string `/^[0-9]{9}$/`
+
+I found these issues by logging the correctly interpreted fields and sorting all the outputs looking visually for weird patterns.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
