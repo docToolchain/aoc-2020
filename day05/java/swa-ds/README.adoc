@@ -1,0 +1,46 @@
+:day: Day05
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `{day}.java`.
+
+== Part 1
+
+The file is read into `List<String> lines` as usual.
+[source,java, linenums]
+----
+include::{day}.java[tags=part1]
+----
+
+<1> To decode the seat ID, I created the method `decodeSeatId` which I use in the stream...
+<2> ...from which the maximum value is taken...
+<3> ...and printed.
+
+=== decodeSeatId function
+
+[source,java, linenums]
+----
+include::{day}.java[tags=decodeSeatId]
+----
+
+The row and column parts are splitted, and then for each of them their ID is decoded using the `decode` function.
+Then the seat ID is calculated and returned.
+
+[source,java, linenums]
+----
+include::{day}.java[tags=decode]
+----
+
+<1> The decode function uses an enum `Half[LOWER|HIGHER]`
+<2> which can be obtained from the corresponding char using the `Half.of(...)` function.
+<3> The function itself calculates the ID.
+
+== Part 2
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part2]
+----
+
+<1> Here I collect all seat IDs in a `SortedSet`.
+Then I iterate over all numbers from lowest to highest seat ID, and print the missing one.
