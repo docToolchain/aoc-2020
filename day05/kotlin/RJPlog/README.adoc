@@ -1,0 +1,35 @@
+== Day 5: Binary Boarding  ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/5
+
+For execution enter _kotlin day2005_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+I wrote a function reading the puzzle input line by line. After recognising, that the puzzleinput is simle a binary format, I replaced for every line's input "F" and "L" with "0" and "B" and "R" with "1". Then the `String` is converted to a binary `Int`. The function returns the max value of the calculated seat ID's.
+
+[source, kotlin, numbered]
+....
+include::day2005_1_2.kts[tags=seat_id]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here all seat ID's are stored in a list. As a function input, solution of part1 is used to count down. If you do not find a seat, this is your's.
+[source, kotlin, numbered]
+....
+include::day2005_1_2.kts[tags=occupied_seats]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2005_1_2.kts[tags=output]
+....

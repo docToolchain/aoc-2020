@@ -1,4 +1,4 @@
-== Day 4: Passport Processing
+== Day 5: Binary Boarding
 
 This solution is written in Groovy.
 
@@ -8,27 +8,29 @@ The source code can be found at https://github.com/docToolchain/aoc-2020/tree/ma
 For execution enter `./solution.groovy` in the command line.
 This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
 
-=== Read File
+=== Decoding
 
-I parse the input to a list of maps.
+This day I start with a method which converts a boardingpass (bp) to a tuple (row, col, id)
 
 [source,groovy, linenums]
 ----
-include::solution.groovy[tags=readInput]
+include::solution.groovy[tags=decodePass]
 ----
 
-=== First Star
+=== Star 1
 
-Let's iterate through all entries and validate them by checking the needed fields.
+Now iterate through all boardingpasses to find the highest ID
 
 [source,groovy, linenums]
 ----
 include::solution.groovy[tags=star1]
 ----
 
-=== Second Star
+=== Star 2
 
-I converted the rules mainly to reguular expressions.
+Let's first get a list of all IDs.
+Then, iterate over all IDs to find the empty seat. 
+Since I already have the highest ID, I only have to skip the first seats.
 
 [source,groovy, linenums]
 ----
