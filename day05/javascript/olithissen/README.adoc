@@ -1,0 +1,46 @@
+== Day 4: Passport Processing  ==
+
+This solution is written in JavaScript with NodeJS.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/5 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day05/javascript/olithissen .
+
+For execution enter `./solution.js` in the command line.
+
+=== Read File
+
+Simply read the input file end split by line endings.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=readInput]
+----
+
+=== Rows, seats and ids
+
+I did a quick check if FB & LR correspond to 0 & 1 respectevely and they actually do.
+So `BBFFBBF` equals `1100110` and can be interpreted as binary.
+Rows and seats are calculated for testing reasons, but the id can be calculated the same way.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=parseSeats]
+----
+
+=== First Star
+
+Simply get the maximum of the seat ids.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star1]
+----
+
+=== Second Star
+
+I was going to check the ids for continuity but in the end brute force seemed reasonable enough.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star2]
+----
