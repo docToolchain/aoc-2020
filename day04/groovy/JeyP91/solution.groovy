@@ -1,9 +1,9 @@
+
 test()
 solve()
 
 void solve() {
-    ArrayList<String> input = Arrays.asList(new File('input.txt').text.split("\n\n"))
-    println("Anzahl passport: " + input.size())
+    ArrayList<String> input = Arrays.asList(new File('input.txt').text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
     println("Solution Part 1: " + solvePart1(input))
     println("Solution Part 2: " + solvePart2(input))
 }
@@ -21,15 +21,27 @@ long solvePart2(ArrayList<String> input) {
 }
 
 boolean isPassportValidPart1(String passport) {
-    return getByr(passport) != null && getEyr(passport) != null && getIyr(passport) != null && getHgt(passport) != null && getHcl(passport) != null && getEcl(passport) != null && getPid(passport) != null
+    return     getByr(passport) != null
+            && getEyr(passport) != null
+            && getIyr(passport) != null
+            && getHgt(passport) != null
+            && getHcl(passport) != null
+            && getEcl(passport) != null
+            && getPid(passport) != null
 }
 
 boolean isPassportValidPart2(String passport) {
-    return byrValid(getByr(passport)) && eyrValid(getEyr(passport)) && iyrValid(getIyr(passport)) && hgtValid(getHgt(passport)) && hclValid(getHcl(passport)) && eclValid(getEcl(passport))  && pidValid(getPid(passport))
+    return     byrValid(getByr(passport))
+            && eyrValid(getEyr(passport))
+            && iyrValid(getIyr(passport))
+            && hgtValid(getHgt(passport))
+            && hclValid(getHcl(passport))
+            && eclValid(getEcl(passport))
+            && pidValid(getPid(passport))
 }
 
 void test() {
-    ArrayList<String> input1 = Arrays.asList(new File('input_test1.txt').text.split("\n\n"))
+    ArrayList<String> input1 = Arrays.asList(new File('input_test1.txt').text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
     assert getByr(input1[0]) == '1937'
     assert getEyr(input1[0]) == '2020'
     assert getIyr(input1[0]) == '2017'
@@ -66,6 +78,7 @@ void test() {
     assert hgtValidIn('59in') == true
     assert hgtValidIn('76in') == true
     assert hgtValidIn('77in') == false
+    assert hgtValidIn('160in') == false
     assert hgtValidIn(null) == false
 
     assert hgtValid('59in') == true
@@ -88,9 +101,9 @@ void test() {
     assert pidValid('0123456789') == false
     assert pidValid(null) == false
 
-    ArrayList<String> input2 = Arrays.asList(new File('input_test2.txt').text.split("\n\n"))
+    ArrayList<String> input2 = Arrays.asList(new File('input_test2.txt').text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
     assert solvePart2(input2) == 0
-    ArrayList<String> input3 = Arrays.asList(new File('input_test3.txt').text.split("\n\n"))
+    ArrayList<String> input3 = Arrays.asList(new File('input_test3.txt').text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
     assert solvePart2(input3) == 4
 }
 
@@ -136,18 +149,18 @@ String getHgt(String passport) {
     return matcher.size() > 0 ? matcher[0][1] : null
 }
 
-boolean hgtValid(value) {
+boolean hgtValid(String value) {
     return hgtValidCm(value) || hgtValidIn(value)
 }
 
-boolean hgtValidCm(value) {
-    def matcher = value =~ /(\d{3})cm/
+boolean hgtValidCm(String value) {
+    def matcher = value =~ /(^\d{3})cm$/
     matcher.find()
     return matcher.size() > 0 && Integer.parseInt(matcher[0][1]) >= 150 && Integer.parseInt(matcher[0][1]) <= 193
 }
 
-boolean hgtValidIn(value) {
-    def matcher = value =~ /(\d{2})in/
+boolean hgtValidIn(String value) {
+    def matcher = value =~ /(^\d{2})in$/
     matcher.find()
     return matcher.size() > 0 && Integer.parseInt(matcher[0][1]) >= 59 && Integer.parseInt(matcher[0][1]) <= 76
 }
@@ -158,8 +171,8 @@ String getHcl(String passport) {
     return matcher.size() > 0 ? matcher[0][1] : null
 }
 
-boolean hclValid(value) {
-    def matcher = value =~ /#[0-9a-f]{6}/
+boolean hclValid(String value) {
+    def matcher = value =~ /^#[0-9a-f]{6}$/
     matcher.find()
     return matcher.size() > 0
 }
@@ -170,8 +183,8 @@ String getEcl(String passport) {
     return matcher.size() > 0 ? matcher[0][1] : null
 }
 
-boolean eclValid(value) {
-    def matcher = value =~ /(amb|blu|brn|gry|grn|hzl|oth)/
+boolean eclValid(String value) {
+    def matcher = value =~ /^(amb|blu|brn|gry|grn|hzl|oth)$/
     matcher.find()
     return matcher.size() > 0
 }
@@ -182,8 +195,8 @@ String getPid(String passport) {
     return matcher.size() > 0 ? matcher[0][1] : null
 }
 
-boolean pidValid(value) {
-    def matcher = value =~ /\d{9}/
+boolean pidValid(String value) {
+    def matcher = value =~ /^\d{9}$/
     matcher.find()
     return matcher.size() > 0 && value.length() == 9
 }
