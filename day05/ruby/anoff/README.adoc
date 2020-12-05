@@ -1,0 +1,27 @@
+Puzzle: https://adventofcode.com/2020/day/5[Binary Boarding]
+
+== Part 1
+
+Was unsure how to do the _split list in half_ thing at first.
+But turns out the ruby array indexing works great for this use case.
+Together with some array `.map` magic this was a straightforward implementation.
+
+Only fuckup on my side was that I first ran the solution with input from a previous day and had to add some debug messages to realize it.
+
+== Part 2
+
+Surprised at first that the first 13 rows are empty when looking at the output, the solution was simple.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

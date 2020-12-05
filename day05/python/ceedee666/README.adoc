@@ -1,0 +1,20 @@
+== Day 05
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+
+
+=== Idea
+
+The important thing to notice with day 5 is, that the seat ID are binary numbers.
+To convert them to decimal numbers one first need to map the letters F, B, L, R to
+0 and 1. 
+
+
+=== How to run
+
+Run using:
+`$ python day05.py --help`
