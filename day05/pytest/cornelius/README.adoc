@@ -19,16 +19,16 @@ include::test_solution.py[tags=read_input]
 
 After realizing that the code on the boarding pass is just a complicated way to express a binary number parsing the code became easy. Taking the right bits of the code, converting the symbols so that it is a binary number as string, and then using the builtin conversion to get the number.
 
-[source,python, linenums]
+[source,python,linenums]
 ----
-include::test_solution.py[tags=parse_boarding_pass]
+include::test_solution.py[tags=decode_boarding_pass]
 ----
 
 === First Star
 
 Iterate through all boarding passes, decode them and remember the maximum seat id.
 
-[source,python, linenums]
+[source,python,linenums]
 ----
 include::test_solution.py[tags=star1]
 ----
@@ -37,7 +37,7 @@ include::test_solution.py[tags=star1]
 
 Basing on the realization that we are dealing with just a binary number (7 bits row, 3 bit column, 10 bits combined as seat id), we can iterate through the range (0 to 1023 for a 10 bit binary number) and look for the condition for our seat.
 
-[source,python, linenums]
+[source,python,linenums]
 ----
 include::test_solution.py[tags=star2]
 ----
