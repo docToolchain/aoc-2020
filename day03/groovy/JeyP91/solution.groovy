@@ -2,7 +2,7 @@ test()
 solve()
 
 void solve() {
-    ArrayList<String> input = Arrays.asList(new File('input.txt').text.split("\n"))
+    ArrayList<String> input = Arrays.asList(new File('input.txt').text.split(System.getProperty("line.separator")))
     println("Solution Part 1: " + solvePart1(input))
     println("Solution Part 2: " + solvePart2(input))
 }
@@ -22,7 +22,7 @@ long solvePart2(ArrayList<String> input) {
 }
 
 void test() {
-    ArrayList<String> input = Arrays.asList(new File('input_test.txt').text.split("\n"))
+    ArrayList<String> input = Arrays.asList(new File('input_test.txt').text.split(System.getProperty("line.separator")))
     assert getTreeForLine(input[0], 0) == 0
     assert getTreeForLine(input[0], 1) == 0
     assert getTreeForLine(input[0], 2) == 1
