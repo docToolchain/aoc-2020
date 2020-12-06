@@ -7,11 +7,10 @@ def get_input_data_as_list(file_name):
         with one entry per line and whitespaced trimmed 
     """
     with open(file_name) as input_file:
-        #data_list = map(str.strip,input_file.readlines())
         data_list = input_file.readlines()
     return data_list
 
-def transform_binarystring_to_number(binary_string, set_char, transform_lut):
+def transform_binarystring_to_number(binary_string, set_char):
     """
     Transforms the binary string into the row number
     set_char equals the char which equals to '1' bit 
@@ -28,8 +27,7 @@ def calculate_seat_id(seat_code):
     """
     calculates seat id from seat code
     """
-    transform_lut = [pow(2,value) for value in range(9, -1, -1)]
-    return transform_binarystring_to_number(seat_code, ['B', 'R'], transform_lut)
+    return transform_binarystring_to_number(seat_code, ['B', 'R'])
 
 def get_seat_codes(seat_list):
     """
@@ -40,6 +38,9 @@ def get_seat_codes(seat_list):
 def get_my_seat(seat_codes):
     seat_codes.sort()
     return set(range(seat_codes[0], seat_codes[-1] + 1)).difference(seat_codes)
+
+
+transform_lut = [pow(2,value) for value in range(9, -1, -1)]
 
 seat_list = get_input_data_as_list(sys.argv[1])
 seat_codes = get_seat_codes(seat_list)
