@@ -5,7 +5,6 @@ forms.append('\n')
 letters_raw = ''
 list_raw = list()
 list_common = list()
-list_intermediate = list()
 
 for file_lines in forms:
     if file_lines == "\n":
