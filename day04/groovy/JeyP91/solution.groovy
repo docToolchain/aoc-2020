@@ -21,6 +21,7 @@ long solvePart2(ArrayList<String> input) {
 }
 
 boolean isPassportValidPart1(String passport) {
+    // tag::isPassportValidPart1[]
     return     getByr(passport) != null
             && getEyr(passport) != null
             && getIyr(passport) != null
@@ -28,9 +29,11 @@ boolean isPassportValidPart1(String passport) {
             && getHcl(passport) != null
             && getEcl(passport) != null
             && getPid(passport) != null
+    // end::isPassportValidPart1[]
 }
 
 boolean isPassportValidPart2(String passport) {
+    // tag::isPassportValidPart2[]
     return     byrValid(getByr(passport))
             && eyrValid(getEyr(passport))
             && iyrValid(getIyr(passport))
@@ -38,6 +41,7 @@ boolean isPassportValidPart2(String passport) {
             && hclValid(getHcl(passport))
             && eclValid(getEcl(passport))
             && pidValid(getPid(passport))
+    // end::isPassportValidPart2[]
 }
 
 void test() {
@@ -108,15 +112,19 @@ void test() {
 }
 
 String getByr(String passport) {
+    // tag::getByr[]
     def matcher = passport =~ /byr:(.*?)(\s|$)/
     matcher.find()
     return matcher.size() > 0 ? matcher[0][1] : null
+    // end::getByr[]
 }
 
 boolean byrValid(String value) {
+    // tag::byrValid[]
     def matcher = value =~ /\d{4}/
     matcher.find()
     return matcher.size() > 0 && Integer.parseInt(value) >= 1920 && Integer.parseInt(value) <= 2002
+    // end::byrValid[]
 }
 
 String getIyr(String passport) {

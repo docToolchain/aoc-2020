@@ -1,0 +1,27 @@
+== Groovy
+
+Here is another solution written in Groovy.
+
+=== Part 1:
+Each passport is checked for all needed fields.
+[source, groovy]
+....
+include::solution.groovy[tags=isPassportValidPart1]
+....
+If a field is there is checked by using regex for example like this:
+[source, groovy]
+....
+include::solution.groovy[tags=getByr]
+....
+
+=== Part 2:
+Each field needs an additional validation:
+[source, groovy]
+....
+include::solution.groovy[tags=isPassportValidPart2]
+....
+This is done by adding some checks like this:
+[source, groovy]
+....
+include::solution.groovy[tags=byrValid]
+....
