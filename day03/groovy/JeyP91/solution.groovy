@@ -17,8 +17,8 @@ long solvePart2(ArrayList<String> input) {
     long trees3 = countTrees(input, 5, 1)
     long trees4 = countTrees(input, 7, 1)
     long trees5 = countTrees(input, 1, 2)
-    long solution4 = trees1 * trees2 * trees3 * trees4 * trees5
-    return solution4
+    long solution = trees1 * trees2 * trees3 * trees4 * trees5
+    return solution
 }
 
 void test() {
@@ -41,13 +41,18 @@ void test() {
 }
 
 int getTreeForLine(String line, int index) {
+    // tag::patternRepetition[]
     index = index % line.length()
+    // end::patternRepetition[]
+    // tag::getTreeForLine[]
     String character = line.substring(index, index + 1)    
     String output = ""
     if(character.equals(".")) return 0
     if(character.equals("#")) return 1
+    // end::getTreeForLine[]
 }
 
+// tag::countTrees[]
 int countTrees(ArrayList<String> lines, int right, int down) {
     int count = 0;
     for (int i = 0; i < lines.size(); i = i + down) {
@@ -55,3 +60,4 @@ int countTrees(ArrayList<String> lines, int right, int down) {
     }
     return count
 }
+// end::countTrees[]
