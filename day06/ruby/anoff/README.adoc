@@ -1,0 +1,26 @@
+Puzzle: https://adventofcode.com/2020/day/6[Custom Customs]
+
+== Part 1
+
+Decided to TDD this day - very limited refactor loop though.
+First star was easy to get, just had to be a bit careful with splitting the newlines.
+Decided to use a regex to remove duplicates from the answers - this is something I saw a while ago but never used so had to stackoverflow it again.
+Using a regex pattern of `\w\1+` matches word characters were any individual character occurs more than once, note the **\** in front of `\1+` that is not there if you simply check for _one or more_ occurrences.
+
+== Part 2
+
+This time my first star implementation almost gave me nothing to work with because of my regex approach for star1 that was completely useless in the second scenario.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
