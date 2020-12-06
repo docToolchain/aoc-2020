@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-ArrayList<String> inputNumbersAsString = Arrays.asList(new File('input.txt').text.split("\n"))
+ArrayList<String> inputNumbersAsString = Arrays.asList(new File('input.txt').text.split(System.getProperty("line.separator")))
 ArrayList<Integer> inputNumbers = new ArrayList<Integer>()
 for(int i = 0; i < inputNumbersAsString.size(); i++)
 {
