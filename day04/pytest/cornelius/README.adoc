@@ -1,0 +1,82 @@
+== Day 4: Passport Processing
+
+This solution is written as test using pytest.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/4.
+
+For execution enter `pytest` on the command line (your working directory has to be this directory where the test is). It will pick up all files where the filename starts with `test_`.
+
+=== Parsing passports
+
+For parsing the passport data we need a helper which converts the input text into something we can process more easily. The `parse_passports` method takes a string, e.g the content of a file or some test data, and turns it into a list of dicts, one per passport, using the given field names as keys.
+
+The parsing is not done line by line, but by splitting the file on the empty lines which separate passports and then by splitting on whitespace. This gives all the fields in a form which can easily put into a dict.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=parse_passports]
+----
+
+=== First Star
+
+As we are doing this in a test-driven way, We start with a test. The example is given in the puzzle, two valid entries. The test calls a method `count_valid_passports` which we still need to implement.
+
+Ignore the `check_fields` parameter for now. This came in when refactoring the code while solving the second star.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=test_star1]
+----
+
+Now we need to implement the methods to do the counting. The counting itself iterates over the passports and counts the valid ones.
+
+The interesting part is happening in the `is_valid_passport` method which is called for each passport. It does the actual check. There is a set of required fields. It checks if they are present.
+
+Ignore the `check_fields` part again. This will be used when solving the second star.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=count_valid_passports]
+----
+
+Now that the implementation is there the tests passes for the example. Let's see if it also solves the puzzle.
+
+For the puzzle the data has to be read from the input file. Other than that the test is the same as for the example.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star1]
+----
+
+Voilà, test passes.
+
+Of course, when running the test for the first time, I didn't know yet for which result to test. So I put in an arbitrary number and the test failed. But it told me what to expect. And when entering this on the AoC site I got the validation that it was the correct result. So that's where this number came from. Now it's in the test and I can check that it still works even when refactoring it (what I actually did to solve the second star).
+
+=== Second star
+
+We start with a test again. We not only have to check for existence of the required fields but also for the validity of the field values. There is quite some test data given in the puzzle, so let's convert that into a test.
+
+Note that the `test_is_valid_passport` also contains the tests for the conditions of the first star. This is where the `check_fields` parameter is used now.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=test_star2]
+----
+
+The code now calls the `is_valid_field` method now. So we have to implement it. This is mostly applying some regexps and checking values. Each field has its own flavor of these checks.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=check_fields]
+----
+
+Now we have the code and the tests for the given examples pass.
+
+Last step is applying it on the puzzle input data.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star2]
+----
+
+Same strategy as for the first star: Run test once, it fails, but gives the correct result. Fix the expected result and the tests pass and the puzzle is solved. We are one step closer to our holiday on a tropical island.

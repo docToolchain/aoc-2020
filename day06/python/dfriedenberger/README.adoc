@@ -1,0 +1,18 @@
+Day 6 of year 2020
+https://adventofcode.com/2020/day/6
+
+TIP: Make a deep copy if you do not want to change your data structures.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....

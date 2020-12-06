@@ -47,3 +47,13 @@ a|{rdmueller}
 a| http://openjdk.java.net/jeps/330[JEP330] lets you execute Java like a script... finally, we've got Java-Script :-D
 
 |====
+
+=== Day 06
+
+[cols="1,10"]
+|====
+
+a|{anoff}
+a| Using an explicit `return` in a ruby `map{}` lambda causes the entire function to return, not just the lambda 😔
+a| You can remove duplicate (adjacent) word characters using regex `.gsub(/(\w)\1+/, '\1')`
+|====
