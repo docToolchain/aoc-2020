@@ -13,4 +13,10 @@ class TestSolution < Test::Unit::TestCase
 
     assert_equal ["abc"], mergeGroupAnswers(input), "Incorrect result for input"
   end
+
+  def test_part2
+    input = readInput("./input_test.txt")
+
+    assert_equal 6, part2(input), "Incorrect result for input"
+  end
 end
