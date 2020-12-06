@@ -1,0 +1,31 @@
+== Day 05
+
+This solution is written in python.
+
+Run using:
+$ python solution.py
+
+The central idea is that seat-numbers are just binary
+('F'/'B' are 0/1 and the same for 'L'/'R').
+The python "int"-function can decode strings if given
+the base as seconday parameter (2 in this case).
+```python
+def decode_seat(line):
+  row_binary = line[:7].replace('F', '0').replace('B', '1')
+  col_binary = line[7:].replace('L', '0').replace('R', '1')
+  row = int(row_binary, 2)
+  col = int(col_binary, 2)
+  return row, col
+```
+
+=== First Star
+We simply decode all IDs from the row/col extracted from the seat-number
+and then compute the maximum of this list of IDs
+(yes for just computing the max we would not need to store all the IDs
+but the input is small and there is still part2)
+
+=== Second Star
+We simply sort the list of IDs and look for a pair of IDs that
+differs by exactly 2 (if the exercise is framed correctly,
+there should only be exactly one of them and we check this.
+

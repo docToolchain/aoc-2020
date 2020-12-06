@@ -1,0 +1,59 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== Advent of Code - Day 05
+https://adventofcode.com/2020/day/5
+
+=== Info
+
+Boarding pass madness - check which seat I could have.
+
+=== HowTo
+
+Data is read from the file 'input05.txt' line by line.
+Each boarding pass is then translated to binary (7bit for row and 3 bit for column) and seat ID is calculated.
+
+Seat ID = row * 8 + column
+
+.Star1: Highest seat ID
+. Binarize row and column
+. Check max
+
+.Star2: Find my (only remaining empty) seat + ID
+. Make plane seat binary array
+. Fill array along with parsing of seat IDs - found IDs are set
+. Check which column is not fully seated
+
+=== Learned today
+
+* Bitwise manipulation in python
+* Local style changes for asciidoc to remove (for me) ugly and space-wasting line margins
+
+Applied style
+[source, css]
+....
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+....
+
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

@@ -1,0 +1,18 @@
+== Groovy
+
+Here is another solution written in Groovy.
+Each password is validated for part 1 and part 2. Valid passwords are then simply summed up to get the final solution.
+
+=== Part 1:
+From each string the necessary parts are taken out and then validated by checking min and max appearances:
+[source, groovy]
+....
+include::solution.groovy[tags=validatePart1]
+....
+
+=== Part 2:
+From each string the necessary parts are taken out and then validated by using XOR operator:
+[source, groovy]
+....
+include::solution.groovy[tags=validatePart2]
+....

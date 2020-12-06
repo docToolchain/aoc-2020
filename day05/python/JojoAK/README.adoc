@@ -1,0 +1,18 @@
+:hardbreaks:
+*General remark*
+Unfortunately it took me some time to get to the simple solution seeing the location of the seat as two binary numbers...Once I noticed, the implementation was rather simple :)
+
+*First star*
+achieved
+1) replacing "B" and "R" by 1 and "F" and "L" by 0
+2) splitting binary string to row and seat string 
+3) convert binary strings to decimal numbers
+4) calculation of seat ID, replacing the current one only if the new one was higher 
+
+*Second star*
+achieved (using most of the solution of part 1)
+
+difference to part 1:
+1) instead of replacing the current seat ID if the new one was higher, I wrote all seat IDs to a list
+2) sorting the list
+3) checking for each element if the following elements value is +1

@@ -1,0 +1,34 @@
+== Day 6: Custom Customs ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/6
+
+For execution enter _kotlin day2006_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+Within a function I read the puzzle input line by line. For each line I add each single element of the string to a list. If a line is empty, I filter that list for only containing distinct elements. The size of that list is added to the result. After that the list is cleared for a new turn.
+[source, kotlin, numbered]
+....
+include::day2006_1_2.kts[tags=group_answers]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+This works pretty much the same but with some additional step. The first line of a new group (at the beginning or after a blank line) is added char by char to a list. For every following line a second list is generated, which will be added a char only if it is content also the first list. After that only the list with element of both lists is keept as new input for the comparision. At a blank line again the distinct elements are added to the result.
+[source, kotlin, numbered]
+....
+include::day2006_1_2.kts[tags=group_answers_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2006_1_2.kts[tags=output]
+....

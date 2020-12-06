@@ -1,0 +1,54 @@
+== Day 05
+
+=== What I learned
+
+Don't get blinded by the detailed description of the task. With first reading this I already noticed the hint of 'binary' and recognized that it decodes as following:
+
+So with the example FBFBBFFRLR: 
+
+Decode the row:
+|===
+|Code|F|B|F|B|B|F|F
+|Value at position|64|32|16|8|4|2|1
+|Results in |0|32|0|8|4|0|0
+|===
+Result:  32 + 8 + 4 = 44
+
+Decode the column:
+|===
+|Code|R|L|R
+|Value at position|R|L|R
+|Results in|4|0|1
+|===
+Result: 4 + 1 = 5
+
+So far with my first approach I considered this and calculated that way. 
+
+But at the instruction "multiply the row by 8, then add the column" the "multiply row by 8" usually would ahve set off my alarm bells. Because what you will then get is:
+
+|===
+|Code|F|B|F|B|B|F|F
+|Value at position|512|256|128|64|32|16|8
+|===
+
+or even
+
+|===
+|Code|F|B|F|B|B|F|F|R|L|R
+|Value at position|512|256|128|64|32|16|8|4|2|1
+|Results in |0|256|0|64|32|0|0|4|0|1
+|===
+
+Result: 256 + 64 + 32 + 4 + 1  = 357
+
+
+=== Usage
+
+python day05.py <filename>
+
+filename: name of file containing the data for this puzzle
+
+[source, python]
+....
+include::day05.py[]
+....

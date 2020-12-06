@@ -1,0 +1,28 @@
+== Groovy
+
+Here is another solution written in Groovy.
+
+=== Part 1:
+Just iterate over all numbers in two nested loops to sum each number with each other number.
+Each number has to be summed only with each following number. Therefore I can initialize the second index with 'i + 1'
+.
+
+[source, groovy]
+....
+include::solution.groovy[tags=loopsPart1]
+            ...
+        }
+    }
+....
+
+=== Part 2:
+Same as part 1, just with three nested loops.
+
+[source, groovy]
+....
+include::solution.groovy[tags=loopsPart2]
+                ...
+            }
+        }
+    }
+....

@@ -1,0 +1,24 @@
+== Day 05
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* functools for the reduce function
+
+=== Idea
+
+The main idea today is to use sets. The first part can be solved using
+the union operation for sets, the second using the intersection operation.
+
+=== What I learned
+
+I learned that the set operation in python like `union` and `intersection`
+can take a iterable as input. Together with the `*` operator this enable calling 
+these functions e.g. with a list of sets.
+
+=== How to run
+
+Run using:
+`$ python day06.py --help`

@@ -1,0 +1,24 @@
+
+Day 4 of year 2020
+https://adventofcode.com/2020/day/4
+
+
+== What I learned
+
+. My first time working with dictionaries in Python.
+. My first time working with regex in Python.
+
+== Approach
+
+. I read the file in using .readlines.
+. I parse through the file and create a list of dictionaries with the passport data for each passport.
+. For problem 1, I iterate over the list and check each dictionary to see if it has all of the mandatory keys.
+. For problem 2, I created a function to check all of the validity stuff. I originally just had a nasty mess of nested if statements, but that was hard to read. The checks on the integers are straightforward. Hair color is done with regular expressions. Height is done first with regular expressions and then the values are checked.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

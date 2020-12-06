@@ -1,0 +1,43 @@
+== Day 6: Custom Customs  ==
+
+This solution is written in JavaScript with NodeJS.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/6 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day06/javascript/olithissen .
+
+For execution enter `./solution.js` in the command line.
+
+=== Read File
+
+Seemed obvious at first, but I'm not sure, if that was the smartest move in the end.
+First, the input is split into answer groups, then every answer group is split by single answers.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=readInput]
+----
+
+
+=== First Star
+
+Array items are joined to a string, then split by character and sorted. 
+`[...new Set(ans..)]` is a trick to get distinct characters.
+Keep the lengths of the resulting arrays and reduce by summing them.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star1]
+----
+
+=== Second Star
+
+Not so proud here.
+I do my join-split-sort-join again, to get all answers into one sorted string.
+The RegEx `/(\S)\1*/g` matches all groups of consecutive characters.
+Keep only those letter groups, where the length of the matching group is equal to the overall number of answers.
+Again keep the lengths of the resulting arrays and reduce by summing them.
+
+[source,javascript, linenums]
+----
+include::solution.js[tags=star2]
+----
