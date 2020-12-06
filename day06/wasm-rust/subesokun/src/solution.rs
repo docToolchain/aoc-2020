@@ -21,7 +21,7 @@ pub fn run_star1(puzzle_input: String) -> u32 {
 //tag::star2[]
 
 fn count_everyone_answers_per_group(puzzle_input: String) -> u32 {
-    let groups: Vec<String> = puzzle_input.replace("\n\n", " ").split(" ").map(|s| s.to_string()).collect();
+    let groups: Vec<String> = puzzle_input.split("\n\n").map(|s| s.to_string()).collect();
     let mut result = 0;
     for group in groups.into_iter() {
         let group_size = group.matches("\n").count() + 1;
