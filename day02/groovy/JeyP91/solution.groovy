@@ -20,6 +20,7 @@ String getPassword(String line) {
 }
 
 boolean validatePart1(line) {
+    // tag::validatePart1[]
     int min = getFirstNumber(line)
     int max = getSecondNumber(line)
     String character = getCharacter(line)
@@ -28,9 +29,11 @@ boolean validatePart1(line) {
     int appearances = password.count(character)
 
     return appearances >= min && appearances <= max
+    // end::validatePart1[]
 }
 
 boolean validatePart2(line) {
+    // tag::validatePart2[]
     int pos1 = getFirstNumber(line)
     int pos2 = getSecondNumber(line)
     String character = getCharacter(line)
@@ -40,6 +43,7 @@ boolean validatePart2(line) {
     String charPos2 = password.substring(pos2 - 1, pos2)
 
     return character.equals(charPos1) ^ character.equals(charPos2)
+    // end::validatePart2[]
 }
 
 void test() {
