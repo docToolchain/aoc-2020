@@ -9,6 +9,7 @@ I started with parsing the input file and turning the provided information into 
 Afterwards I created the recursive methods `get_all_bags_inside_bag` and `get_all_parent_bags` that traverse the graph
 to extract the required information from the graph.
 
+In order to run the example you first have to install the `networkx` library e.g. using `pip install networkx`
 
 [source, python]
 ....
