@@ -1,0 +1,28 @@
+== Groovy
+
+Here is another solution written in Groovy.
+First I split the input into a list with seat strings:
+[source, groovy]
+....
+include::solution.groovy[tags=splitInput]
+....
+
+=== Part 1:
+Trees are counted by iterating over the lines with right and down pattern:
+[source, groovy]
+....
+include::solution.groovy[tags=countTrees]
+....
+The pattern repetition problem is solved by simply using modulo on the index with the line length of the pattern:
+[source, groovy]
+....
+include::solution.groovy[tags=patternRepetition]
+....
+In the pattern line, the position is checked for '.' or '#' and o or 1 is returned:
+[source, groovy]
+....
+include::solution.groovy[tags=getTreeForLine]
+....
+
+=== Part 2:
+Just call the solution for part 1 with all 5 patterns and calculate the product of the 5 solutions.

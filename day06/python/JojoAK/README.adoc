@@ -1,0 +1,17 @@
+:hardbreaks:
+*General remark*
+some minor starting problems today, figured out I need to append a \n to the end of the PuzzleInput, else my for loop won't process the last element. There might be prettier solutions for that :)
+
+*First star*
+achieved
+1) answers of all groups are combined in a string (= ansgroup), removing all newlines from the list elements before adding them to the string
+2) once there is only a \n in the PuzzleInput, the ansgroup is processed by using the set() function to eliminate all duplicates
+3) length of ansgroup is added to the count
+
+*Second star*
+achieved (using most of the solution of part 1)
+
+difference to part 1:
+1) now also counting the size of the groups with k and saving the answers of the first groupmember
+2) iterating though the answer of the first groupmember and check if they are k-times in the combined answers. If yes, count is increased by 1
+Additional thought: While writing this documentation, I figured to increase speed, I could have iterated through the shortest answer of each group.

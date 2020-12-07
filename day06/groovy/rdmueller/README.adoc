@@ -1,0 +1,28 @@
+== Day 6: Custom Customs
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/6 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day06/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Star 1
+
+Now this seems to be quite trivial.
+This time, I don't parse the file into a map, I just operate on the files.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Star 2
+
+It does not get much harder...
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----
