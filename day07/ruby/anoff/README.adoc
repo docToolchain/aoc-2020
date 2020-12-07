@@ -1,0 +1,68 @@
+Puzzle: https://adventofcode.com/2020/day/7[Handy Haversacks]
+
+== Part 1
+
+Oh god graphs again!
+
+Unsure how to build up the graph though I opted for a graph-esque solution.
+I built a class `Bag` that can take the list of all baggage rules and then populate a local array with all the bags that can be stored in the `Bag` instance.
+This is done recursively for any `Bag` that does not have this list populated yet.
+
+In the end it is just counting the number of items in the instance of the shiny gold `Bag`.
+
+[plantuml, day07-p1, png]
+....
+@startuml
+skinparam defaulttextalignment center
+skinparam monochrome true
+skinparam shadowing false
+start
+:create <i>Ruleset</i> instance;
+while (for each bag rule in input)
+  :create <i>Bag</i> instance;
+endwhile
+while (for each bag in ruleset)
+  :get all bag contents recursively:
+    - check if child bag is already populated
+        with children, otherwise call recursion
+    - add child bag type to own <i>contents</i> array
+    - count how many child bags there are in <i>contentSize</i>
+  ;
+endwhile
+
+while (loop through all bags in ruleset)
+  if (bag contents
+  include "shiny goald") then (Y)
+    :add to count;
+  endif
+endwhile
+:print count;
+end
+@enduml
+....
+
+== Part 2
+
+My first hacky try to just append each Bag a gazillion times even on the recursive level failed, aborted the computation after a minute 😁
+
+The working solution was to just introduce another class variable that represents the total count of all bags in the bag itself.
+This was easy to populate using the existing recursive setup and executed in less than a second.
+
+== Solution
+
+[source, ruby]
+....
+include::ruleset.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
