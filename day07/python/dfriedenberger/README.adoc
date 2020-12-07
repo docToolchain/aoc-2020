@@ -1,0 +1,18 @@
+Day 7 of year 2020
+https://adventofcode.com/2020/day/7
+
+TIP: Using recursive functions is a developer skill.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
