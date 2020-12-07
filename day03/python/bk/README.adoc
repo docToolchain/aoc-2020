@@ -1,0 +1,22 @@
+
+
+This solution is written in Python.
+
+Example from day3 of year 2020
+
+https://adventofcode.com/2020/day/3
+
+== First Star
+
+
+[source, python]
+....
+include::solution.py[]
+....
+
+== Second Star
+
+[source, python]
+....
+include::solution2.py[]
+....
