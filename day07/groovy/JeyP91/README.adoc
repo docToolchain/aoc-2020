@@ -1,0 +1,55 @@
+== Groovy
+
+Here is another solution written in Groovy.
+First I split the input into a list of rules:
+[source, groovy]
+....
+include::solution.groovy[tags=splitInput]
+....
+For both parts I need to parse the rules. A rule is converted from a String into list of Tuple<String, Tuple<int, String>>
+
+For example:
+
+[source]
+----
+light red bags contain 1 bright white bag, 2 muted yellow bags.
+----
+is converted into:
+
+[source]
+----
+[
+    {'light red', {1, 'bright white'}},
+    {'light red', {2, 'muted yellow'}}
+]
+----
+using this parser:
+[source, groovy]
+....
+include::solution.groovy[tags=parseRule]
+....
+
+=== Part 1:
+Part 1 is solved using a recursion upwards and putting all parent bags into a HashSet to filter out duplicates.
+
+To get the parent bags of a single bag color, a simple loop through all rules is used:
+[source, groovy]
+....
+include::solution.groovy[tags=getParentBags]
+....
+
+After having the parent bags for a bag, I need to find the parent bags of the parent bags.
+This is done by using a simple recursion, which is executed, until no parent bags are found.
+[source, groovy]
+....
+include::solution.groovy[tags=getAllParentBags]
+....
+
+=== Part 2:
+For Part 2 I need to calculate how many child bags are inside a bag.
+The logic for finding the children of a single bag is similar, but instead of simply counting the number of different bags, I need to find the exact number of bags.
+Therefore within the recursion I calculate the exact number of child bags. This result will be propagated to the top of the recursion:
+[source, groovy]
+....
+include::solution.groovy[tags=getAllChildBags]
+....
