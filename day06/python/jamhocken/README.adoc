@@ -1,0 +1,25 @@
+
+Day 6 of year 2020
+https://adventofcode.com/2020/day/6
+
+
+== What I learned
+
+. Set manipulation in Python
+
+== Approach
+
+. I read the file in using .readlines.
+.. I added an '\n' to the end of my list to simplify things later. (Thanks to the common code respository, I picked up this hint from a solution from a previous day).
+. In a for loop, I created 2 list of sets. One for the sets containing all letters used on forms in a group. One for the sets containing only the letters common within a group.
+.. For the first list, you just keep on adding letters to a string until the end of the group and then you create a set of that string.
+.. For the second list, you initial it with the first person from the group and then create an intersection between it and each further member.
+. Then I just sum up the length of the sets in each of the 2 lists and print them.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

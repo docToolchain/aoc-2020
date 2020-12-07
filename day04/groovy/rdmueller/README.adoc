@@ -1,0 +1,36 @@
+== Day 4: Passport Processing
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/4 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day04/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Read File
+
+I parse the input to a list of maps.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=readInput]
+----
+
+=== First Star
+
+Let's iterate through all entries and validate them by checking the needed fields.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Second Star
+
+I converted the rules mainly to reguular expressions.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----

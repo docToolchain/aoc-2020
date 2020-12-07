@@ -1,0 +1,43 @@
+== Day 5: Binary Boarding
+
+This solution is written as test using pytest.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/5.
+
+For execution enter `pytest` on the command line (your working directory has to be this directory where the test is). It will pick up all files where the filename starts with `test_`.
+
+=== Setting up
+
+Let's start with reading the input file.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=read_input]
+----
+
+=== Parsing the boarding pass
+
+After realizing that the code on the boarding pass is just a complicated way to express a binary number parsing the code became easy. Taking the right bits of the code, converting the symbols so that it is a binary number as string, and then using the builtin conversion to get the number.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=decode_boarding_pass]
+----
+
+=== First Star
+
+Iterate through all boarding passes, decode them and remember the maximum seat id.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star1]
+----
+
+=== Second Star
+
+Basing on the realization that we are dealing with just a binary number (7 bits row, 3 bit column, 10 bits combined as seat id), we can iterate through the range (0 to 1023 for a 10 bit binary number) and look for the condition for our seat.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star2]
+----

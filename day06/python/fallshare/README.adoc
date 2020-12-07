@@ -1,0 +1,14 @@
+== Day 6: Custom Customs
+
+I am really a fan of Set objects now!
+I decided to spent some effort and created a proper data structure to store the custom information.
+It is a list containing all the groups. Every group is a list of all group members.
+The answer of every group member is represented as a Set.
+It took the most time to write the parser for the input.
+
+The rest of tasks was pretty much itterationg through the data structure and using the `union()` (Star 1) and `intersection()` method of the Set object.
+
+[source, python]
+....
+include::solution.py[]
+....

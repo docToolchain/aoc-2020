@@ -1,0 +1,16 @@
+== Day 3: Toboggan Trajectory
+
+The first challenge of this task is that the map tile is not big enough for the trajectories.
+Hence the map must be enhaced by concatinaging suffiecent tiles until it is wide enough.
+
+I decided to enhance the map in advance before calculating the path of the tobbogan.
+My other idea was enahcing the map dynamically while calculating the path.
+I decided for the first approach since this helps me to keep the two use cases seperated.
+
+After implementing it I talked to an friend and he pointed out that using the modulo operator would have made it possible to only use that one map tile... next time.
+
+
+[source, python]
+....
+include::solution.py[]
+....

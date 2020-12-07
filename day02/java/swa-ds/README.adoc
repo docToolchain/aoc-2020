@@ -6,6 +6,8 @@ Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `{d
 
 == Part 1
 
+Method to evaluate validity of the password:
+
 [source,java, linenums]
 ----
 include::{day}.java[tags=part1]
@@ -15,6 +17,16 @@ include::{day}.java[tags=part1]
 <2> extract the actual password
 <3> count occurences of the character in question. Note that `chars()` returns an `IntStream` (since there is no such thing as a `CharStream`)!
 <4> evaluate validity of the password
+
+Get the solution:
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part1Eval]
+----
+
+<1> Read the input into a list of Strings
+<2> Use a stream to filter for valid passwords, using the above method and count them
 
 == Part 2
 
@@ -27,4 +39,11 @@ include::{day}.java[tags=part2]
 <2> extract the actual password
 <3> count charachter occurences at the positions
 <4> password is valid  if there is exactly one occurence of the password at the two positions
+
+Get the solution (same as for Part 1, but using the other method):
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part2Eval]
+----
 

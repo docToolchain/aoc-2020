@@ -1,0 +1,32 @@
+.grid-container {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 5px 5px;
+    grid-template-areas: "star1 star1-result star1-duration" "star2 star2-result star2-duration";
+}
+
+.star1 {
+    grid-area: star1;
+}
+
+.star1-result {
+    grid-area: star1-result;
+}
+
+.star1-duration {
+    grid-area: star1-duration;
+}
+
+.star2 {
+    grid-area: star2;
+}
+
+.star2-result {
+    grid-area: star2-result;
+}
+
+.star2-duration {
+    grid-area: star2-duration;
+}

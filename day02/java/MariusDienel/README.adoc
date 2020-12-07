@@ -1,0 +1,21 @@
+= Day 01
+
+Run the program using "~/.sdkman/candidates/java/current/bin/java Day02.java"
+
+= First star
+
+We are using a stream of all the lines and filter so that only the valid passwords remain. After that we count the number of elemnts of the stream and print it. 
+
+Following steps are performed to check if a password is valid:
+
+1. We are getting the different values we need (minValue, maxValue, ...) by splitting the string and substringing (is this a word?) it. 
+2. We are iterating over the password and are increasing a count every time the letter matches the letter we search for. If they match we return true, otherwise false.
+
+= Second star
+
+Since this is for fun we do not care about code duplication. We use the same stream().filter() method and just change the Predicate:
+
+1. Still getting all the values we need
+2. We check both at positions if the letters match
+3. First check if both positions match -> false
+4. We now can check if either one matches. If it does return true. 

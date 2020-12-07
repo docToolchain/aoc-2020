@@ -1,0 +1,37 @@
+== Rust + WASM
+
+Runs Rust directly in your browser ✨
+
+Try it live in your browser, https://subesokun.github.io/aoc-2020/day06/wasm-rust/subesokun[day06]
+
+=== First Star
+
+[source,rust, linenums]
+----
+include::src/solution.rs[tags=star1]
+----
+
+=== Second Star
+
+[source,rust, linenums]
+----
+include::src/solution.rs[tags=star2]
+----
+
+=== Run locally
+
+> Hint: When running in Codespaces make sure that your terminal is running in a Bash session (just enter "bash" to start it)
+
+```
+# in a new terminal
+./build-wasm.sh     # auto rebuilds on changes
+
+# in a new terminal
+cd www
+npm ci
+npm start           # auto rebuilds on changes
+
+# In your browser open the localhost:8080 or in Codespaces the provided url
+# -> Have a look in your console for the output
+# Hint: Auto-reload of web page works only on localhost as Codespaces blocks the WebSocket connection for some reason
+```

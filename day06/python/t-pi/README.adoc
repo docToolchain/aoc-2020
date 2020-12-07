@@ -1,0 +1,42 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 06: Custom Declaration Forms
+https://adventofcode.com/2020/day/6
+
+=== Info
+
+Help passengers with answers to custom declaration form, check all pax groups' 'yes'es
+
+=== HowTo
+
+Data is read from the file 'input06.txt' line by line.
+For every group (minding the last without newline) the questions ('a' to 'z') with positive answer are collected.
+
+.Star1: Sum of 'yes'es
+. Collect groups total answers into "set" (list with 'doubles' entry check)
+. Count and sum
+
+.Star2: Sum of groups' collective 'yes'es - i.e. everyone in group answered question
+. New batch: take in all letters
+. New line: check whether "group letters" are present, else pop from group letters
+. Sum up
+
+=== Learned today
+
+* 'set' vs 'list', nevertheless stuck with list :)
+* Don't pop in a running 'for' loop
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

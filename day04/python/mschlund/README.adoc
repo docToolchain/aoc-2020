@@ -1,0 +1,49 @@
+== Day 04
+
+This solution is written in python.
+
+Run using:
+$ python solution.py
+
+The central idea is to read in the whole input as one string
+(yes for larger inputs this is a no-go because of memory-usage...)
+and to extract the passports using simple String.split-functions
+for validation (star2), we make use of the standard regular expression-library re.
+
+```python
+    with open(input_filename, 'r') as input:
+        all_passports = input.read()
+        passports = re.split('\n\n', all_passports)
+        for chunk in passports:
+            passport = re.split('\\s', chunk)
+            all_fields_values = [(x.split(':')[0], x.split(':')[1]) for x in filter(lambda x: x!='', passport)]
+            fields = list(map(lambda x: x[0], all_fields_values))
+```
+
+=== First Star
+
+For the first star, we only have to check if all required fields are present:
+```python
+def is_valid_star1(fields):
+    required_fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
+    return all([x in fields for x in required_fields])
+```
+
+=== Second Star
+For the second star, we check in addition
+whether the stated requirements on passports are satisfied.
+This checking optimistically tries to access a field
+in a passport (the whole block is surrounded by a try...except
+and if a field is not present, the passport is invalid).
+All the checks are fairly easy, the only case that cost
+me significant time to debug was the checking of the passport-ID.
+It is very important that the number is *at most* 9 digits.
+So "[0-9]{9}" will also wrongly match a 10-digit pid --
+hence we have to make sure that we see a newline after the pid:
+```python
+[...]
+        if not re.match('[0-9]{9}$', fields_with_values['pid']):
+            print('pid invalid')
+            return False
+[...]
+```

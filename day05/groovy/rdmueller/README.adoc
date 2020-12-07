@@ -1,0 +1,38 @@
+== Day 5: Binary Boarding
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/5 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day05/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Decoding
+
+This day I start with a method which converts a boardingpass (bp) to a tuple (row, col, id)
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=decodePass]
+----
+
+=== Star 1
+
+Now iterate through all boardingpasses to find the highest ID
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Star 2
+
+Let's first get a list of all IDs.
+Then, iterate over all IDs to find the empty seat. 
+Since I already have the highest ID, I only have to skip the first seats.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----
