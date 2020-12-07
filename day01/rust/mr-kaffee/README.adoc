@@ -1,0 +1,3 @@
+== Day 1 ==
+
+Run solution with cargo run
