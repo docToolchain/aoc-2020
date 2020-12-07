@@ -1,0 +1,34 @@
+== Day 7: Handy Haversacks ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/7
+
+For execution enter _kotlin day2007_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+The function "shiny_bag" reads first the puzzle input but leaves out shiny gold itself. "shiny_bag" itself is already placed in a list. This list will be compared with all the rules, if it apears in some of the rules as a content of an other bag. If yes, this outer bag will be stored in a new_list, and after going to all rules, this new list will replace the first one and the check runs again, until new_list will not increase any more.
+[source, kotlin, numbered]
+....
+include::day2007_1_2.kts[tags=shiny_bag]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here I changed the stragegy and created a function, which will run recursively through the ruleset and step by step collect the number of bags.
+[source, kotlin, numbered]
+....
+include::day2007_1_2.kts[tags=shiny_bag_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2007_1_2.kts[tags=output]
+....

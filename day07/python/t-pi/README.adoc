@@ -1,0 +1,43 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 07: Handy Haversacks
+https://adventofcode.com/2020/day/7
+
+=== Info
+
+Bags are stacked in bag -- where could I stash my shiny golden bag?
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+Recursively pack the bags into dict of (outer color: [(inner color, amount), ...])
+
+.Star1: How many bags can hold directly or indirectly my 'shiny gold' bag?
+. Recursively run through dict's inner colors, starting with 'shiny gold'
+. Count the amount of bag outer colors
+
+
+.Star2: How many bags can my 'shiny gold' bag hold in total max?
+. Recursively run through dict's outer colors, starting with 'shiny gold'
+. Count the amount of actual bags with found inner colors
+. Don't count the 'shiny gold' bag... 🙄
+
+=== Learned today
+
+* Working with recursive functions and not get lost with counting and keeping track of doubles
+* From other solutions, that I really need to get into ```re```... 
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

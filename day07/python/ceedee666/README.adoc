@@ -1,0 +1,26 @@
+== Day 05
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* collections to use the defaultdict
+
+=== Idea
+
+The main idea today is to use `dict`s to represent which bags are contained in
+which other bags. I created two dicts. One to represent which bags contain which other bags. 
+And one to represent the reverse relation.
+
+I used two recursive functions to solve the two parts of the puzzle.
+=== What I learned
+
+I use some list comprehension in this solution. Unfortunately, this time my solution is much more
+imperative then on the previous days. One of my goals is to practice some functional programming 
+but this didn't work that well today. Seems I need more practice :D
+
+=== How to run
+
+Run using:
+`$ python day07.py --help`
