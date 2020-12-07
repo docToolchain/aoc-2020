@@ -1,0 +1,28 @@
+Puzzle: https://adventofcode.com/2020/day/7[Handy Haversacks]
+
+== Part 1
+
+Oh god graphs again!
+
+Unsure how to build up the graph though I opted for a graph-esque solution.
+I built a class `Bag` that can take the list of all baggage rules and then populate a local array with all the bags that can be stored in the `Bag` instance.
+This is done recursively for any `Bag` that does not have this list populated yet.
+
+In the end it is just counting the number of items in the instance of the shiny gold `Bag`.
+
+== Part 2
+
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
