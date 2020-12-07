@@ -5,8 +5,23 @@ This solution is written in python.
 Run using:
 $ python solution.py
 
-=== First Star
+We split the whole input in chunks with '\n\n' as delimiter,
+hence each chunk comprises one group of people.
 
+=== First Star
+We make use of set-comprehension to put all the answers of
+one group into a set (this takes care of idempotency automatically, i.e. aa = a).
+In the main-function we just extract the size of the set of answers
+for each group (and add those up).
+
+```python
+def get_answers_of_group(group):
+    answers = {x for x in group if re.match('[a-z]', x)}
+    return answers
+```
 
 === Second Star
+The idea is similar as before: the answers given by each person are put in a set and
+the sets (=answers from each group) are intersected to get the questions, where everybody
+of a single group answered yes.
 
