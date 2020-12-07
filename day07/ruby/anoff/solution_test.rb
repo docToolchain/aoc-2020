@@ -14,7 +14,7 @@ class TestSolution < Test::Unit::TestCase
     assert_equal false, b.expanded?
     b.expandRules(r)
     assert_equal true, b.expanded?
-    assert_equal 2, b.possibleBags.size
+    assert_equal 2, b.contents.size
   end
 
   def test_part1
@@ -32,6 +32,14 @@ class TestSolution < Test::Unit::TestCase
     assert_equal "faded blue", r.bags[1].color
     assert_equal 2, r.getBag("vibrant plum").rules.size
     assert_equal ["5 faded blue", "6 dotted black"], r.getBag("vibrant plum").rules
+  end
+
+  def test_part2
+    rules = readInput("./input_test.txt")
+    assert_equal 32, part2(rules)
+
+    rules = readInput("./input_test2.txt")
+    assert_equal 126, part2(rules)
   end
 
 end

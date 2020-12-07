@@ -10,10 +10,50 @@ This is done recursively for any `Bag` that does not have this list populated ye
 
 In the end it is just counting the number of items in the instance of the shiny gold `Bag`.
 
+[plantuml, day07-p1, png]
+....
+@startuml
+skinparam defaulttextalignment center
+skinparam monochrome true
+skinparam shadowing false
+start
+:create <i>Ruleset</i> instance;
+while (for each bag rule in input)
+  :create <i>Bag</i> instance;
+endwhile
+while (for each bag in ruleset)
+  :get all bag contents recursively:
+    - check if child bag is already populated
+        with children, otherwise call recursion
+    - add child bag type to own <i>contents</i> array
+    - count how many child bags there are in <i>contentSize</i>
+  ;
+endwhile
+
+while (loop through all bags in ruleset)
+  if (bag contents
+  include "shiny goald") then (Y)
+    :add to count;
+  endif
+endwhile
+:print count;
+end
+@enduml
+....
+
 == Part 2
 
+My first hacky try to just append each Bag a gazillion times even on the recursive level failed, aborted the computation after a minute 😁
+
+The working solution was to just introduce another class variable that represents the total count of all bags in the bag itself.
+This was easy to populate using the existing recursive setup and executed in less than a second.
 
 == Solution
+
+[source, ruby]
+....
+include::ruleset.rb[]
+....
 
 [source, ruby]
 ....

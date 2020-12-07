@@ -25,11 +25,12 @@ class Ruleset
 end
 
 class Bag
-  attr_reader :color, :rules, :possibleBags
+  attr_reader :color, :rules, :contents, :contentSize
   def initialize(color, rules)
     @color = color
     @rules = rules
-    @possibleBags= []
+    @contents = []
+    @contentSize = 0
     @isExpanded = false
   end
 
@@ -38,7 +39,7 @@ class Bag
   end
 
   def canContain?(color)
-    @possibleBags
+    @contents
       .filter {|b| b.color == color}
       .size >= 1
   end
@@ -51,14 +52,21 @@ class Bag
       if rule == "no other"
         next
       end
+      bagCount = rule.split(" ")[0].to_i
       bagColor = rule.gsub(/[0-9]+\s?/, '')
       b = ruleset.getBag(bagColor)
       if not b.expanded?
         b.expandRules(ruleset)
       end
-      @possibleBags += b.possibleBags
-      @possibleBags.append(b)
+      @contents += b.contents
+      @contents.append(b)
+      for n in 1..bagCount
+        @contentSize += b.contentSize
+        @contentSize += 1
+      end
     end
     @isExpanded = true
   end
+
+
 end
