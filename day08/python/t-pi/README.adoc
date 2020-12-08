@@ -30,11 +30,15 @@ OpCodes are interpreted as they go
 . Upon doubling of line visit, return Accumulator status
 
 
-.Star2: 
-. ?
+.Star2: Accumulator sum for code fixed with single swap 'nop' <-> 'jmp'
+. Modified code loop: returns true/false for endless loop found/or not
+. Optimize code function: swaps opcode in single line of code copy and checks for loop
+. Return Accumulator status, when code runs through, else return False
 
 === Learned today
 
+* string.replace() does not work on the string itself. Need more practice in functional programming :)
+* Worked quite straightforward, however a lingering doubt remains, that my code is not well prepared for the things to come...
 
 === Source
 
