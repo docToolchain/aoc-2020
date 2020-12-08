@@ -1,0 +1,11 @@
+= Day 0 =
+
+I'll try to solve this year's edition with https://rust-lang.org[Rust].
+
+All days should run using `cargo run`. I also plan to add some simple tests based on the example data from the puzzle descriptions which can be executed using `cargo test`.
+
+Tests are implemented in the same source file with the code in a separate `tests` module which is excluded from the regular binary:
+[sourc, rust, numbered]
+....
+include::src/main.rs[tags=test]
+....
