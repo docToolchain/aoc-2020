@@ -1,0 +1,25 @@
+
+Day 8 of year 2020
+https://adventofcode.com/2020/day/8
+
+
+== What I learned
+
+. I used the test data from the website this time and things went smoothly. :-)
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data.
+.. I put each line into a dictionary. The key is the line number (starting with 0) and the values are a tuple of operator and value.
+. I execute the program line by line and return a tuple with the accumalator, a flag whether we ended in an infinite loop or not and a list of all program lines executed.
+. For part 1, you just print the accumulator.
+. For part 2, I loop over the code lines executed in part 1 and change each line from nop to jmp (or vise versa) and run the program. I grab the value of the accumulater if it wasn't in an infinite loop. (I could have alternatively used a "break" statement). This is probably optimizable but at least it's more efficient than going through all of the program lines. The corrupted line has to be one of the lines in the program executed from part 1.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
