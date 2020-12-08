@@ -1,4 +1,4 @@
-= Day 2: Password Philosophy =
+== Day 2: Password Philosophy ==
 
 Run solution with `cargo run`
 
