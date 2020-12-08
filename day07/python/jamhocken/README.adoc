@@ -1,0 +1,27 @@
+
+Day 7 of year 2020
+https://adventofcode.com/2020/day/7
+
+
+== What I learned
+
+. Read the problem statement (especially for star 2)
+. Check if your stuff is working for the simple description example given (especially for star2...and read the problem statement).
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data.
+.. I regex using a string ending with "contain" to find the outermost bag. I strip off " bags".
+.. I then regex for strings starting with 1 or more digits and followed by 3 words. These are the bags contained in the outermost bag. I push them into a temporary list one by one.
+.. I create a dictionary with outermost bag as the key and values are a list of all pairs of number of bags and text for each of the inner bags.
+. Problem 1 basically boils down to finding out whether there is a path from the 'shiny gold' bag to each of the other bag types. If there is a path, count that bag. I used a standard "find path" algorithm, since 1 path is sufficient (no need for all paths or the shortest path).
+. Problem 2 is solved recursively. You go through all of the bags and see if an outer bag is the one you are looking for (first call with 'shiny bag') then you iterate over the inner bags and call the function with those and your counter multiplied by their values. It goes through on all paths until it hits an empty bag and then heads back up the stack adding on the way. That last part was the part I missed when reading the problem statement. Anyway, the function counts 1 too many, so you have to subtract 1 before printing.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
