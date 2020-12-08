@@ -1,3 +1,5 @@
+package cpu
+
 class Vm {
     static state = [pointer:0, acc:0]
     static program = []
