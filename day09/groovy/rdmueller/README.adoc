@@ -1,0 +1,49 @@
+== Day 9: Handheld Halting
+
+This solution is written in Groovy.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/9 .
+The source code can be found at https://github.com/docToolchain/aoc-2020/tree/main/day09/groovy/rdmueller .
+
+For execution enter `./solution.groovy` in the command line.
+This is possible because I looked up the right shebang for the first line of the file to tell bash to use groovy.
+
+=== Parsing Input
+
+With the experience from last year, I expect that we will build a full blown virtual machine again.
+So, I need a good parser for the opcodes.
+But I also decided to copy and paste the virtual machine every day to see it grow.
+
+Here is the parser:
+
+[source,groovy, linenums]
+----
+include::cpu/Parser.groovy[]
+----
+
+and this is my cpu for today:
+
+[source,groovy, linenums]
+----
+include::cpu/Vm.groovy[]
+----
+
+As you can see, I will use packages and classes from now on for my groovy scripts.
+
+=== Star 1
+
+Let's just follow the instructions
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star1]
+----
+
+=== Star 2
+
+Let's mutate the source until we get an exit.
+
+[source,groovy, linenums]
+----
+include::solution.groovy[tags=star2]
+----

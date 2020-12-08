@@ -1,0 +1,49 @@
+== Day 8: Handheld Halting
+
+This solution is written as test using pytest.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/8.
+
+For execution enter `pytest` on the command line (your working directory has to be this directory where the test is). It will pick up all files where the filename starts with `test_`.
+
+=== Test First Example
+
+Let's start with the test for the first star using the given example.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=test_star1]
+----
+
+The implementation is straight-forward. It already contains a refactoring I did after solving the second star. Checking for the program counter to reach the end of the program is not necessary for star 1.
+
+=== First Star
+
+Now we can read the input file, run the code and get the result.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star1]
+----
+
+=== Test Second Example
+
+Go through all possible replacements of nops and jmps until there is a solution.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=test_star2]
+----
+
+There is some duplication in the code, so a refactoring to eliminate that would be nice. As we have the solution already and the code is not to be used again, I'll leave it at what it is.
+
+=== Second Star
+
+Run it on the puzzle input and get the result.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star2]
+----
+
+What still puzzles me: The results are 2003 and 1984. That looks like two significant year numbers. What do they mean?
