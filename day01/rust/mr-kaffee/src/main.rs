@@ -25,6 +25,7 @@ fn part1(list: &[i32]) -> Result<i32, &str> {
     Err("Could not solve part 1")
 }
 
+// tag::part2[]
 fn part2(list: &[i32]) -> Result<i32, &str> {
     // find 3-combination that sums to 2020
     // idx values start counting from 0
@@ -58,6 +59,7 @@ fn part2(list: &[i32]) -> Result<i32, &str> {
 
     Err("Could not solve part 2")
 }
+// end::part2[]
 
 fn read_input() -> Result<Vec<i32>, Box<dyn Error>> {
     let content = fs::read_to_string("input.txt")?;

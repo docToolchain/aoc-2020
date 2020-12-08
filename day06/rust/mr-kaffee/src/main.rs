@@ -1,5 +1,6 @@
 use std::fs;
 
+// tag::part[]
 fn part<F>(content: &str, init: i32, f: F) -> (u32, u32)
     where F: Fn(i32, i32) -> i32
 {
@@ -39,15 +40,20 @@ fn part<F>(content: &str, init: i32, f: F) -> (u32, u32)
     // return count and sum
     (cnt, sum)
 }
+// end::part[]
 
 fn main() {
     let content = fs::read_to_string("input.txt")
         .expect("Could not read file");
 
+    // tag::part1[]
     let (_, sum1) = part(&content, 0, |acc, val| acc | val);
+    // end::part1[]
     assert_eq!(sum1, 6530);
 
+    // tag::part2[]
     let (_, sum2) = part(&content, (1 << 27) - 1, |acc, val| acc & val);
+    // end::part2[]
     assert_eq!(sum2, 3323);
 }
 
