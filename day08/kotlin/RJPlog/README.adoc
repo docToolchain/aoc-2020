@@ -1,0 +1,43 @@
+== Day 8: Handheld Halting ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/8
+
+For execution enter _kotlin day2008_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+First of all the program_code is read in and stored in a list.
+
+[source, kotlin, numbered]
+....
+include::day2008_1_2.kts[tags=read_puzzle]
+....
+
+For the first part, a function `boot_code` is called running through the program_code and storing in a second list, if this line was reached. As soon as a line is visited which was reached before, the function returns the current value of `accu`
+
+[source, kotlin, numbered]
+....
+include::day2008_1_2.kts[tags=boot_code]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here I also use the 'boot-code' function, which was enhanced not to return a `Int` but a combination of "infinite-"+ value of accumulator. If the return value contains infinite, the boot_code program will be modified step by step. Both is running in a loop, until return value of the function does not contain a "infinite" anymore.
+
+[source, kotlin, numbered]
+....
+include::day2008_1_2.kts[tags=part_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2008_1_2.kts[tags=output]
+....
