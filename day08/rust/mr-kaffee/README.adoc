@@ -28,5 +28,5 @@ Alter instructions `nop <--> jmp` one by one until the program terminates withou
 
 [source, rust, numbered]
 ....
-include::src/main.rs[tags=find]
+include::src/main.rs[tags=fix]
 ....

@@ -1,47 +1,54 @@
 use regex::Regex;
 use std::collections::BTreeSet;
 use std::fs;
+use std::mem;
 
 fn main() {
     let content = fs::read_to_string("input.txt")
         .expect("Could not read file.");
 
-    let program = Instruction::parse(&content);
+    let mut program = Instr::parse(&content);
 
     let (_, acc) = run(&program);
     println!("Accumulator is {} before program repeats.", acc);
     assert_eq!(acc, 1179);
 
-    let (_, acc) = find(&program);
+    let (_, acc) = fix(&mut program);
     println!("Fixed program yields {}.", acc);
     assert_eq!(acc, 1089);
 }
 
-// tag::find[]
-fn find(program: &[Instruction]) -> (usize, i32) {
-    let len = program.len();
-    let mut modified = Vec::from(program);
-    for i in 0..len {
-        modified[i] = match program[i] {
-            Instruction::NOp(val) => Instruction::Jmp(val),
-            Instruction::Jmp(val) => Instruction::NOp(val),
-            _ => { continue; }
-        };
+fn swap(program: &mut [Instr], i: usize) -> Option<Instr> {
+    match program[i] {
+        Instr::NOp(val) => Some(mem::replace(&mut program[i], Instr::Jmp(val))),
+        Instr::Jmp(val) => Some(mem::replace(&mut program[i], Instr::NOp(val))),
+        Instr::Acc(_) => None,
+    }
+}
 
-        let (pos, acc) = run(&modified);
-        if pos >= len {
-            println!("Changed {:?} to {:?} at {}", program[i], modified[i], i);
-            return (pos, acc);
-        }
-        modified[i] = program[i];
+// tag::fix[]
+fn fix(program: &mut Vec<Instr>) -> (usize, i32) {
+    for i in 0..program.len() {
+        // if swap, evaluate variant
+        if let Some(old) = swap(program, i) {
+            // run program and return if it terminates
+            let (pos, acc) = run(&program);
+            if pos >= program.len() {
+                println!("Changed {:?} to {:?} at {}", old, program[i], i);
+                return (pos, acc);
+            }
+
+            // revert
+            program[i] = old;
+        };
     };
 
     panic!("Nothing found.");
 }
-// end::find[]
+// end::fix[]
 
 // tag::run[]
-fn run(program: &[Instruction]) -> (usize, i32) {
+fn run(program: &[Instr]) -> (usize, i32) {
     let mut pos = 0;
     let mut acc = 0;
 
@@ -50,9 +57,9 @@ fn run(program: &[Instruction]) -> (usize, i32) {
 
     while pos < program.len() {
         let (pos_upd, acc_upd) = match &program[pos as usize] {
-            Instruction::NOp(_) => (pos + 1, acc),
-            Instruction::Acc(inc) => (pos +1, acc + inc),
-            Instruction::Jmp(jmp) => ((pos as i32 + jmp) as usize, acc),
+            Instr::NOp(_) => (pos + 1, acc),
+            Instr::Acc(inc) => (pos + 1, acc + inc),
+            Instr::Jmp(jmp) => ((pos as i32 + jmp) as usize, acc),
         };
         pos = pos_upd;
         acc = acc_upd;
@@ -69,24 +76,24 @@ fn run(program: &[Instruction]) -> (usize, i32) {
 
 // tag::instruction[]
 #[derive(Debug, PartialEq, Clone, Copy)]
-enum Instruction {
+enum Instr {
     NOp(i32),
     Acc(i32),
     Jmp(i32),
 }
 // end::instruction[]
 
-impl Instruction {
-    fn parse(content: &str) -> Vec<Instruction> {
+impl Instr {
+    fn parse(content: &str) -> Vec<Instr> {
         let re = Regex::new(r"(nop|acc|jmp) \+?(-?\d+)\s*")
             .expect("Invalid regular expression");
 
         re.captures_iter(content).map(|cap| {
             let val: i32 = cap[2].parse().expect("Could not parse number");
             match &cap[1] {
-                "nop" => Instruction::NOp(val),
-                "acc" => Instruction::Acc(val),
-                "jmp" => Instruction::Jmp(val),
+                "nop" => Instr::NOp(val),
+                "acc" => Instr::Acc(val),
+                "jmp" => Instr::Jmp(val),
                 other => panic!(format!("Illegal instruction: {}", other)),
             }
         }).collect()
@@ -107,38 +114,50 @@ acc +1
 jmp -4
 acc +6";
 
-    fn instructions() -> Vec<Instruction> {
+    fn instructions() -> Vec<Instr> {
         vec![
-            Instruction::NOp(0), Instruction::Acc(1), Instruction::Jmp(4),
-            Instruction::Acc(3), Instruction::Jmp(-3), Instruction::Acc(-99),
-            Instruction::Acc(1), Instruction::Jmp(-4), Instruction::Acc(6)
+            Instr::NOp(0), Instr::Acc(1), Instr::Jmp(4),
+            Instr::Acc(3), Instr::Jmp(-3), Instr::Acc(-99),
+            Instr::Acc(1), Instr::Jmp(-4), Instr::Acc(6)
         ]
     }
 
     #[test]
     fn test_instruction_parse() {
-        assert_eq!(Instruction::parse(CONTENT), instructions());
+        assert_eq!(Instr::parse(CONTENT), instructions());
     }
 
     #[test]
     fn test_run() {
-        let mut instructions = instructions();
-        let len = instructions.len();
-        let (pos, acc) = run(&instructions);
-        assert!(pos < len);
+        let mut program = instructions();
+
+        // run original program, should not terminate
+        let (pos, acc) = run(&program);
+        assert!(pos < program.len());
         assert_eq!(acc, 5);
 
-        instructions[len - 2] = Instruction::NOp(0);
-        let (pos, acc) = run(&instructions);
-        assert_eq!(pos, len);
+        // swap Jmp(-4) to NOp(-4) at i = 7
+        let option_old = swap(&mut program, 7);
+        assert_eq!(option_old, Some(Instr::Jmp(-4)));
+
+        // run modified program, should terminate
+        let (pos, acc) = run(&program);
+        assert_eq!(pos, program.len());
         assert_eq!(acc, 8);
     }
 
     #[test]
-    fn test_find() {
-        let instructions = instructions();
-        let (pos, acc) = find(&instructions);
-        assert_eq!(pos, instructions.len());
+    fn test_fix() {
+        let mut program = instructions();
+
+        // fix program and get result
+        let (pos, acc) = fix(&mut program);
+        assert_eq!(pos, program.len());
+        assert_eq!(acc, 8);
+
+        // re-run fixed program should reprocude results
+        let (pos, acc) = run(&program);
+        assert_eq!(pos, program.len());
         assert_eq!(acc, 8);
     }
 }
