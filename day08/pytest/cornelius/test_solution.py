@@ -39,11 +39,11 @@ def run_code(instructions):
 #end::test_star1[]
 
 #tag::star1[]
-def read_input(day):
+def read_input():
     with Path("input.txt").open() as f:
         return f.read()
 
-puzzle_input = read_input(5)
+puzzle_input = read_input()
 
 def test_answer1():
     assert solve1(puzzle_input) == 2003
