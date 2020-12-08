@@ -1,0 +1,17 @@
+== Day 7: Handy Haversacks
+
+This day reminded me of some challenges from last years AoC that I did not like.
+But after having a closer look the provided information seemed to resemble a structure that I am quite familiar with:
+A Directed Acyclic Graph (DAG)!
+
+After some googling I found the python graph library `networkx`.
+I started with parsing the input file and turning the provided information into a graph.
+Afterwards I created the recursive methods `get_all_bags_inside_bag` and `get_all_parent_bags` that traverse the graph
+to extract the required information from the graph.
+
+In order to run the example you first have to install the `networkx` library e.g. using `pip install networkx`
+
+[source, python]
+....
+include::solution.py[]
+....
