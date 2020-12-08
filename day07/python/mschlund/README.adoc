@@ -1,0 +1,55 @@
+== Day 07
+
+This solution is written in python.
+We are using pipenv to ensure reproducibility
+and easy dependeny management.
+
+Run using:
+$ pipenv install
+$ pipenv shell
+$ python solution.py
+
+The exercise defines a directed graph with
+edges between colors. An edge u -w-> v with weight w means that a u-colored
+bag contains w other bags, colored in v.
+The first task is to read in that graph from the input -- to this
+end we use regular expressions and the String.split-function to
+parse each line of the input-file and to add the extracted edges to
+a networkx-digraph G.
+
+
+=== First Star
+We have to count all (direct and indirect) predecessors from the node "shiny gold".
+While this would just require a dfs, our solution (although much too cosly for larger graphs)
+can be expressed fairly simply:
+We compute the transitive closure of the graph and get the number of predecessors
+of the "shiny gold"-node in the resulting graph.
+
+```python
+transitive_closure = nx.transitive_closure(G)
+num_pred = len(list(transitive_closure.predecessors('shiny gold')))
+print('We have {} predecessors of "shiny gold"'.format(num_pred))
+```
+
+=== Second Star
+The basic idea:
+We have to get the total weight (=sum of weights) of all paths originating
+at the start-vertex "shiny gold".
+The weight of a path is basically the product of the weights of its edges
+(+ the weight (=number of bags) originating from each vertex).
+The computation is done recursively:
+
+```python
+def get_total_weight(G, s):
+  if G.out_degree(s) == 0:
+    return 0
+  neighbors = G.successors(s)
+  weight_of_neighbors = [(get_total_weight(G, v) + 1) * G[s][v]['weight'] for v in G.successors(s)]
+  return sum(weight_of_neighbors)
+
+[...]
+    #star 2:
+    needed_bags = get_total_weight(G, 'shiny gold')
+    print('The shiny gold bag contains {} bags.'.format(needed_bags))
+```
+
