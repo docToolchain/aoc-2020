@@ -11,13 +11,15 @@ with `cargo test`
 == Part 1 ==
 
 Instructions are modeled as an enum type with some derived traits:
-[source, rust, numbered]
+
+[source,rust,numbered]
 ....
 include::src/main.rs[tags=instruction]
 ....
 
 Run program and store positions visited in a set until position repeats:
-[source, rust, numbered]
+
+[source,rust,numbered]
 ....
 include::src/main.rs[tags=run]
 ....
@@ -26,7 +28,7 @@ include::src/main.rs[tags=run]
 
 Alter instructions `nop <--> jmp` one by one until the program terminates without repetition:
 
-[source, rust, numbered]
+[source,rust,numbered]
 ....
 include::src/main.rs[tags=fix]
 ....
