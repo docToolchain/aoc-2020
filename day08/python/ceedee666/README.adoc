@@ -16,7 +16,7 @@ For solving part 2 i simply create all possible program variants and check which
 
 === What I learned
 
-I learnd two things:
+I learnd two things::
 1. `list(other_list)` creates a shallow copy. This leed to a bug where all my prgram variants where the same.
 1. Calling `list()` on an iterator consumes the iterator. This can leed to stupid results while debugging using print statements.
 
