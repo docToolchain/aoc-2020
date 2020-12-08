@@ -1,0 +1,12 @@
+== Day 07
+
+=== Usage
+
+python day07.py <filename>
+
+filename: name of file containing the data for this puzzle
+
+[source, python]
+....
+include::day07.py[]
+....
