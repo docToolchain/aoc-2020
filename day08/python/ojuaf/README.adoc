@@ -1,0 +1,8 @@
+== AoC 2020
+
+This solution is written in python.
+
+
+
+
+

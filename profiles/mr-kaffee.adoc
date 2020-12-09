@@ -1,0 +1,22 @@
+
+:mr-kaffee-avatar: https://avatars0.githubusercontent.com/u/73745454?v=4
+:mr-kaffee-realName: Peter Wieland
+
+:icons: font
+
+//tag::free-form[]
+
+[cols="1,5"]
+|===
+| image:{mr-kaffee-avatar}[width=100px]
+a| **mr-kaffee** +
+{mr-kaffee-realName} +
+Github: https://github.com/mr-kaffee[mr-kaffee],
+|===
+
+=== About me
+
+Got infected by the AoC virus in 2019 when I solved the puzzles with Java.
+This year, I decided to try https://rust-lang.org[Rust]... (it's been a while that I tried to learn a new language)
+
+//end::free-form[]

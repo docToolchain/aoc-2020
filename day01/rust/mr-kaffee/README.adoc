@@ -1,0 +1,13 @@
+= Day 1: Report Repair =
+
+Run solution with `cargo run`
+
+The solution for both parts is about iterating through all https://en.wikipedia.org/wiki/Combination[combinations] of two or three elements in the first and second part respectively and find a combination which sums up to 2020.
+
+I was hoping to find an elegant solution without nested `for`-loops but after some time I gave up.
+The solution for part 2 looks as follows (part 1 is the same without the third nesting level):
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=part2]
+....
