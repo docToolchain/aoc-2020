@@ -1,0 +1,36 @@
+== Day 9: Encoding Error ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/9
+
+For execution enter _kotlin day2009_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+For the first part, a function reads all puzzle inputs in a list, the the list is worked trough with nested loops, if any couple of the 25 values added up are identical to the 26th. This value will be returned.
+
+[source, kotlin, numbered]
+....
+include::day2009_1_2.kts[tags=XMAS]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here the solution of part1 will deal as input of the second function, which then it will start evaluating, if there is a contiguous set adding up with the same value. If the value is to small, the next value will be added to the list, if the value is to high, it starts builiding up the list from the next index
+
+[source, kotlin, numbered]
+....
+include::day2009_1_2.kts[tags=XMAS_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2009_1_2.kts[tags=output]
+....
