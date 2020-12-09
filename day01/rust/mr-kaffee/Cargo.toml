@@ -1,5 +1,5 @@
 [package]
-name = "aoc2020"
+name = "mr-kaffee-2020-01"
 version = "0.1.0"
 authors = ["Peter Wieland <peter@die-wielands.net>"]
 edition = "2018"

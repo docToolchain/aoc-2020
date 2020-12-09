@@ -1,4 +1,4 @@
-= Day 3: Toboggan Trajectory =
+== Day 3: Toboggan Trajectory ==
 
 Run solution with `cargo run`
 
