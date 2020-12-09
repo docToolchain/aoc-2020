@@ -1,7 +1,7 @@
 class BoardingPassScanner:
     def __init__(self, data):
         self.__data=data
-        self.__boardingPasses=BoardingPass=[]
+        self.__boardingPasses=[]
         self.__parse()
     def __parse(self):
         for d in data:
