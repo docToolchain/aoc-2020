@@ -8,21 +8,19 @@ let lines = input.split('\n').map(line => parseInt(line))
 
 const PREAMBLE_SIZE = 25
 
-function getValidEntries(entries: number[], pos:number){
-    const preamble = entries.slice(pos-PREAMBLE_SIZE,pos)
-    const result = preamble.map(p => preamble.slice(1).map(q => p+q)).flat()
+function isValidEntry(entries: number[], pos:number, entry:number){
+    const preamble = entries.slice(pos,pos+PREAMBLE_SIZE)
+    const result = preamble.some((p,i) => preamble.slice(1+i).some(q => p+q === entry))
     return result
 }
 
 
 function findInvalidEntry(entries:number[]) {
     let result = 0
-    entries.some((line: number, index) => {
-        if (index >= PREAMBLE_SIZE) {
-            if (!getValidEntries(entries, index).includes(line)) {
-                result = line
-                return line
-            }
+    entries.slice(PREAMBLE_SIZE).some((entry: number, index) => {
+        if (!isValidEntry(entries, index,entry)) {
+            result = entry
+            return true
         }
     });
     return result
