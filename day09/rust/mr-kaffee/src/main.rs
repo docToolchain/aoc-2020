@@ -16,7 +16,7 @@ fn main() {
 }
 
 // tag::find_contiguous[]
-fn find_contiguous(list: &[i64], val: i64) -> i64 {
+fn find_contiguous(list: &[u64], val: u64) -> u64 {
     // O(n) algorithm - thanks Daniel Lin for the hint ;)
 
     let mut i1 = 0;
@@ -29,7 +29,9 @@ fn find_contiguous(list: &[i64], val: i64) -> i64 {
             i2 += 1;
         }
 
-        while sum > val && i1 < i2 {
+        // if value is too big, move lower bound up
+        // sum > val implies i1 < i2 because val >= 0 and sum = 0 if i1 == i2
+        while sum > val {
             sum -= list[i1];
             i1 += 1;
         }
@@ -38,16 +40,16 @@ fn find_contiguous(list: &[i64], val: i64) -> i64 {
     assert_eq!(sum, val, "Nothing found");
 
     let (min, max) = list[i1..i2].iter()
-        .fold((list[i1], list[i1]),
-              |(min, max), v|
-                  (cmp::min(min, *v), cmp::max(max, *v)),
+        .fold(
+            (list[i1], list[i1]),
+            |(min, max), v| (cmp::min(min, *v), cmp::max(max, *v)),
         );
     return min + max;
 }
 // end::find_contiguous[]
 
 // tag::find_fail[]
-fn find_fail(list: &[i64], len: usize) -> i64 {
+fn find_fail(list: &[u64], len: usize) -> u64 {
     let pos = (len..list.len())
         .find(|pos| !check_pos(list, *pos, len))
         .expect("Nothing found.");
@@ -56,16 +58,16 @@ fn find_fail(list: &[i64], len: usize) -> i64 {
 // end::find_fail[]
 
 // tag::check_pos[]
-fn check_pos(list: &[i64], pos: usize, len: usize) -> bool {
+fn check_pos(list: &[u64], pos: usize, len: usize) -> bool {
     list[pos - len..pos].iter()
         .tuple_combinations()
         .find(|(a, b)| *a + *b == list[pos]).is_some()
 }
 // end::check_pos[]
 
-fn parse(content: &str) -> Vec<i64> {
+fn parse(content: &str) -> Vec<u64> {
     content.lines()
-        .map(|line| line.parse::<i64>().expect("Parse error"))
+        .map(|line| line.parse::<u64>().expect("Parse error"))
         .collect()
 }
 
@@ -94,7 +96,7 @@ mod tests {
 309
 576";
 
-    fn numbers() -> Vec<i64> {
+    fn numbers() -> Vec<u64> {
         vec![35,
              20,
              15,
