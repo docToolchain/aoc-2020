@@ -30,6 +30,8 @@ include::{day}.java[tags=part1]
 include::{day}.java[tags=part2]
 ----
 
+(Quick & dirty )
+
 . Split the groups, then the lines of each group.
 . For each group, add answers (Character objects) of first person into a set.
 . Iterate over answers of all remaining persons and all answers that are not contained in any of the other people's answers
