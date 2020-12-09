@@ -1,0 +1,15 @@
+:hardbreaks:
+*General remark*
+no remarks today
+
+*First star*
+achieved
+1) create a list of sums of the first 25 elements, not adding the same elements
+2) check if the 26th element is part of the list of sums. If it is, remove the 0th element of the list and start over until 26th element is not in list of sums
+
+*Second star*
+achieved
+
+1) add up elements on the list until the sum is larger than the previous value
+2) once it is larger, reset sum and counter and delete 0th element of list.
+3) when the sum equals the result of part 1, write needed elements to result list, find min and max value of that list and add them together
