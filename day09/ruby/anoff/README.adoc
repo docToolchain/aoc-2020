@@ -1,0 +1,25 @@
+Puzzle: https://adventofcode.com/2020/day/9[Encoding Error]
+
+== Part 1
+
+Decided to implement the low level tests as well for the moving window validator and paid off I would say.
+First validated my `validNumber?` method and then went on to do the looping and in the end my first syntax-free solution worked correctly!
+
+Had some issues with indexing arrays (only `Range`s work but not arrays of indexes).
+
+== Part 2
+
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

@@ -57,3 +57,13 @@ a|{anoff}
 a| Using an explicit `return` in a ruby `map{}` lambda causes the entire function to return, not just the lambda 😔
 a| You can remove duplicate (adjacent) word characters using regex `.gsub(/(\w)\1+/, '\1')`
 |====
+
+=== Day 09
+
+[cols="1,10"]
+|====
+
+a|{anoff}
+a| Indexing an `Array` in Ruby is only possible with single integer indexes or a `Range` object. Using an `Array` to index an `Array` is not possible.
+a| Ruby has fun `Vector` and `Matrix` operators that would have been fun to play with if you need multiplications instead of sums.
+|====
