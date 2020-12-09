@@ -1,4 +1,5 @@
 use std::{fs, cmp};
+use itertools::Itertools;
 
 fn main() {
     let content = fs::read_to_string("input.txt").expect("Failed to read file");
@@ -16,28 +17,32 @@ fn main() {
 
 // tag::find_contiguous[]
 fn find_contiguous(list: &[i64], val: i64) -> i64 {
-    for (i1, v1) in list[..list.len() - 1].iter().enumerate() {
-        let mut sum = *v1;
-        let mut min = *v1;
-        let mut max = *v1;
+    // O(n) algorithm - thanks Daniel Lin for the hint ;)
 
-        for v2 in &list[i1 + 1..] {
-            sum = sum + v2;
-            min = cmp::min(min, *v2);
-            max = cmp::max(max, *v2);
-            if sum >= val {
-                break;
-            }
+    let mut i1 = 0;
+    let mut i2 = 0;
+    let mut sum = 0;
+
+    while sum != val && i2 < list.len() {
+        while sum < val && i2 < list.len() {
+            sum += list[i2];
+            i2 += 1;
         }
 
-        if sum == val {
-            // match found, return sum of smallest and largest number in range
-            return min + max;
+        while sum > val && i1 < i2 {
+            sum -= list[i1];
+            i1 += 1;
         }
     }
 
-    // I will only end up here, if no matching range was found
-    panic!("Nothing found.");
+    assert_eq!(sum, val, "Nothing found");
+
+    let (min, max) = list[i1..i2].iter()
+        .fold((list[i1], list[i1]),
+              |(min, max), v|
+                  (cmp::min(min, *v), cmp::max(max, *v)),
+        );
+    return min + max;
 }
 // end::find_contiguous[]
 
@@ -52,16 +57,9 @@ fn find_fail(list: &[i64], len: usize) -> i64 {
 
 // tag::check_pos[]
 fn check_pos(list: &[i64], pos: usize, len: usize) -> bool {
-    // again those ugly nested for loops :(
-    for a in list[pos - len..pos - 1].iter() {
-        for b in list[pos - len + 1..pos].iter() {
-            if a + b == list[pos] {
-                return true;
-            }
-        }
-    }
-
-    false
+    list[pos - len..pos].iter()
+        .tuple_combinations()
+        .find(|(a, b)| *a + *b == list[pos]).is_some()
 }
 // end::check_pos[]
 

@@ -4,10 +4,30 @@ Run solution with `cargo run`
 
 The solution for both parts is about iterating through all https://en.wikipedia.org/wiki/Combination[combinations] of two or three elements in the first and second part respectively and find a combination which sums up to 2020.
 
-I was hoping to find an elegant solution without nested `for`-loops but after some time I gave up.
-The solution for part 2 looks as follows (part 1 is the same without the third nesting level):
+With a tip of Sven H., I found that Rust https://docs.rs/itertools[itertools] have the `tuple_combinations` iterator adaptor, which results in very clean code.
+Here is how solution of part 2 looks like (part 1 is very similar):
 
 [source,rust,numbered]
 ....
 include::src/main.rs[tags=part2]
 ....
+
+A generic method which takes the size of the combination as a parameter looks as follows:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=generic]
+....
+
+The generic variant is much slower than the specific ones (~1 ms vs ~20 ms for part 1).
+
+I do not understand why I need to map `|a| *a` and `into_iter()` is not working for the sum as it does for the product.
+
+Another generic variant looks like this:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=generic_no_iter]
+....
+
+Performs better than the variant above but still significantly slower than the specific variants.

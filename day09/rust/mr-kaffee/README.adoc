@@ -24,7 +24,7 @@ Length of the preamble is in paramter `len` to be able to use the same function 
 include::src/main.rs[tags=find_fail]
 ....
 
-*Step 3*: define for part 3 of the puzzle a function which finds a contiguous range summing up to a given value and returns the sum of the smallest and largest number in that range:
+*Step 3*: define for part 2 of the puzzle a function which finds a contiguous range summing up to a given value and returns the sum of the smallest and largest number in that range:
 
 [source,rust,numbered]
 ....
