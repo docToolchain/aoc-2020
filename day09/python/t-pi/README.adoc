@@ -1,0 +1,41 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 09: Encoding Error
+https://adventofcode.com/2020/day/9
+
+=== Info
+
+Hacking eXchange-Masking Addition System code from plane.
+Fibonacci-like cipher. Every number from line 26 must be composed from any two different previous 25 numbers.
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+
+.Star1: Find the first number not following the XMAS rule
+. Take difference of new number with (-n), compare with -(n+1)..(-25)
+. Return ok if pair matching found
+. Provide first non-matching
+
+
+.Star2: 
+. ?
+
+=== Learned today
+
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
