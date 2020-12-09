@@ -1,0 +1,7 @@
+== Day 8: Handheld Halting 
+
+
+[source, python]
+....
+include::solution.py[]
+....
