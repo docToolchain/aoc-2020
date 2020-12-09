@@ -1,0 +1,21 @@
+== Day 0: Hello World ==
+
+All days should run using `cargo run`.
+
+My hello world prints Ferris:
+....
+This year I became a Rustacian!
+    _~^~^~_
+\) /  o o  \ (/
+  '_   ¬   _'
+  \ '-----' /
+....
+
+I also plan to add some simple tests based on the example data from the puzzle descriptions which can be executed using `cargo test`.
+
+Tests are implemented in the same source file with the code in a separate `tests` module which is excluded from the regular binary:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=test]
+....

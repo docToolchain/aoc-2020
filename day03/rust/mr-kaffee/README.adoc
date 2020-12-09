@@ -1,0 +1,16 @@
+== Day 3: Toboggan Trajectory ==
+
+Run solution with `cargo run`
+
+Run tests on example data with `cargo test`
+
+It was helpful today that in Rust an integer overflow is an error.
+The number of trees easily fits in a 32bit integer, but the product over the different slopes for part 2 does not.
+In Rust, this causes the code to panic with quite specific hints what went wrong.
+
+This works:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=product]
+....

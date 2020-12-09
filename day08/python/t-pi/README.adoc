@@ -1,0 +1,48 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 08: Handheld Halting
+https://adventofcode.com/2020/day/8
+
+=== Info
+
+Kid gaming's GameKid is stuck in infinite loop - help him out.
+Hack OpCode based process.
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+OpCodes are interpreted as they go
+* acc - Accumulator sum goes up or down
+* jmp - jump relative lines
+* nop - -> jmp +1
+
+.Star1: Accumulator sum right before endless loop closing
+. Run through OpCode code: interpret and execute every line
+. Keep track of visited lines
+. Upon doubling of line visit, return Accumulator status
+
+
+.Star2: Accumulator sum for code fixed with single swap 'nop' <-> 'jmp'
+. Modified code loop: returns true/false for endless loop found/or not
+. Optimize code function: swaps opcode in single line of code copy and checks for loop
+. Return Accumulator status, when code runs through, else return False
+
+=== Learned today
+
+* string.replace() does not work on the string itself. Need more practice in functional programming :)
+* Worked quite straightforward, however a lingering doubt remains, that my code is not well prepared for the things to come...
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

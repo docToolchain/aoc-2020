@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import cpu.*
 
 //tag::star1[]
 Parser.parse(new File("input.txt").text)

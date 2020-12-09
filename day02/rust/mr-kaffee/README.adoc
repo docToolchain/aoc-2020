@@ -1,0 +1,15 @@
+== Day 2: Password Philosophy ==
+
+Run solution with `cargo run`
+
+Run tests on example data with `cargo test`
+
+This was my first experience with https://en.wikipedia.org/wiki/Regular_expression[regular expressions] in Rust.
+
+In addition, played around with iterators, clojures and tuples.
+Created one function `check` which returns a pair of booleans as check results for parts 1 and 2 and use this as follows:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=count_pass]
+....

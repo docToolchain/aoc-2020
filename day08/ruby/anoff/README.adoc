@@ -1,0 +1,32 @@
+Puzzle: https://adventofcode.com/2020/day/8[Handheld Halting]
+
+== Part 1
+
+I implemented a computer class that holds a pointer to the current executed line.
+With each execution the pointer position is stored in an array of _visited codelines_, if the pointer has a value that was already added to the array, the program will fail.
+
+Once the fail is detected print the stack value.
+
+== Part 2
+
+For part2 I adapted the error codes of the computer class to detect the scenario of reaching program end.
+I ran the program once into its infinite loop and then used the stacktrace (list of executed pointers) to manipulate line by line until the program did terminate correctly.
+
+== Solution
+
+[source, ruby]
+....
+include::computer.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

@@ -1,0 +1,19 @@
+Day 9 of year 2020
+https://adventofcode.com/2020/day/9
+
+TIP: Python has a lot of predefined function like sum, min, max,  but you can optimize with `numpy` functions.
+https://jakevdp.github.io/PythonDataScienceHandbook/02.04-computation-on-arrays-aggregates.html
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
