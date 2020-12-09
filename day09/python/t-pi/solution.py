@@ -1,6 +1,6 @@
 import math
 
-trackback = 25
+trackback = 5
 
 def read_daily_input(filename):
     ''' Read lines from file with given input name
@@ -31,17 +31,32 @@ def filter_codelist(codes_list, max):
     return_list = [item for item in codes_list if (item < max)]
     return return_list
 
-def get_codebreaking_pair(goal, codes_list):
-    pass
+def get_codebreaking_list(goal, codes_list, summands = set()):
+    reduced_list = filter_codelist(codes_list, goal)
+    if (reduced_list == []): return None
+    print(reduced_list, summands)
+    for line, num in enumerate(reduced_list):
+        new_goal = goal - num
+        if (new_goal < 0): 
+                continue
+        summands.add(num)
+        if (new_goal == 0): 
+                return summands
+        new_summands = get_codebreaking_list(new_goal, reduced_list, summands)
+        if (not new_summands):
+            summands.discard(num)
+        else:
+            summands.update(new_summands)
+    return summands
 
 def main():
-    daily_list = read_daily_input('input09.txt')
+    daily_list = read_daily_input('input_test.txt')
     star1 = get_next_XMAS_error(daily_list)
     print(f"First XMAS code error at: {star1}")
-    reduced_list = filter_codelist(daily_list, star1)
-
-#    star2 = optimize_code(daily_list)
-#    print(f"Accumulator status with fixed code: {star2}")
+    star2_list = get_codebreaking_list(star1, daily_list)
+    print(star2_list)
+    star2 = min(star2_list) + max(star2_list)
+    print(f"Breaking pair's sum: {star2}")
 
 if __name__ == "__main__":
     main()
