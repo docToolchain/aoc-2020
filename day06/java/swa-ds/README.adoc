@@ -1,0 +1,36 @@
+:day: Day06
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `{day}.java`.
+
+== Main method
+
+Read input, call methods for part 1 & 2 and print result:
+
+[source,java, linenums]
+----
+include::{day}.java[tags=main]
+----
+
+== Part 1
+
+Split the groups and then count the distinct letters in each groupo
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part1]
+----
+
+
+== Part 2
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part2]
+----
+
+. Split the groups, then the lines of each group.
+. For each group, add answers (Character objects) of first person into a set.
+. Iterate over answers of all remaining persons and all answers that are not contained in any of the other people's answers
+
