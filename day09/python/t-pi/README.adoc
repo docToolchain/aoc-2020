@@ -14,7 +14,7 @@ https://adventofcode.com/2020/day/9
 === Info
 
 Hacking eXchange-Masking Addition System code from plane.
-Fibonacci-like cipher. Every number from line 26 must be composed from any two different previous 25 numbers.
+Fibonacci-like series. Every number from line 26 must be composed from any two different previous 25 numbers.
 
 === HowTo
 
@@ -22,16 +22,21 @@ Data is read from the file 'input<two-digit-day>.txt' line by line.
 
 
 .Star1: Find the first number not following the XMAS rule
-. Take difference of new number with (-n), compare with -(n+1)..(-25)
-. Return ok if pair matching found
-. Provide first non-matching
+. set trackback variable (5 for testing, 25 for 'real thing')
+. Function for sublist with trackback length to check if two numbers summing up are found
+. Run through list with fixed sliding window of length trackback for function
+. Provide first non-matching code
 
-
-.Star2: 
-. ?
+.Star2: Find *contiguous* range to sum up to found non-matching code
+. Reduce list to members < code
+. Run through list with increasing window until either sum is found or depassed
+. Return window to calculate min+max sum
 
 === Learned today
 
+* Look up the friggin' words that are not crystal clear in the puzzle text
+* Lost lots of time for a function to find any set of number summing up to code
+* Then stumbled over the ambiguity in test results...
 
 === Source
 
