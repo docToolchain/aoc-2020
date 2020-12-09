@@ -19,4 +19,13 @@ class TestSolution < Test::Unit::TestCase
     input = readInput("./input_test.txt")
     assert_equal 127, part1(input, 5)
   end
+
+  def test_findRangeForSum
+    input = readInput("./input_test.txt")
+    assert_equal [15, 25, 47, 40], findRangeForSum(input, 127)
+  end
+  def test_part2
+    input = readInput("./input_test.txt")
+    assert_equal 62, part2(input, 127)
+  end
 end

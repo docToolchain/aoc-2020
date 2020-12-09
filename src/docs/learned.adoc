@@ -66,4 +66,5 @@ a| You can remove duplicate (adjacent) word characters using regex `.gsub(/(\w)\
 a|{anoff}
 a| Indexing an `Array` in Ruby is only possible with single integer indexes or a `Range` object. Using an `Array` to index an `Array` is not possible.
 a| Ruby has fun `Vector` and `Matrix` operators that would have been fun to play with if you need multiplications instead of sums.
+a| TDD or die! When I don't test stuff I always overlook details in the puzzle that are hard to debug later on. Test early, test often.
 |====

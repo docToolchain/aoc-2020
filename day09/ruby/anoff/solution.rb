@@ -5,6 +5,7 @@ def readInput(path)
   return input
 end
 
+# check if `number` is the sum of any two values provided in `range`
 def validNumber?(range, number)
   range = range.sort
   ix2 = range.size - 1
@@ -37,12 +38,27 @@ def part1 (input, windowSize)
   end
 end
 
-def part2 (input)
+# find a contiguous range of numbers in `input` that sums up to `sum`
+def findRangeForSum(input, sum)
+  for windowSize in 2..(input.size - 1)
+    for ix in 0..(input.size - 1 - windowSize)
+      window = (ix..(ix+windowSize))
+      n = input[window].reduce(&:+)
+      if n == sum
+        return input[window]
+      end
+    end
+  end
+end
+
+def part2 (input, targetNumber)
+  window = findRangeForSum(input, targetNumber).sort
+  return window[0] + window[-1]
 end
 
 if caller.length == 0
   input = readInput("./input.txt")
 
   puts "Solution for part1: %d" % part1(input, 25)
-  #puts "Solution for part2: %d" % part2(input)
+  puts "Solution for part2: %d" % part2(input, 14360655)# 1631469 too low
 end
