@@ -68,9 +68,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-
-input_filename = 'input.txt'
-input = open(input_filename, 'r')
-G = nx.DiGraph()
-for i, line in enumerate(input):
-  parse_line(i, line, G)
