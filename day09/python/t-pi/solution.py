@@ -37,27 +37,26 @@ def reduce_codelist(codes_list, max):
     return_list = [item for item in codes_list if (item <= max)]
     return return_list
 
-def get_codebreaking_list_non_contigous(goal, codes_list, summands = set()):
+def get_non_contigous_codebreaking_list(goal, codelist, summands = list()):
     ''' AMBIGUOUS RESULTS! Needed to look up contiguous...
         Recursively tests for any summands in codes_list, whether they sum up to goal
         Returns set of summands
     '''
-    reduced_list = reduce_codelist(codes_list, goal)
-    if (reduced_list == []): return None
-    print(reduced_list, summands)
+    reduced_list = reduce_codelist(codelist, goal)
+    if (reduced_list == []): 
+        summands.pop()
+        return summands
     for line, num in enumerate(reduced_list):
         new_goal = goal - num
         if (new_goal < 0): 
-                return None
-        summands.add(num)
+            continue
+        summands.append(num)
         if (new_goal == 0): 
-                return summands
-        new_summands = get_codebreaking_list(new_goal, reduced_list[line + 1:], summands)
-        print("new:", new_summands)
-        if (new_summands == None):
-            summands.discard(num)
-        else:
-            summands.update(new_summands)
+            return summands
+        summe = sum(summands)
+        summands = get_non_contigous_codebreaking_list(new_goal, reduced_list[line + 1:], summands)
+        if ((sum(summands)-summe) == new_goal): return summands
+        if (line == len(reduced_list)-1): summands.pop()
     return summands
 
 def get_contiguous_codebreaking_list(goal, codes_list):
@@ -83,9 +82,17 @@ def main():
     star1 = get_next_XMAS_error(daily_list)
     print(f"First XMAS code error at: {star1}")
     star2_list = get_contiguous_codebreaking_list(star1, daily_list)
+    star2_list.sort()
     print(star2_list)
     star2 = min(star2_list) + max(star2_list)
     print(f"Breaking pair's sum: {star2}")
+    print(" --- BONUS: Any summands in list window ---")
+    bonus_list = list(get_non_contigous_codebreaking_list(star1, daily_list))
+    bonus_list.sort()
+    print(bonus_list)
+    print(sum(bonus_list))
+    bonus_star = min(bonus_list) + max(bonus_list)
+    print(f"Breaking pair any sum: {bonus_star}")
 
 if __name__ == "__main__":
     main()
