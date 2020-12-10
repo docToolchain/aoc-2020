@@ -15,8 +15,7 @@ The idea for part one is to::
 1. Count the differences
 
 
-The idea for part two is to count for each element e if e+1, e+2 and e+3
-are also in the list. The number of possible combinations is the product of those. 
+The idea for part 2 is to count the possible solutions from left to right.
 
 === What I learned
 
