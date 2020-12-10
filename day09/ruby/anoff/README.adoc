@@ -1,0 +1,28 @@
+Puzzle: https://adventofcode.com/2020/day/9[Encoding Error]
+
+== Part 1
+
+Decided to implement the low level tests as well for the moving window validator and paid off I would say.
+First validated my `validNumber?` method and then went on to do the looping and in the end my first syntax-free solution worked correctly!
+
+Had some issues with indexing arrays (only `Range`s work but not arrays of indexes).
+
+== Part 2
+
+Wow... one time I did not TDD my code and I ran into the same problem as always.
+Overlooked one part of the puzzle definition - in this case that the final sum needs to be the **smallest and largest** and not the **first and last** element.
+First had a wrong result for part2 then decided to implement a test for part2 solution and quickly realized what was going wrong.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

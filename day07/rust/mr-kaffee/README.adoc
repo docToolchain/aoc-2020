@@ -1,10 +1,10 @@
-= Day 7: Handy Haversacks =
+== Day 7: Handy Haversacks ==
 
 Run solution with `cargo run`
 
 Run tests on example data with `cargo test`
 
-== Part 1 ==
+=== Part 1 ===
 
 Part 1 is solved with a breadth first search:
 
@@ -13,7 +13,7 @@ Part 1 is solved with a breadth first search:
 include::src/main.rs[tags=explore_parents]
 ....
 
-== Part 2 ==
+=== Part 2 ===
 
 Part 2 is solved with a recursive algorithm:
 

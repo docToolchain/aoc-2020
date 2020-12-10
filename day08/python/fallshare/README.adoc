@@ -1,0 +1,12 @@
+== Day 8: Handheld Halting 
+
+2019 says hello again.
+Let's see how maintainable my solution will be in the next couple of days.
+
+I also learned a lot today about deep cloning and shallow cloning of lists that contain other data structure e.g. dictionaries.
+
+
+[source, python]
+....
+include::solution.py[]
+....

@@ -1,4 +1,4 @@
-Puzzle: https://adventofcode.com/2020/day/8Handheld Halting]
+Puzzle: https://adventofcode.com/2020/day/8[Handheld Halting]
 
 == Part 1
 
