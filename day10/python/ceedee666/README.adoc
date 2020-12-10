@@ -1,0 +1,27 @@
+== Day 09
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* the Counter from the itertools library 
+
+=== Idea
+
+The idea for part one is to::
+1. sort the input list 
+1. calculate the difference beteween consequtive numbers
+1. Count the differences
+
+
+The idea for part 2 is to count the possible solutions from left to right.
+
+=== What I learned
+
+The `Counter` in the `itertools` library is really useful!
+
+=== How to run
+
+Run using:
+`$ python day10.py --help`
