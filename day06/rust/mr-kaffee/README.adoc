@@ -1,0 +1,33 @@
+== Day 6: Custom Customs ==
+
+Run solution with `cargo run`
+
+Run tests on example data with `cargo test`
+
+Today, I wrote my first Rust function accepting a `Fn` as an argument.
+This allows to use the same function to solve parts 1 and 2.
+
+Idea: questions for which some-one answered yes are stored as bits of an integer.
+Then, for part 1, we start with no bits set and combine results with bitwise or.
+For part 2, we start with all bits set and combine results with bitwise and.
+
+The function which achieves this accepts an initial state and a function used to combine results as arguments:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=part]
+....
+
+The call for part 1 looks as follows:
+
+[source,rust]
+....
+include::src/main.rs[tags=part1]
+....
+
+The call for part 2 looks as follows:
+
+[source,rust]
+....
+include::src/main.rs[tags=part2]
+....

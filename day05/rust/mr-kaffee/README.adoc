@@ -1,0 +1,19 @@
+== Day 5: Binary Boarding ==
+
+Run solution with `cargo run`
+
+Run tests on example data with `cargo test`
+
+Every letter represents a bit (big endian).
+There is no need to distinguish between rows (F = 0, B = 1) and columns (L = 0, R = 1).
+We just build one 10bit number where the upper 7 bits represent the row, and the lower 3 bits represent the column.
+
+To find the free seat in part 2, I tried the `zip`-function of Rust iterators after sorting the list of boarding passes:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=zip]
+....
+
+The `zip`-function produces pairs of the elements of two iterators.
+Using the same list `passes` twice, with an offset of 1 for the second instance, the code finds the pair with boarding pass IDs different by 2, i.e., one seat fits in between.

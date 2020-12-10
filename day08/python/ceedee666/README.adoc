@@ -1,0 +1,26 @@
+== Day 05
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* collections to use the defaultdict
+* copy to create deep copies of collections
+
+=== Idea
+
+Oh no. Int-Code-Computer all over again. 
+No special idea for part 1. Just a straight forward implementation using a while loop.
+For solving part 2 i simply create all possible program variants and check which terminated.
+
+=== What I learned
+
+I learnd two things::
+1. `list(other_list)` creates a shallow copy. This leed to a bug where all my prgram variants where the same.
+1. Calling `list()` on an iterator consumes the iterator. This can leed to stupid results while debugging using print statements.
+
+=== How to run
+
+Run using:
+`$ python day08.py --help`

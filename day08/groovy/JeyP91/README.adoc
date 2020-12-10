@@ -1,0 +1,29 @@
+== Groovy
+
+Here is another solution written in Groovy.
+First I split the input into a list of commands:
+[source, groovy]
+....
+include::solution.groovy[tags=splitInput]
+....
+
+=== Part 1:
+Part 1 simply executes all commands until one command is executed the second time:
+[source, groovy]
+....
+include::solution.groovy[tags=executeProgramExecutedCommands]
+        ...
+    }
+....
+When the loop stops, the current accumulator is returned
+
+=== Part 2:
+In part 2 the execution of the commands is the same.
+The program is now not only stopped, if a command is executed the second time, but also if a position is reached, which is higher then the number of commands.
+The executeProgram method returns a Tuple, which indicates successful execution and the accumulator.
+To test all jmp->nop and nop-jmp, I just iterate over all commands and try to change one at a time until the program executes successfully:
+[source, groovy]
+....
+include::solution.groovy[tags=solvePart2]
+....
+

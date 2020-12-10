@@ -1,0 +1,30 @@
+== Day 7: Handy Haversacks ==
+
+Run solution with `cargo run`
+
+Run tests on example data with `cargo test`
+
+=== Part 1 ===
+
+Part 1 is solved with a breadth first search:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=explore_parents]
+....
+
+=== Part 2 ===
+
+Part 2 is solved with a recursive algorithm:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=count_children]
+....
+
+The algorithm includes the bag itself, i.e., the final result is obtained as
+
+[source,rust]
+....
+include::src/main.rs[tags=sol2]
+....

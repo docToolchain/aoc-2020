@@ -41,12 +41,14 @@ struct Slope {
 }
 
 impl Grid {
+    // tag::product[]
     fn product(&self, slopes: &[Slope]) -> u64 {
         // calculate product converting u32 -> u64 on the way
         slopes.iter()
             .map(|slope| self.count_trees(slope) as u64)
             .product()
     }
+    // end::product[]
 
     fn count_trees(&self, slope: &Slope) -> u32 {
         let mut x: usize = 0;

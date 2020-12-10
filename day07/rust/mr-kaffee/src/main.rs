@@ -12,11 +12,14 @@ fn main() {
     println!("Found {} containers for shiny gold bags", parents.len());
     assert_eq!(parents.len(), 235);
 
+    // tag::sol2[]
     let count = count_children(&bags, "shiny gold") - 1;
+    // end::sol2[]
     println!("Shiny gold bags contain {} bags", count);
     assert_eq!(count, 158493);
 }
 
+// tag::explore_parents[]
 fn explore_parents<'a>(bags: &'a BTreeMap<String, Bag>, color: &str) -> BTreeSet<&'a str> {
     // breadth first search
     let mut parents: BTreeSet<&str> = BTreeSet::new();
@@ -36,7 +39,9 @@ fn explore_parents<'a>(bags: &'a BTreeMap<String, Bag>, color: &str) -> BTreeSet
 
     parents
 }
+// end::explore_parents[]
 
+// tag::count_children[]
 fn count_children(bags: &BTreeMap<String, Bag>, color: &str) -> i32 {
     // find bag, expect to be present if problem is well-formed
     let bag = bags.get(color)
@@ -48,6 +53,7 @@ fn count_children(bags: &BTreeMap<String, Bag>, color: &str) -> i32 {
             (color, count)| acc + count * count_children(bags, color),
     )
 }
+// end::count_children[]
 
 #[derive(Debug, PartialEq)]
 struct Bag {

@@ -1,0 +1,5 @@
+== Day 4: Passport Processing ==
+
+Run solution with `cargo run`
+
+Run tests on example data with `cargo test`

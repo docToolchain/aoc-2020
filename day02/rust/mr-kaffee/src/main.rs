@@ -53,6 +53,7 @@ impl Password {
     }
 }
 
+// tag::count_pass[]
 fn count_pass(passwords: &[Password]) -> (u32, u32) {
     // check and sum trues for elements on tuples independently
     passwords.iter()
@@ -61,6 +62,7 @@ fn count_pass(passwords: &[Password]) -> (u32, u32) {
               |count, check|
                   (count.0 + check.0 as u32, count.1 + check.1 as u32))
 }
+// end::count_pass[]
 
 fn main() {
     // read content from file

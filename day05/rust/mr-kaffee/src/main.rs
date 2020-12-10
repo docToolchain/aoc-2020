@@ -14,9 +14,11 @@ fn main() {
     println!("Max ID is {}", max);
     assert_eq!(*max, 878);
 
+    // tag::zip[]
     let (a, b) = passes.iter().zip(passes[1..].iter())
         .find(|(a, b)| *b - *a == 2)
         .expect("No seats with one in between found");
+    // end::zip[]
     println!("{} -> {} -> {} ", a, a + 1, b);
     assert_eq!(a + 1, 504);
 }

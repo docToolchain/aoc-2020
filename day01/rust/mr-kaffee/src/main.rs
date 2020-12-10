@@ -1,63 +1,7 @@
-use std::error::Error;
 use std::fs;
-
-fn part1(list: &[i32]) -> Result<i32, &str> {
-    // find 2-combination that sums to 2020
-    // idx values start counting from 0,
-    // indices to slice are
-    //   i1 = idx1,
-    //   i2 = idx1 + idx2 + 1
-    for (idx1, v1) in list[..list.len() - 1].iter().enumerate() {
-        for (idx2, v2) in list[idx1 + 1..].iter().enumerate() {
-            if v1 + v2 == 2020 {
-                println!(
-                    "Values at {}/{}: {} + {} = 2020",
-                    idx1,
-                    idx1 + idx2 + 1,
-                    v1,
-                    v2
-                );
-                return Ok(v1 * v2);
-            }
-        }
-    }
-
-    Err("Could not solve part 1")
-}
-
-fn part2(list: &[i32]) -> Result<i32, &str> {
-    // find 3-combination that sums to 2020
-    // idx values start counting from 0
-    // indices to slice are
-    //   i1 = idx1,
-    //   i2 = idx1 + idx2 + 1,
-    //   i3 = idx1 + idx2 + idx3 + 2
-    for (idx1, v1) in list[..list.len() - 2].iter().enumerate() {
-        for (idx2, v2) in list[idx1 + 1..list.len() - 1].iter().enumerate() {
-            // if v1 + v2 >= 2020, there is no way that v1 + v2 + v3 == 2020
-            if v1 + v2 >= 2020 {
-                continue;
-            }
-
-            for (idx3, v3) in list[idx1 + idx2 + 2..].iter().enumerate() {
-                if v1 + v2 + v3 == 2020 {
-                    println!(
-                        "Values at {}/{}/{}: {} + {} + {} = 2020",
-                        idx1,
-                        idx1 + idx2 + 1,
-                        idx1 + idx2 + idx3 + 2,
-                        v1,
-                        v2,
-                        v3
-                    );
-                    return Ok(v1 * v2 * v3);
-                }
-            }
-        }
-    }
-
-    Err("Could not solve part 2")
-}
+use std::error::Error;
+use std::time::Instant;
+use mr_kaffee_2020_01::*;
 
 fn read_input() -> Result<Vec<i32>, Box<dyn Error>> {
     let content = fs::read_to_string("input.txt")?;
@@ -70,18 +14,47 @@ fn read_input() -> Result<Vec<i32>, Box<dyn Error>> {
     Ok(list)
 }
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let list = read_input()?;
+fn main() {
+    let list = read_input()
+        .expect("Could not read from file");
+
+    const R1: i32 = 381_699;
 
     // solve part 1, check & print
-    let r1 = part1(&list)?;
-    assert_eq!(r1, 381_699);
-    println!("Solved part 1: {}", r1);
+    let now = Instant::now();
+    let r1 = solve_n2(&list);
+    println!("Solved part 1 with tuple combinations in {} us -> {}", now.elapsed().as_micros(), r1);
+    assert_eq!(r1, R1);
+
+    // solve with generic method
+    let now = Instant::now();
+    let r1 = solve_with_itertools(&list, 2);
+    println!("Solved part 1 with itertools::combinations in {} us -> {}", now.elapsed().as_micros(), r1);
+    assert_eq!(r1, R1);
+
+    // solve with generic method without iterators
+    let now = Instant::now();
+    let r1 = solve_with_while(&list, 2);
+    println!("Solved part 1 with while loop in {} us -> {}", now.elapsed().as_micros(), r1);
+    assert_eq!(r1, R1);
+
+    const R2: i32 = 111_605_670;
 
     // solve part 2, check & print
-    let r2 = part2(&list)?;
-    assert_eq!(r2, 111_605_670);
-    println!("Solved part 2: {}", r2);
+    let now = Instant::now();
+    let r2 = solve_n3(&list);
+    assert_eq!(r2, R2);
+    println!("Solved part 2 with tuple combinations in {} us -> {}", now.elapsed().as_micros(), r2);
 
-    Ok(())
+    // solve with generic method
+    let now = Instant::now();
+    let r2 = solve_with_itertools(&list, 3);
+    println!("Solved part 2 with itertools::combinations in {} us -> {}", now.elapsed().as_micros(), r2);
+    assert_eq!(r2, R2);
+
+    // solve with generic method without iterators
+    let now = Instant::now();
+    let r2 = solve_with_while(&list, 3);
+    println!("Solved part 2 with while loop in {} us -> {}", now.elapsed().as_micros(), r2);
+    assert_eq!(r2, R2);
 }
