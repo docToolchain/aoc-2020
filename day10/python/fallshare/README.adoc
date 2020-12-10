@@ -1,0 +1,7 @@
+== Day 10: Adapter Array
+
+
+[source, python]
+....
+include::solution.py[]
+....
