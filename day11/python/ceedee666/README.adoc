@@ -1,0 +1,25 @@
+== Day 11
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* the functools library 
+* the itertool library
+* the collections library
+
+This puzzle took me a lot longer then it probably should have and my code turned out somewhat messy :(
+=== Idea
+
+Implement the rules and execute them step by step. 
+Very similar to Conways GoL.
+
+=== What I learned
+
+Used a generator function to implement the simulation.
+
+=== How to run
+
+Run using:
+`$ python day11.py --help`
