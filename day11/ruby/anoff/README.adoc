@@ -1,0 +1,32 @@
+Puzzle: https://adventofcode.com/2020/day/11[Seating System]
+
+== Part 1
+
+Yay game of life!
+
+The only part I had to think about a bit was how to deal with the whole _look at all seats at once and make up their future state before applying it_ thing.
+Decided to just create a temporary seatmap cloned from the current where I modify the seats and then replace the map of the original instance.
+
+Again learned that testing is super helpful.. had a stupid mistake again where I checked for `>4` occupied seats instead of `>= 4` seats.
+The first test cases I wrote were fine with this but the final one caught the error.
+
+Also messed up x/y at one point and that only caused an error with the real input not with the test inputs..
+
+== Part 2
+
+This is one of the cases where I couldn't be bothered with thinking of a solution to make my code run ruleset 1 and 2..so I just cloned my `Seatmap` class and adapted the methods accordingly :D
+Only issue I faced is that my method for finding _the next seat in line of sight_ did not consider hitting the end of the map and at first created some nice infinite loops.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

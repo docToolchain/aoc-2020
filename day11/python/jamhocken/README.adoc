@@ -1,0 +1,27 @@
+
+Day 11 of year 2020
+https://adventofcode.com/2020/day/11
+
+Oooo! The game of life.
+
+== What I learned
+
+. Sometimes you need to create a function to visualize what is going on.
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. I create a dictionary for each entry. The position on the grid is the key (as a tuple) and the value is one of the 3 symbols.
+. I also created a function to visualize the room. This helped a lot when I was debugging.
+. Both problems are essentially the same with minor changes.
+.. You have a function with a while loop that creates the new seating occupancy and loops until there is no change between iterations. Within this loop, I gather the occupancy of all neighbors of the current chair and add up how many are occupied and apply the rule.
+.. The find neighbors function uses one of the two rules to find the next neighbor to your current position. It returns a 3x3 list of lists (matrix) with the occupancy. The own chair is not counted (is 0) and if you hit an edge, the entry is also zero.
+... Holding all neighbors in the vector is not really necessary (you could just sum right away), but it was helpful for debugging.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
