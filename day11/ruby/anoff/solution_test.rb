@@ -15,7 +15,7 @@ class TestSolution < Test::Unit::TestCase
   # visual testing.. :D
   def Ttest_SeatmapStep
     input = readInput("./input_test.txt")
-    s = Seatmap.new(input)
+    s = Seatmap2.new(input)
     s.print
     s.step
     puts s.occupiedSeatCount(2, 0)
@@ -24,5 +24,10 @@ class TestSolution < Test::Unit::TestCase
   def test_part1
     input = readInput("./input_test.txt")
     assert_equal 37, part1(input)
+  end
+
+  def test_part2
+    input = readInput("./input_test.txt")
+    assert_equal 26, part2(input)
   end
 end
