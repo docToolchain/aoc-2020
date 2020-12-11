@@ -12,6 +12,9 @@ How does it work: +
 
 The puzzle input is read into a map, and step by step for each posiition the rules for taking a seat or standing up are applied. This is coninued until no change takes place, and the resulting numbers of occupied places are returned.
 
+Update: Peter proposed not to use the coordinates in a string, better to use Pair, so I changed the first part of this programm to use Pairs. At least makes code much more readable and handling easier. (part2 is still the old way, so everybody could compare)
+Thx @Peter!.
+
 [source, kotlin, numbered]
 ....
 include::day2011_1_2.kts[tags=create_seat_plan]
