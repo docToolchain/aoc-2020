@@ -1,0 +1,39 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 11: Seating System
+https://adventofcode.com/2020/day/11
+
+=== Info
+
+Game of Seats: Change free / occupied seats in timesteps, based on adjacent seats' status
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Find amount of taken seats in stable distribution
+. Framebuffers
+. Function to compare framebuffers
+. Function to count adjacent seats
+. Count iterations
+
+.Star2: 
+. ?
+
+=== Learned today
+
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
