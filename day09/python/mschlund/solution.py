@@ -1,5 +1,3 @@
-
-
 class XMASCode:
   def __init__(self, size):
     self._num_elems = 0
