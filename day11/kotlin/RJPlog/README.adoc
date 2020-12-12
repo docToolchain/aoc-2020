@@ -15,6 +15,8 @@ The puzzle input is read into a map, and step by step for each posiition the rul
 Update: Peter proposed not to use the coordinates in a string, better to use Pair, so I changed the first part of this programm to use Pairs. At least makes code much more readable and handling easier. (part2 is still the old way, so everybody could compare)
 Thx @Peter!.
 
+For all improvments of suggested by Peter checkout day2011_1_2_rework.kts
+
 [source, kotlin, numbered]
 ....
 include::day2011_1_2.kts[tags=create_seat_plan]
