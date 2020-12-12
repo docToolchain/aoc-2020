@@ -1,0 +1,23 @@
+
+Day 10 of year 2020
+https://adventofcode.com/2020/day/10
+
+== Approach
+
+. clean up input by converting it to integer values and sorting it
+. Part 1
+.. go through input and check if the next elements value is 1, 2 or 3 higher than the current elements value.
+... if it is, increment the corresponding counter
+... if it is not, break
+. Part 2
+.. create a new list which contains the differences between elements values
+.. creata a new list which contains the length of consecutive differences of 1
+.. multiply the possibilities of the different lengths
+
+== Run script
+Run the solution with `python Day_10.py`
+
+[source, python]
+....
+include::Day_10.py[]
+....

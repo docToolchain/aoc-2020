@@ -155,13 +155,13 @@ fun seats_occupied_2(): Int {
 
 // tag::create_seat_plan[]
 fun seats_occupied(): Int {
-	var Grid = mutableMapOf<String, String>()
+	var Grid = mutableMapOf<Pair<Int, Int>, String>()
 	var x: Int = 0
 	var y: Int = 0
 
 	File("day2011_puzzle_input.txt").forEachLine {
 		it.forEach {
-			Grid.put(x.toString() + "=" + y.toString(), it.toString())
+			Grid.put(Pair(x,y), it.toString())
 			x++
 		}
 		y++
@@ -169,7 +169,7 @@ fun seats_occupied(): Int {
 	}
 
 	var sum: Int
-	var Grid_new = mutableMapOf<String, String>()
+	var Grid_new = mutableMapOf<Pair<Int, Int>, String>()
 	var gameend: Boolean = false
 	var count: Int = 0
 
@@ -177,9 +177,8 @@ fun seats_occupied(): Int {
 		gameend = true
 		Grid.forEach {
 			var texture = it.value
-			var position = it.key.split("=")
-			var xpos = position[0].toInt()
-			var ypos = position[1].toInt()
+			var xpos = it.key.first
+			var ypos = it.key.second
 
 			var cond1: Boolean
 			var cond2: Boolean
@@ -187,27 +186,9 @@ fun seats_occupied(): Int {
 			sum = 0
 
 			if (texture.equals("L")) {
-				cond1 =
-					!Grid.getOrDefault(
-						(xpos - 1).toString() + "=" + (ypos - 1).toString(),
-						"."
-					).equals("#") && !Grid.getOrDefault((xpos).toString() + "=" + (ypos - 1).toString(), ".").equals(
-						"#"
-					) && !Grid.getOrDefault((xpos + 1).toString() + "=" + (ypos - 1).toString(), ".").equals("#")
-				cond2 =
-					!Grid.getOrDefault(
-						(xpos - 1).toString() + "=" + (ypos).toString(),
-						"."
-					).equals("#") && !Grid.getOrDefault((xpos + 1).toString() + "=" + (ypos).toString(), ".").equals(
-						"#"
-					)
-				cond3 =
-					!Grid.getOrDefault(
-						(xpos - 1).toString() + "=" + (ypos + 1).toString(),
-						"."
-					).equals("#") && !Grid.getOrDefault((xpos).toString() + "=" + (ypos + 1).toString(), ".").equals(
-						"#"
-					) && !Grid.getOrDefault((xpos + 1).toString() + "=" + (ypos + 1).toString(), ".").equals("#")
+				cond1 = !Grid.getOrDefault(Pair(xpos - 1,ypos - 1),".").equals("#") && !Grid.getOrDefault(Pair(xpos,ypos - 1), ".").equals("#") && !Grid.getOrDefault(Pair(xpos + 1,ypos - 1), ".").equals("#")
+				cond2 = !Grid.getOrDefault(Pair(xpos - 1,ypos),".").equals("#") && !Grid.getOrDefault(Pair(xpos + 1,ypos), ".").equals("#")
+				cond3 = !Grid.getOrDefault(Pair(xpos - 1,ypos + 1),".").equals("#") && !Grid.getOrDefault(Pair(xpos,ypos + 1), ".").equals("#") && !Grid.getOrDefault(Pair(xpos + 1,ypos + 1), ".").equals("#")
 				if (cond1 && cond2 && cond3) {
 					Grid_new.put(it.key, "#")
 					gameend = false
@@ -215,28 +196,28 @@ fun seats_occupied(): Int {
 					Grid_new.put(it.key, "L")
 				}
 			} else if (texture.equals("#")) {
-				if (Grid.getOrDefault((xpos - 1).toString() + "=" + (ypos - 1).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos - 1,ypos - 1), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos).toString() + "=" + (ypos - 1).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos,ypos - 1), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos + 1).toString() + "=" + (ypos - 1).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos + 1,ypos - 1), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos - 1).toString() + "=" + (ypos).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos - 1,ypos), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos + 1).toString() + "=" + (ypos).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos + 1,ypos), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos - 1).toString() + "=" + (ypos + 1).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos - 1,ypos + 1), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos).toString() + "=" + (ypos + 1).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos,ypos + 1), ".").equals("#")) {
 					sum++
 				}
-				if (Grid.getOrDefault((xpos + 1).toString() + "=" + (ypos + 1).toString(), ".").equals("#")) {
+				if (Grid.getOrDefault(Pair(xpos + 1,ypos + 1), ".").equals("#")) {
 					sum++
 				}
 				if (sum > 3) {
@@ -262,6 +243,7 @@ fun seats_occupied(): Int {
 	return count
 }
 // end::create_seat_plan[]
+
 
 //fun main(args: Array<String>) {
 

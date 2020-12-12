@@ -1,0 +1,36 @@
+== Day 12: Rain Risk ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/12
+
+For execution enter _kotlin day20012_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+This is just interpreting the input and adding up x and y positions according to the instructions. For the forward command a simple direction pointer is implemented
+
+[source, kotlin, numbered]
+....
+include::day2012_1_2.kts[tags=storm]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Same as above, just the instructions are interpreted according to the new rules.
+
+[source, kotlin, numbered]
+....
+include::day2012_1_2.kts[tags=storm_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2012_1_2.kts[tags=output]
+....
