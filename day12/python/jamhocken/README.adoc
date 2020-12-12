@@ -1,0 +1,33 @@
+
+Day 12 of year 2020
+https://adventofcode.com/2020/day/12
+
+Seems mostly like a brute force job
+
+== What I learned
+
+. This one was pretty straightforward.
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. I put the codes into a list of tuples. First entry is the letter code, second entry is the integer value.
+. Problem 1:
+.. I created a list of tuples with the current direction as well as the position of the ship.
+.. Append the next direction and position to the list within a for loop for all instructions using a function taking the current tuple from the list, the code and the value.
+... 'N','S','E','W' are straightforward.
+... For 'F' you just call the function again but with the current ship's direction as th code.
+... Rotate is straightforward since all values are multiples of 90.
+.. The last entry in the list is used to calculate the answer. You actually don't need a list, but it made it easier to debug. 
+. Problem 2:
+.. 2 lists of tuples. One for the waypoint and one for the ship. You don't need to keep the ship's direction anymore.
+.. Otherwise, similar to problem 1. Actually, the calculations are almost easier than for problem 1...
+
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
