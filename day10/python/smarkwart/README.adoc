@@ -1,0 +1,30 @@
+== Day 10
+
+
+For this day I tried to use python list comprehension in order to solve the puzzles.
+
+=== Usage
+
+python day10.py <filename>
+
+filename: name of file containing the data for this puzzle
+
+=== My solution for star 2 of day 10:
+
+I decided to put the adapters into a tree with each adapter being a node object. Therefore I walk through the reverse sorted list of adapters. Meaning from leave to root of the tree. Therefore I can refer to already evaluated adapter objects and add them as children to the current adapter object. Since that way I need to walk through the list only once building up the tree is done with linear complexity.
+
+For counting all possible combinations now you could ask, starting from the root, every child node how many leaves are below it. Every child node would recursively ask its children and so forth. In general this works, but with rather higher complexity (nearly exponential, an increase of 1 in the list in worst case nearly doubles the number of branches).
+
+But nevertheless this can be easily brought down to linear complexity by immediately evaluating the number of leaves of the sub-tree when a node is completed (this is known, because of the puzzles rules). Then its just a look up at the children and no recursive function.
+
+. Walk through the reverse sorted (largest to smallest) list of adapters
+. For each adapter identify the children (according to rule) and take them from the list of already evaluated adapter objects
+. When all children for an adapter are identified calculate the number of leaves of the current sub-tree (freeze node)
+. Add adapter to the list of evaluated adapter objects
+. Repeat steps 2) to 4) for all adapters 
+. Get number of leaves for root node. 
+
+[source, python]
+....
+include::day10.py[]
+....

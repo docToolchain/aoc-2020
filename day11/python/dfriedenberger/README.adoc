@@ -1,0 +1,23 @@
+Day 11 of year 2020
+https://adventofcode.com/2020/day/11
+
+TIP: Python only can use one constructor.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
+
+=== Class
+....
+include::src/util.py[tags=TreeMap]
+....

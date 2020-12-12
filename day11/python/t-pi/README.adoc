@@ -1,0 +1,44 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 11: Seating System
+https://adventofcode.com/2020/day/11
+
+=== Info
+
+Game of Seats: Change free / occupied seats in timesteps, based on adjacent seats' status.
+No neighbours -> empty seat gets occupied
+(3 + star) neighbours -> occupied seat gets empty
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Find amount of taken seats in stable distribution
+. Iterate through timesteps
+. Compare iteration with previous floor plan
+. Count seats
+
+.Star2: Modify seat counting to line of sight neighbours
+. Extend neighbour testing by linear scaling until seat or end-of-boat is found
+. Modify rule2 to be dependent on star
+
+=== Learned today
+
+* list.copy() only works as intended (by me) with immutable elements
+* import copy & copy.deepcopy(list) required
+* first experiments with maps were quickly thwarted by list of lists 🙄
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
