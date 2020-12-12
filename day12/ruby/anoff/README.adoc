@@ -1,0 +1,30 @@
+Puzzle: https://adventofcode.com/2020/day/12[Rain Risk]
+
+== Part 1
+
+Decided to implement a class to keep the state of position and direction.
+Added some basic unit tests to check if my direction instructions work as intended and then implemented a test using the sample input.
+
+Running through the actual input worked on first try. Testing ftw!
+
+== Part 2
+
+
+== Solution
+
+[source, ruby]
+....
+include::ship.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
