@@ -1,8 +1,9 @@
 class Ship
-  attr_reader :pos, :dir
+  attr_reader :pos, :dir, :waypoint
   def initialize
     @dir = Pos2D.new(1, 0) # face east
     @pos = Pos2D.new(0, 0)
+    @waypoint = Pos2D.new(10, 1)
   end
 
   def move(instruction)
@@ -78,6 +79,38 @@ class Ship
       raise "Unexpected direction detected: #{@dir.x},#{@dir.y}"
     end
   end
+
+  def move_with_waypoint(instruction)
+    cmd = instruction.slice(0)
+    value = instruction.slice(1, instruction.size).to_i
+    case cmd
+    when "N"
+      @waypoint.y += value
+    when "S"
+      @waypoint.y -= value
+    when "E"
+      @waypoint.x += value
+    when "W"
+      @waypoint.x -= value
+    when "L"
+      distance = Math.sqrt(@waypoint.x.pow(2) + @waypoint.y.pow(2))
+      angle = Math.atan2(@waypoint.y, @waypoint.x)
+      angle += Math::PI * value/180
+      @waypoint.x = (distance * Math.cos(angle)).round
+      @waypoint.y = (distance * Math.sin(angle)).round
+    when "R"
+      distance = Math.sqrt(@waypoint.x.pow(2) + @waypoint.y.pow(2))
+      angle = Math.atan2(@waypoint.y, @waypoint.x)
+      angle -= Math::PI * value/180
+      @waypoint.x = (distance * Math.cos(angle)).round
+      @waypoint.y = (distance * Math.sin(angle)).round
+    when "F"
+      @pos.x += value * @waypoint.x
+      @pos.y += value * @waypoint.y
+    else
+      raise "Error unknown instruction: #{instruction}"
+    end
+  end
 end
 
 class Pos2D
@@ -85,5 +118,9 @@ class Pos2D
   def initialize(x, y)
     @x = x
     @y = y
+  end
+
+  def ==(o)
+    @x == o.x && @y == o.y
   end
 end

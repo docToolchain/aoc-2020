@@ -20,4 +20,18 @@ class TestSolution < Test::Unit::TestCase
     assert_equal 25, part1(input)
   end
 
+  def test_waypoint
+    s = Ship.new
+    assert_equal Pos2D.new(10, 1), s.waypoint
+    s.move_with_waypoint("L90")
+    assert_equal Pos2D.new(-1, 10), s.waypoint
+    s.move_with_waypoint("L180")
+    assert_equal Pos2D.new(1, -10), s.waypoint
+    s.move_with_waypoint("R270")
+    assert_equal Pos2D.new(10, 1), s.waypoint
+  end
+  def test_part2
+    input = readInput("./input_test.txt")
+    assert_equal 286, part2(input)
+  end
 end

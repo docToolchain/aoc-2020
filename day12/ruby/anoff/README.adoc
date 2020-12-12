@@ -9,6 +9,12 @@ Running through the actual input worked on first try. Testing ftw!
 
 == Part 2
 
+Oh god it has been too long that I needed to use geometry.
+At first tried building upon my simple _rotation logic_ from part 1, but failed when I realized that we can now have arbitrary angles to rotate and not just switch from one axis to another.
+Remembered to do some `atan2` magic to go from x/y to angles and do the operation there.
+
+SNAFU: Overlooked that Ruby's `atan2(y, x)` takes `y` argument first.
+Since all my code uses x first, y second I messed up here and had some weird results in the tests.
 
 == Solution
 
