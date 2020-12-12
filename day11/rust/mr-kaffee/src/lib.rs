@@ -55,17 +55,17 @@ impl Grid {
     /// assert_eq!(changed, g1 != g2);
     /// ```
     pub fn update(&self, depth: usize, threshold: usize) -> (Grid, bool) {
-        let mut data = Vec::new();
-        for i in 0..self.width * self.height {
-            data.push(match self.data[i] {
+        let data = self.data.iter().enumerate().map(|(i, v)|
+            match v {
                 '.' => '.',
                 'L' if self.count_occupied(i, depth) == 0 => '#',
                 '#' if self.count_occupied(i, depth) >= threshold => 'L',
-                v => v,
-            });
-        };
+                v => *v,
+            }).collect();
+
         let grid = Grid { data, width: self.width, height: self.height };
         let changed = &grid != self;
+
         (grid, changed)
     }
     // end::update[]

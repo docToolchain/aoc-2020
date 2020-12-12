@@ -31,3 +31,7 @@ debug/
 target/
 Cargo.lock
 **/*.rs.bk
+
+# Ignore IntelliJ IDEA stuff
+.idea
+*.iml
