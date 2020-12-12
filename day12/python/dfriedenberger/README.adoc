@@ -1,0 +1,24 @@
+Day 10 of year 2020
+https://adventofcode.com/2020/day/10
+
+TIP: Use numpy matrix/vector operations.
+[source, python]
+....
+include::src/util.py[tags=rotate]
+....
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
+
+
