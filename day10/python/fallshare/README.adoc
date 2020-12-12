@@ -1,0 +1,16 @@
+== Day 10: Adapter Array
+ 
+=== Star 1
+Calculating the histogram.
+
+=== Star 2
+ All adapters in the box where the next adapter has a jolt distance of 3  must be in the adapter chain.
+ Otherwhise no chain can be formed. Those adapters can be seen as seperators that can be used to split down the big bag of adapters into smaller lists of adapters. 
+ The possible combinations for those smaller list can individually be calculated. 
+ In the end the amout of combinations of the sublist is multiplied to get the total number of possible combinations
+    
+
+[source, python]
+....
+include::solution.py[]
+....
