@@ -1,8 +1,8 @@
 == Day 13: Shuttle Search ==
 
-My favorite challange in this year so far!
-
 Rust solution for https://adventofcode.com/2020/day/13[AoC 2020, Day 13]
+
+My favorite challenge in this year so far!
 
 Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
 

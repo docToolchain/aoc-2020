@@ -28,8 +28,8 @@ include::src/main.rs[tags=to_deltas]
 include::src/main.rs[tags=count_deltas]
 ----
 
-Still managed to program some bugs in it which.
-After one wrong attempt, I implemented my test... (TDD?!)
+Still managed to implement some bugs in my solution.
+After one wrong attempt, I started implementing tests... (TDD?!)
 
 Part two is more tricky, and the first puzzle this year, where I exploit structure of the puzzle input.
 the fact that the distance between two neighbouring adaptors is either one or three but never two is important!
