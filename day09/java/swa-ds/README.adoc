@@ -8,6 +8,5 @@ Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `{d
 
 [source,java, linenums]
 ----
-include::{day}.java
+include::{day}.java[]
 ----
-
