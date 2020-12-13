@@ -26,6 +26,14 @@ include::src/lib.rs[tags=find_time]
 ----
 
 I find it quite amazing that the solution only takes a couple of microseconds.
+After comparing with other solutions, I realized that the key for performance is to go bus by bus and not so much how to solve the linear equations with a module.
+Searching for those solutions iteratively is merely slower. I implemented a variant:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=find_time_iteratively]
+----
+
 
 I have to admit it took me quite a while to get the algorithm right.
 In addition to test driven development, properly writing down your algorithm before you try to encode it in an iterator adaptor definitely helps.
