@@ -25,7 +25,6 @@ print('The product of those 2 numbers is', schedule[my_bus][0]*bus_wait[my_bus])
 ref_time = schedule[0][0]
 time_fixed = 0
 for bus in schedule:
-    flag = 1
     i = 0
     while (time_fixed+ref_time*i + bus[1]) % bus[0] != 0:
             i += 1
