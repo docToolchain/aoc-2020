@@ -27,10 +27,8 @@ time_fixed = 0
 for bus in schedule:
     flag = 1
     i = 0
-    while flag == 1:
-        if (time_fixed+ref_time*i + bus[1]) % bus[0] == 0:
-            flag = 0
-        else: i += 1
+    while (time_fixed+ref_time*i + bus[1]) % bus[0] != 0:
+            i += 1
     time_fixed = time_fixed + ref_time*i
     if bus[1] != 0:
         ref_time = ref_time*bus[0]
