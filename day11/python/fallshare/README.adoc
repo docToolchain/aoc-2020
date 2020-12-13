@@ -1,0 +1,13 @@
+== Day 11: Seating System
+
+This is one of the challenges were TDD would have been handy.
+I used some printf debugging to verify that everything works fine.
+
+Due to lack of time I decided to hard copy all required methods for Star 2 from Star1.
+There is a lot of duplicate code and technical debt left behind.
+I decided to not clean it up seens I'm already 2 days behind and want to catch up.
+
+[source, python]
+....
+include::solution.py[]
+....

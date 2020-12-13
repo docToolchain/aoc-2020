@@ -1,0 +1,36 @@
+Puzzle: https://adventofcode.com/2020/day/12[Rain Risk]
+
+== Part 1
+
+Decided to implement a class to keep the state of position and direction.
+Added some basic unit tests to check if my direction instructions work as intended and then implemented a test using the sample input.
+
+Running through the actual input worked on first try. Testing ftw!
+
+== Part 2
+
+Oh god it has been too long that I needed to use geometry.
+At first tried building upon my simple _rotation logic_ from part 1, but failed when I realized that we can now have arbitrary angles to rotate and not just switch from one axis to another.
+Remembered to do some `atan2` magic to go from x/y to angles and do the operation there.
+
+SNAFU: Overlooked that Ruby's `atan2(y, x)` takes `y` argument first.
+Since all my code uses x first, y second I messed up here and had some weird results in the tests.
+
+== Solution
+
+[source, ruby]
+....
+include::ship.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

@@ -1,0 +1,44 @@
+== Day 09
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+We save all numbers in a custom-written ring-buffer (=queue) of size 25.
+I.e. if the buffer is already full, each new number pushed will
+evict the oldest number stored. In python we can easily implement a queue
+via a list using "append" and "pop(0)"
+
+=== First Star
+We compute in a very blunt way the sum of all pairs of numbers in the ring-buffer
+and check if the number is there.
+
+```python
+  def is_valid(self, number):
+    self._sum_pairs = {x+y for x in self._buffer for y in self._buffer}
+    return number in self._sum_pairs
+```
+
+=== Second Star
+We use a queue to store our segment.
+The total sum of elements in the queue is tracked
+(yes and it is recomputed each time a new value is pushed -- this could be optimized but well..)
+If the total sum is still less than the target-value we search, then we add the next number to the queue.
+If it is larger, we evict the oldest element and continue.
+
+```python
+def find_contiguous_seq(all_numbers, target):
+  seq = []
+  i = 0
+  while i < len(all_numbers):
+    if sum(seq) == target:
+      return seq
+    elif sum(seq) < target:
+      seq.append(all_numbers[i])
+      i += 1
+    elif sum(seq) > target:
+      seq.pop(0)
+  return []
+```
