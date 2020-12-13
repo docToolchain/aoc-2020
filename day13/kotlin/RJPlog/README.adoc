@@ -1,0 +1,42 @@
+== Day 13: Shuttle Search ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/13
+
+For execution enter _kotlin day20013_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+After reading the earliest time to leave in line one, all bus ID's ar read into a list. Then for each element the next possible departure is calculated, and whenever smaller than before, stored, at same time the return value is calculated and stored. After finishing working trough the list, the result is returned. This was the easy part.
+
+[source, kotlin, numbered]
+....
+include::day2013_1_2.kts[tags=bus]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+First of all, it seemd that you have just to add the offsets accoring to the appearence in the input, and than calculate time step for time step, if each bus follows it's designated departure time x timesteps after the final timestep according to the puzzle input. 
+
+This works for all test cases, but for the final input it is way to long, even when starting after 100000000000000. 
+
+So that's why I implemented a dynamic step size approach, as soon as the right frequency between Bus 1 and Bus2 is recognised, step size is adapted to that new frequency, and a new frequence is calculated based on bus 1 and next one, so the step size is getting bigger and bigger. At the end you reach the goal in dramatically faster. Run the file, the dynamic step_size is printed out, also the necessary number of steps.
+
+This was up to now the most challenging puzzle for me.
+
+[source, kotlin, numbered]
+....
+include::day2013_1_2.kts[tags=bus_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2013_1_2.kts[tags=output]
+....
