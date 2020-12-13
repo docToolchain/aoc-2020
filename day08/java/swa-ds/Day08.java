@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 public class Day08 {
@@ -127,33 +129,31 @@ class Jmp extends Operation {
 //tag::parser[]
 class Parser {
 
+    private static final Map<String, Supplier<Operation>> OPERATIONS = new HashMap<>();
+
+    static {
+        OPERATIONS.put("nop", Nop::new);
+        OPERATIONS.put("acc", Acc::new);
+        OPERATIONS.put("jmp", Jmp::new);
+    }
+
+    static Operation toOperation(String lineOfCode) {
+        String[] split = lineOfCode.split(" ");
+        Supplier<Operation> opSupplier = OPERATIONS.get(split[0]);
+        if (opSupplier == null) {
+            throw new IllegalArgumentException("Instruction '" + split[0] + "' is not supported");
+        }
+        Operation op = opSupplier.get(); // <1>
+        op.value = Integer.parseInt(split[1]); // <2>
+        return op;
+    }
+
     public static Program parse(List<String> linesOfCode) {
         Program newProgram = new Program();
         newProgram.operations = linesOfCode.stream()
                 .map(Parser::toOperation)
                 .toArray(Operation[]::new);
         return newProgram;
-    }
-
-    static Operation toOperation(String lineOfCode) {
-        String[] split = lineOfCode.split(" ");
-        Operation op; // <1>
-        // if we'd have Java 14, we could use the more convenient switch expression (but using JDK 11)
-        switch (split[0]) {
-            case "nop":
-                op = new Nop();
-                break;
-            case "acc":
-                op = new Acc();
-                break;
-            case "jmp":
-                op = new Jmp();
-                break;
-            default:
-                throw new UnsupportedOperationException("Operation '" + split[0] + "' is not supported!");
-        }
-        op.value = Integer.parseInt(split[1]); // <2>
-        return op;
     }
 }
 //end::parser[]
