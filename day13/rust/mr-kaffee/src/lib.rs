@@ -1,5 +1,4 @@
 use std::cmp::Ordering;
-use itertools::Itertools;
 
 pub fn parse(content: &str) -> (i64, Vec<Option<i64>>) {
     let mut lines = content.lines();
@@ -32,9 +31,8 @@ pub fn find_earliest_departure(earliest: i64, ids: &[Option<i64>]) -> (i64, i64)
 }
 // end::find_earliest_departure[]
 
-/// Calculate multiplicate inverse of a modulo m
-/// See https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm: Extended
-/// Euclidean algorithm
+/// Calculate multiplicate inverse of `a` modulo `m`
+/// with the [Extended Euclidean Algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)
 ///
 /// # Panics
 /// if a and m are not co-prime
@@ -75,54 +73,68 @@ pub fn mul_inverse_mod(a: i64, m: i64) -> i64 {
 }
 
 // tag::find_time[]
-/// Find time which satisfied `(t + off[i]) % id[i] == 0` for all ship ids
+/// Find time which satisfied `(t + pos[i]) % id[i] == 0` for all ship ids
 ///
 /// # Algorithm
 ///
-/// The algorithm update the time `t` for every position solving equations of the form
-/// `(a k + b) % m = 0` for k which is not an x as follows.
+/// The algorithm updates the time `t` for every position `pos[i]` where
+/// `id[i] = id[pos[i]] != "x"`, solving equations of the form `(a k + b) % m = 0` for `k` as
+/// follows.
 ///
 /// ## Initial Step
-/// ``
-///   a[0] = 1
-///   k[0] = 0
-///   t[0] = 0
-/// ``
 ///
-/// ## Loop (i >= 1)
-/// ``
-///   a[i] = id[i - 1] * a[i - 1]
-///   k[i]: solve (t[i - 1] + k[i] * a[i] + pos[i]) % id[i] == 0
-///   t[i] = t[i - 1] + k[i] * a[i]
-/// ``
+/// 1. `t[0] = 0`
+/// 2. `a[0] = id[0]`
+///
+/// ## Loop (`i >= 1`)
+///
+/// 1. solve `(t[i - 1] + k * a[i - 1] + pos[i]) % id[i] == 0` for k
+/// 2. `t[i] = t[i - 1] + k * a[i - 1]`
+/// 3. `a[i] = id[i - 1] * a[i - 1]`
+///
+/// ## Solving linear equations with modulo
+///
+/// The solution of `(a k + b) % m = 0` for `k` generally requires `a` and `m` to be co-prime and
+/// is done with a multiplicative inverse `a` modulo `m`. See [`mul_inverse_mod`]
 ///
 /// # Panics
-/// if any of the ids are not co-prime or the first id is an `x`
+/// if any of the ids are not co-prime or the first id is an `x` in the list
 ///
 pub fn find_time(ids: &[Option<i64>]) -> i64 {
-    assert!(ids[0].is_some(), "First entry must not be a None value");
-
     let (t, ..) = ids.iter().enumerate()
-        .batching(|it|
-            loop {
-                return match it.next() {
-                    None => None,
-                    Some((pos, Some(id))) => Some((pos as i64, *id)),
-                    _ => continue
-                };
-            })
+        .filter(|(_, v)| v.is_some())
+        .map(|(pos, id)| (pos as i64, id.unwrap()))
         .skip(1).fold(
-        (0, 1, ids[0].unwrap()),
-        |(t, a, last_id), (pos, id)| {
-            let a = last_id * a;
+        (0, ids[0].expect("First entry must not be a None value")),
+        |(t, a), (pos, id)| {
             let k = ((-mul_inverse_mod(a, id) * (t + pos)) % id + id) % id;
-            let t = t + k * a;
-            (t, a, id)
+            (t + k * a, a * id)
         });
 
     t
 }
 // end::find_time[]
+
+// tag::find_time_iteratively[]
+/// Solution idea of James Hockenberry re-implemented in rust
+///
+/// Instead of calculating the multiplicative inverse, iteratively looks for the right multiple
+/// of the time bus by bus
+pub fn find_time_iteratively(ids: &[Option<i64>]) -> i64 {
+    let (t, ..) = ids.iter().enumerate()
+        .filter(|(_, v)| v.is_some())
+        .map(|(pos, id)| (pos as i64, id.unwrap()))
+        .skip(1).fold(
+        (0, ids[0].expect("First entry must not be a None value")),
+        |(t, a), (pos, id)| {
+            let mut k = 0;
+            while (t + k * a + pos) % id != 0 { k += 1; };
+            (t + k * a, a * id)
+        });
+
+    t
+}
+// end::find_time_iteratively[]
 
 #[cfg(test)]
 mod tests {
@@ -164,6 +176,13 @@ mod tests {
     fn test_find_time() {
         let ids = bus_ids();
         let t = find_time(&ids);
+        assert_eq!(t, 1_068_781);
+    }
+
+    #[test]
+    fn test_find_time_iteratively() {
+        let ids = bus_ids();
+        let t = find_time_iteratively(&ids);
         assert_eq!(t, 1_068_781);
     }
 }

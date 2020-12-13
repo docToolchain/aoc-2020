@@ -24,4 +24,10 @@ fn main() {
     let t = find_time(&ids);
     println!("Solution part 2 done in {:?}: {}", instant.elapsed(), t);
     assert_eq!(t, 939_490_236_001_473);
+
+    // solve part 2 variant
+    let instant = Instant::now();
+    let t = find_time_iteratively(&ids);
+    println!("Solution part 2 (variant) done in {:?}: {}", instant.elapsed(), t);
+    assert_eq!(t, 939_490_236_001_473);
 }
