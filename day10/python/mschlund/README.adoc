@@ -1,0 +1,74 @@
+== Day 10
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+=== First Star
+We just have to sort the sequence of numbers and
+determine the spacings between the numbers.
+There is a very neat python-trick to determine the spacings
+(found at https://stackoverflow.com/questions/6352425/whats-the-most-pythonic-way-to-identify-consecutive-duplicates-in-a-list) 
+
+To count each gapsize we use a defaultdict:
+```python
+def count_gaps(sorted_numbers):
+  counts = defaultdict(int)
+  for fst, snd in zip(sorted_numbers, sorted_numbers[1:]):
+    gapsize = snd - fst
+    counts[gapsize] += 1
+  return counts
+```
+
+On the input if we count the spacings we get:
+
+```
+defaultdict(<class 'int'>, {1: 68, 3: 32})
+```
+
+=== Second Star
+
+Now it is getting interesting :)
+First realization: Enumeration is out of the question -- the number of possible arrangements is just too vast.
+We have to determine for each number whether it is optional or not.
+First insight: Numbers where we have a spacing of 3 are "fixed"
+-- we can never leave them out without making the resulting arrangement invalid (=no current can flow).
+So an arrangement just depends on the consecutive "blocks" (=spacings) of 1s.
+E.g.:
+[1, 2, 5, 6, 9] has the spacings
+[1, 1, 3, 1, 3] (here, it is *very* important to consider the initial spacing 0 -> 1 ...
+I forgot that at first and it cost me some time...)
+Each block of 1s corresponds to numbers that may or may not be left out.
+Here it important to observe that the number of numbers that are optional
+corresponds to the length of blocks of 1s minus 1 -- since the next spacing
+is a "3" and thus the last number of a block is not optional.
+E.g. the number of "1"s appearing consecutively minus 1 defines the number
+of numbers that can (at most) be left out. We name the number the "block_length"
+```python
+    spacings = get_spacings(sorted(all_numbers))
+    block_lengths = [x-1 for x in count_blocks_of_ones(spacings)]
+```
+The total number of arrangements is the product of the numbers of
+arrangements arising from each block
+(since different blocks can be arranged independently).
+So it remains to get for a given block-length the number of arrangements.
+For a block-lenth of 1, we have 2 arrangements,
+for length 2, there are 4 possibilties,
+for lenth 3, there are 7 (the number of all possibilities is 2^3 -- each number can be there or not,
+and only one possibility, "000" yields an invalid arrangement of adapters)
+for lengths >= 4 we can devise a recursion:
+Let n be a block-length and a_n count the number of arrangements.
+An arrangement can be seen as a bitstring -- "0" means the number is left out, "1" means it is kept.
+Consider the block from the left: If the leftmost bit is a "1",
+then the situation remaining is one where the blocklength is (n-1).
+If the left-most bit is "0", we distinguish again two cases for the
+next bit: if it is "1", the remaining situation is one where the block-length is (n-2).
+If the bit is "0" then the third bit is forced to be "1" (otherwise we have a gap of length >3)
+so the remaining situation is one of length (n-3). Assembling the cases together we have
+the simple recursion:
+$a_n = a_{n-1} + a_{n-2} + a_{n-3}$ to compute the number of arrangements yielded by a block of length n.
+
+
+

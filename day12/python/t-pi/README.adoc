@@ -1,0 +1,40 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 12: Rain Risk
+https://adventofcode.com/2020/day/12
+
+=== Info
+
+Navigation issues: Follow mixed absolute (N,E,S,W) and relative (F,L,R) instructions + distances
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Find traveled Manhattan distance (abs(x)+abs(y))
+. Change position and heading line by line & sum up
+. Output position
+
+.Star2: Still find Manhattan distance, but moving with waypoint
+. Introduce rotation function to rotate waypoint around ship
+. Else: s. Star 1
+
+=== Learned today
+
+* Small rotation matrix reminder
+* Moving from gitpod to local environment
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
