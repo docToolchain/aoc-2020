@@ -1,0 +1,44 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 14: Docking Data
+https://adventofcode.com/2020/day/14
+
+=== Info
+
+Ferry Docking - Bitmask Fun
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Add the numbers from memory, after storage through dominant bitmask and sum up
+Straightforward:
+
+. Map values with mask
+. Add to 'mem' dict at found address
+. Sum up
+
+.Star2: Add the values to masked address list, sum up
+. Identify all 'X' in masked address
+. For each 'X' add two more addresses to list ('0', '1') and run address list for next "X" in all addresses
+. Store values in 'mem' dict and sum up
+
+=== Learned today
+
+* First `re` usage - finally :)
+* Loop over all 'X's is better than first recursive approach
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
