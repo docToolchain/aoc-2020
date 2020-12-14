@@ -21,6 +21,8 @@ include::{day}.java[tags=mainPart1]
 include::{day}.java[tags=parser]
 ----
 <1> I have chosen to implement an object oriented solution with the super class `Operation` and derived classes for the specific operations.
+This way new operations can be added easily by creating new subclasses and adding them to the OPERATIONS map,
+following the open-closed principle.
 <2> To reduce code (such as repeated constructors in the subclasses and setter methods) I have decided to set the properties directly
 
 === The Operations

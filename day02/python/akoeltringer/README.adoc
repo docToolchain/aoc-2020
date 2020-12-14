@@ -1,0 +1,12 @@
+
+== Day 2 ==
+
+The solution is written in Python. The repo including utility functions, unit test etc.
+can be found https://gitlab.com/akoeltringer/advent_of_code[on Gitlab]
+
+=== Code ===
+
+[source, python, linenums]
+....
+include::solution.py[]
+....
