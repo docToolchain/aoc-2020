@@ -6,6 +6,9 @@ Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `{d
 
 == Solution
 
+For part 2 I took the liberty to "adapt" James Hockenberrys solution since I couldn't come up with one myself
+that finishes in a reasonable amount of time...
+
 [source,java, linenums]
 ----
 include::{day}.java[]
