@@ -1,0 +1,28 @@
+Puzzle: https://adventofcode.com/2020/day/14[Docking Data]
+
+== Part 1
+
+Might have worked with string ops too but decided to go for the binary operator approach.
+To make sure that all `0` in the mask end up as `0` in the value, turn the X->1 and use a binary and `&` operator.
+For the `1` do the logical opposite - turn X->0 and use OR.
+
+To make sure I store all numbers and allow overwriting I use a ruby hash and use the memory pool address as hash key.
+
+This was a fun regex exercise :)
+
+== Part 2
+
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
