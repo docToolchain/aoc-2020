@@ -48,7 +48,8 @@ fn find_one_groups(deltas: &[u32]) -> Vec<usize> {
         if *v == 1 {
             cnt += 1;
         } else {
-            if cnt > 1 {
+            // groups of size <= 2 are not relevant
+            if cnt > 2 {
                 groups.push(cnt);
             }
             cnt = 1;
@@ -62,7 +63,6 @@ fn find_one_groups(deltas: &[u32]) -> Vec<usize> {
 // tag::count_combinations[]
 fn count_combinations(groups: &[usize]) -> u64 {
     groups.iter().map(|g| match g {
-        2 => 1,
         3 => 2,
         4 => 4,
         5 => 7,
@@ -155,7 +155,7 @@ mod tests {
 
     #[test]
     fn test_part2() {
-        do_test_part2(&CONTENT_1, &vec![2, 4, 3, 2], 8);
-        do_test_part2(&CONTENT_2, &vec![5, 5, 4, 3, 5, 2, 5], 19_208);
+        do_test_part2(&CONTENT_1, &vec![4, 3], 8);
+        do_test_part2(&CONTENT_2, &vec![5, 5, 4, 3, 5, 5], 19_208);
     }
 }

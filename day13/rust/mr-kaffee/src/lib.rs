@@ -1,5 +1,6 @@
-use std::cmp::Ordering;
-
+/// Parse input to earliest timestamp and vector of ids as `Option<i64>`.
+///
+/// Ids `"x"` result in `None` values, integer ids result in `Some<i64>` values.
 pub fn parse(content: &str) -> (i64, Vec<Option<i64>>) {
     let mut lines = content.lines();
 
@@ -18,58 +19,86 @@ pub fn parse(content: &str) -> (i64, Vec<Option<i64>>) {
 }
 
 // tag::find_earliest_departure[]
+/// Find earliest departure after timestamp `earliest`
 pub fn find_earliest_departure(earliest: i64, ids: &[Option<i64>]) -> (i64, i64) {
-    ids.iter().filter(|id| id.is_some()).map(|id|
-        if let Some(id) = *id {
-            (id, ((earliest + id - 1) / id) * id)
-        } else {
-            panic!("Could not unwrap");
-        }
-    ).min_by(|a, b|
-        if a.1 > b.1 { Ordering::Greater } else if a.1 < b.1 { Ordering::Less } else { Ordering::Equal }
-    ).expect("No min found")
+    ids.iter()
+        .filter_map(|id| id.map(|id| (id, ((earliest + id - 1) / id) * id)))
+        .min_by(|(_, a), (_, b)| a.cmp(b))
+        .expect("No min found")
 }
 // end::find_earliest_departure[]
 
 /// Calculate multiplicate inverse of `a` modulo `m`
 /// with the [Extended Euclidean Algorithm](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)
 ///
+/// The result is in the range `-(m-1)..m` (inclusive lower, exclusive upper bound)
+///
+/// # Examples
+///
+/// ```
+/// let a = 2;
+/// let m = 13;
+///
+/// // the result of `mul_inverse_mod` is in the range -(m-1)..m, normalize by adding `m` to
+/// // negative results
+/// let a_inv = match mr_kaffee_2020_13::mul_inverse_mod(a, m) {
+///     v if v < 0 => v + m,
+///     v => v
+/// };
+///
+/// // `a_inv` and `a` are both positive, remainder and modulo yield the same result
+/// assert_eq!((a_inv * a) % m, 1)
+/// ```
+///
 /// # Panics
-/// if a and m are not co-prime
+/// The function panics if `a` and `m` are not co-prime
+/// ```should_panic
+/// let a = 15;
+/// let m = 27;
+/// let a_inv = mr_kaffee_2020_13::mul_inverse_mod(a, m);
+/// ```
 pub fn mul_inverse_mod(a: i64, m: i64) -> i64 {
-    let mut t = 1i64;
-    let mut old_t = 0i64;
+    // tuples allow for simultaneous update without temporary variables
+    let mut t = (0, 1);
+    let mut r = (m, a);
 
-    let mut r = a;
-    let mut old_r = m;
+    while r.1 != 0 {
+        let quotient = r.0 / r.1;
 
-    let mut quotient: i64;
-    let mut temp: i64;
-
-    while r != 0 {
-        quotient = old_r / r;
-
-        temp = old_r;
-        old_r = r;
-        r = temp - quotient * r;
-
-        temp = old_t;
-        old_t = t;
-
-
-        t = temp - quotient * t;
+        r = (r.1, r.0 - quotient * r.1);
+        t = (t.1, t.0 - quotient * t.1);
     }
-
-    // s, oldS are not calculated as they are not needed
-    // oldS * size + old_t * fac = gcd(size, fac) = old_r
-    // modulo size: old_t * fac = old_r % size
 
     // if GCD != 1, there is no inverse
-    if old_r != 1 {
-        panic!(format!("a = {} and m = {} are not co-prime (GCD = {})", a, m, old_r));
+    if r.0 != 1 {
+        panic!(format!("a = {} = {} * {} and m = {} = {} * {} are not co-prime",
+                       a, a / r.0, r.0, m, m / r.0, r.0));
     }
 
-    old_t
+    t.0
+}
+
+/// a modulo trait
+///
+/// The generic parameter Value is not strictly needed in this crate since it is only used for i64.
+/// But AoC is for learning, right?
+trait Modulo {
+    type Value;
+
+    fn modulo(self, m: Self::Value) -> Self::Value;
+}
+
+/// implementation of the modulo trait for i64
+///
+/// allows to call the modulo function on any i64 value
+impl Modulo for i64 {
+    type Value = i64;
+
+    fn modulo(self, m: i64) -> i64 {
+        // a % m yields remainder
+        // a % m + m > 0 for m > 0
+        (self % m + m) % m
+    }
 }
 
 // tag::find_time[]
@@ -84,11 +113,11 @@ pub fn mul_inverse_mod(a: i64, m: i64) -> i64 {
 /// ## Initial Step
 ///
 /// 1. `t[0] = 0`
-/// 2. `a[0] = id[0]`
+/// 2. `a[0] = 1`
 ///
-/// ## Loop (`i >= 1`)
+/// ## Loop (`i >= 0`)
 ///
-/// 1. solve `(t[i - 1] + k * a[i - 1] + pos[i]) % id[i] == 0` for k
+/// 1. solve `(t[i - 1] + k * a[i - 1] + pos[i]) % id[i] == 0` for `k`
 /// 2. `t[i] = t[i - 1] + k * a[i - 1]`
 /// 3. `a[i] = id[i - 1] * a[i - 1]`
 ///
@@ -98,18 +127,16 @@ pub fn mul_inverse_mod(a: i64, m: i64) -> i64 {
 /// is done with a multiplicative inverse `a` modulo `m`. See [`mul_inverse_mod`]
 ///
 /// # Panics
-/// if any of the ids are not co-prime or the first id is an `x` in the list
+/// if any of the ids are not co-prime
 ///
 pub fn find_time(ids: &[Option<i64>]) -> i64 {
     let (t, ..) = ids.iter().enumerate()
-        .filter(|(_, v)| v.is_some())
-        .map(|(pos, id)| (pos as i64, id.unwrap()))
-        .skip(1).fold(
-        (0, ids[0].expect("First entry must not be a None value")),
-        |(t, a), (pos, id)| {
-            let k = ((-mul_inverse_mod(a, id) * (t + pos)) % id + id) % id;
-            (t + k * a, a * id)
-        });
+        .filter_map(|(pos, v)| v.map(|v| (pos as i64, v)))
+        .fold((0, 1),
+              |(t, a), (pos, id)| {
+                  let k = (-mul_inverse_mod(a, id) * (t + pos)).modulo(id);
+                  (t + k * a, a * id)
+              });
 
     t
 }
@@ -118,19 +145,17 @@ pub fn find_time(ids: &[Option<i64>]) -> i64 {
 // tag::find_time_iteratively[]
 /// Solution idea of James Hockenberry re-implemented in rust
 ///
-/// Instead of calculating the multiplicative inverse, iteratively looks for the right multiple
-/// of the time bus by bus
+/// Instead of calculating the multiplicative inverse, solves equations
+/// `(k a + c) % m = 0` for `k` by linear search.
 pub fn find_time_iteratively(ids: &[Option<i64>]) -> i64 {
     let (t, ..) = ids.iter().enumerate()
-        .filter(|(_, v)| v.is_some())
-        .map(|(pos, id)| (pos as i64, id.unwrap()))
-        .skip(1).fold(
-        (0, ids[0].expect("First entry must not be a None value")),
-        |(t, a), (pos, id)| {
-            let mut k = 0;
-            while (t + k * a + pos) % id != 0 { k += 1; };
-            (t + k * a, a * id)
-        });
+        .filter_map(|(pos, v)| v.map(|v| (pos as i64, v)))
+        .fold((0, 1),
+              |(t, a), (pos, id)| {
+                  let mut k = 0;
+                  while (t + k * a + pos) % id != 0 { k += 1; };
+                  (t + k * a, a * id)
+              });
 
     t
 }
