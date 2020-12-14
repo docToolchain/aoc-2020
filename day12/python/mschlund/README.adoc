@@ -1,0 +1,20 @@
+== Day 11
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+We will store the robot's map in a huge 2d-array (yes this is very very dirty ...)
+To get a ridiculous upper bound on its size we take all "F"s of the input and sum them up:
+
+$ grep -E "F([0-9]+)" input.txt | cut -d "F" -f2 | paste -sd+ | bc
+10665
+So an array of size 22.000 where the origin is in the middle suffices for this exercise.
+
+=== First Star
+
+
+=== Second Star
+

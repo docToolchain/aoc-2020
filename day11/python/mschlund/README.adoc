@@ -18,7 +18,8 @@ We read in a game like this (using the numpy "genfromtxt"-function with a fixed-
 ```
 
 === First Star
-For the "regular" 3x3 neighborhood we can use the very neat "scipy ndimage.generic_filter"-function
+For the "regular" 3x3 neighborhood we can use the very neat "scipy ndimage.generic_filter"-function.
+
 ```python
     result_stable = iterate_until_stable(board, update_board_1)
     num_occupied = result_stable[result_stable == 1].sum()
@@ -53,4 +54,9 @@ def iterate_until_stable(board, step_function):
 
 === Second Star
 
+With some additions the solution is similar to the first:
+- We precompute (once) for each seat its neighborhood (<= 8 locations).
+- We define a function that executes exactly one update for each of
+the seats on the board (the "step_function" used as input to the iterate_until_stable-function).
+- We iterate the update-function until the board does not change any more (the "iterate_until_stable" function).
 
