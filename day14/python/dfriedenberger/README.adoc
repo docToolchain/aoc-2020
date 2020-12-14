@@ -1,0 +1,20 @@
+Day 14 of year 2020
+https://adventofcode.com/2020/day/14
+
+TIP: Don't use 32bit system if you should use 36bit system.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
+
+
