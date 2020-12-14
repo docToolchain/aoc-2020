@@ -2,6 +2,9 @@ use std::collections::HashMap;
 
 // tag::bitmask[]
 /// A bitmask
+///
+/// Bits are stored in two integers, `ones` for all one bits, `zeros` for all zero bits. The unset
+/// bits can be obtained as `nones = BitMask::ALL & !ones & !zeros`.
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct BitMask {
     ones: u64,
@@ -11,7 +14,7 @@ pub struct BitMask {
 
 // tag::instruction[]
 /// An instruction, with variants `BitMask` for [`BitMask`] values and `Write` for
-/// tuple `(usize, u64)` values
+/// tuple `(u64, u64)` values representing address and value
 #[derive(Debug, PartialEq)]
 pub enum Instruction {
     BitMask(BitMask),
@@ -20,40 +23,44 @@ pub enum Instruction {
 // end::instruction[]
 
 // tag::bitmask_nones[]
-/// An iterator over all nones of a bit-mask
+/// An Iterator over all possible states the none bits of a [`BitMask`] may take
 pub struct BitMaskNones {
-    bits: u64,
-    bits_max: u64,
+    current: u64,
+    max: u64,
     mask: u64,
     nones: Vec<u64>,
 }
 // end::bitmask_nones[]
 
 impl BitMask {
-    /// mask for all bits set
-    pub const ALL: u64 = (1 << 36) - 1;
+    /// Number of bits
+    pub const BITS: usize = 36;
 
-    /// parse a `BitMask` from a textual input
+    /// Mask for all bits set
+    pub const ALL: u64 = (1 << BitMask::BITS) - 1;
+
+    /// Parse a `BitMask` from a textual input
+    ///
+    /// Valid lines are composed of exactly [`BitMask::BITS'] characters, each one of '1', '0',
+    /// and 'X'
+    ///
+    /// # Panics
+    ///
+    /// This function panics if the length of the line is not equal to [`BitMask::BITS'] or it
+    /// contains any character other than '0', '1', or 'X'
     pub fn parse(line: &str) -> BitMask {
-        let mut msk = BitMask { ones: 0, zeros: 0 };
-        for c in line.chars() {
-            match c {
-                '1' => {
-                    msk.zeros = msk.zeros << 1;
-                    msk.ones = (msk.ones << 1) | 1;
-                }
-                '0' => {
-                    msk.zeros = (msk.zeros << 1) | 1;
-                    msk.ones = msk.ones << 1;
-                }
-                'X' => {
-                    msk.zeros = msk.zeros << 1;
-                    msk.ones = msk.ones << 1;
-                }
-                c => panic!(format!("Unexpected char: '{}'", c)),
-            }
-        }
-        msk
+        assert_eq!(line.len(), BitMask::BITS, "Line length must be equal to BitMask::BITS");
+
+        let (zeros, ones) = line.chars().fold(
+            (0, 0),
+            |(zeros, ones), c| match c {
+                '0' => ((zeros << 1) | 1, ones << 1),
+                '1' => (zeros << 1, (ones << 1) | 1),
+                'X' => (zeros << 1, ones << 1),
+                _ => panic!(format!("Unexpected char: '{}'", c)),
+            });
+
+        BitMask { zeros, ones }
     }
 
     /// Apply the bit-mask (protocol V1)
@@ -62,11 +69,11 @@ impl BitMask {
     }
 
     // tag::nones[]
-    /// Get a all none bits as a `Vec<u64>` (protocol V2)
+    /// Get a all none bits as a `Vec<u64>` of masks with one bit set in every mask (protocol V2)
     pub fn nones(&self) -> Vec<u64> {
         let mut nones = Vec::new();
 
-        let mask = !self.zeros & !self.ones & BitMask::ALL;
+        let mask = BitMask::ALL & !self.zeros & !self.ones;
         let mut candidate = 1;
         while candidate < mask {
             if mask & candidate > 0 {
@@ -83,37 +90,37 @@ impl BitMask {
 impl Instruction {
     /// Parse instructions
     pub fn parse(content: &str) -> Vec<Instruction> {
-        let mut instructions = Vec::new();
-
-        for line in content.lines() {
+        content.lines().map(|line| {
+            // split
             let mut parts = line.split(" = ");
-            let left = parts.next().expect("No LHS");
-            let right = parts.next().expect("No RHS");
 
-            instructions.push(match left {
-                "mask" => Instruction::BitMask(BitMask::parse(right)),
-                left =>
+            // assign parts
+            let (lhs, rhs) =
+                (parts.next().expect("No LHS"), parts.next().expect("No RHS"));
+
+            // parse parts
+            match lhs {
+                "mask" => Instruction::BitMask(BitMask::parse(rhs)),
+                lhs =>
                     Instruction::Write((
-                        left[4..left.len() - 1].parse().expect("Could not parse address"),
-                        right.parse().expect("Could not parse value"))),
-            });
-        };
-
-        instructions
+                        lhs[4..lhs.len() - 1].parse().expect("Could not parse address"),
+                        rhs.parse().expect("Could not parse value")
+                    )),
+            }
+        }).collect()
     }
 }
 
 impl BitMaskNones {
     // tag::bitmask_nones_from[]
-    /// Construct from `[BitMask]`
+    /// Construct instance from `[BitMask]`
     pub fn from(mask: &BitMask) -> BitMaskNones {
         let nones = mask.nones();
-        let bits_max = 1 << nones.len();
         BitMaskNones {
-            bits: 0,
-            bits_max,
+            current: 0,
+            max: 1 << nones.len(),
             mask: !mask.zeros & !mask.ones & BitMask::ALL,
-            nones
+            nones,
         }
     }
     // end::bitmask_nones_from[]
@@ -124,7 +131,7 @@ impl Iterator for BitMaskNones {
     type Item = (u64, u64);
 
     fn next(&mut self) -> Option<(u64, u64)> {
-        if self.bits >= self.bits_max {
+        if self.current >= self.max {
             // all values consumed
             return None;
         }
@@ -132,15 +139,23 @@ impl Iterator for BitMaskNones {
         // combine all nones for which the corresponding bit is set in `k` with bitwise or
         let nones = self.nones.iter()
             .enumerate()
-            .fold(0,
-                  |nones, (pos, none)|
-                      nones | (((self.bits as u64 >> pos) & 1) * *none));
+            .filter(|(pos, _)| (self.current >> pos) & 1 == 1)
+            .fold(0, |nones, (_, none)| nones | none);
 
         // update counter
-        self.bits += 1;
+        self.current += 1;
 
         // return mask and none
         Some((self.mask, nones))
+    }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let remaining = self.max - self.current;
+        if remaining > usize::MAX as u64 {
+            (usize::MAX, None)
+        } else {
+            (remaining as usize, Some(remaining as usize))
+        }
     }
 }
 // end::iterator_impl[]
@@ -186,7 +201,7 @@ pub fn run_v2(instructions: &[Instruction]) -> HashMap<u64, u64> {
             Instruction::BitMask(new_mask) => mask = *new_mask,
             Instruction::Write((address, value)) => {
                 // apply ones to address
-                let address = *address as u64 | mask.ones;
+                let address = *address | mask.ones;
                 // iterate over all combinations of floating bits and add value to memory addresses
                 for (mask, none) in BitMaskNones::from(&mask) {
                     memory.insert((address & !mask) | none, *value);
@@ -216,10 +231,7 @@ mem[26] = 1";
 
     fn exp_instructions() -> Vec<Instruction> {
         vec![
-            Instruction::BitMask(BitMask {
-                ones: 0b100_0000,
-                zeros: 0b10,
-            }),
+            Instruction::BitMask(BitMask { ones: 0b100_0000, zeros: 0b10 }),
             Instruction::Write((8, 11)),
             Instruction::Write((7, 101)),
             Instruction::Write((8, 0)),
@@ -271,7 +283,11 @@ mem[26] = 1";
     fn test_bitmask_nones_iterator() {
         let msk = BitMask::parse("000000000000000000000000000000X1001X");
         let list: Vec<_> = BitMaskNones::from(&msk).collect();
-        assert_eq!(list, vec![(0b10_0001, 0b0), (0b10_0001, 0b1), (0b10_0001, 0b10_0000), (0b10_0001, 0b10_0001)]);
+        assert_eq!(list, vec![
+            (0b10_0001, 0b0),
+            (0b10_0001, 0b1),
+            (0b10_0001, 0b10_0000),
+            (0b10_0001, 0b10_0001)]);
     }
 
     #[test]

@@ -12,7 +12,7 @@ Today's challenge gave me quite some headaches, especially part two.
 Can't really explain why.
 In the end it was not very complicated.
 
-The bit-mask is modeled as struct, and a single instruction is modeled as an enum with one variant for bit masks and another one a write operations.
+The bit-mask is modeled as struct, and a single instruction is modeled as an enum with one variant for bit masks and another one for write operations.
 
 [source,rust,numbered]
 ----
@@ -50,7 +50,8 @@ which is initialized from a `BitMask` as follows:
 include::src/lib.rs[tags=bitmask_nones_from]
 ----
 
-The only function to implement is the next function:
+The only function to implement is the `next` function.
+(The `size_hint` function is optional, it may help to optimize code)
 
 [source,rust,numbered]
 ----
