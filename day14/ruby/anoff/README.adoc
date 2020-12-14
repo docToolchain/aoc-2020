@@ -12,6 +12,13 @@ This was a fun regex exercise :)
 
 == Part 2
 
+Approached it again with tests.
+Using binary operations did not work in this case because we need to maintain the `X`s.
+After a bit wiggling around managed to implement an `addressModifier` method that expands the address space given a mask input.
+
+TIL: Ruby uses references everywhere!
+Had issues with my `addressModifier` method modifying the original mask and therefore ruining the input for subsequent method calls with other target addresses.
+Fixed the issue by cloning the mask before manipulation.
 
 == Solution
 

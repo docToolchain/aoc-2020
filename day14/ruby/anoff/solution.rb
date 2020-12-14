@@ -40,6 +40,7 @@ def addressModifier(mask, address)
     mask2[xIx] = "1"
     return toggleX(mask1) + toggleX(mask2)
   end
+  mask = mask.dup
   aString = "%036d" % address.to_s(base=2)
   for ix in 0..35
     if mask[ix] == "0" && aString[ix] == "1"
