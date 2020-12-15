@@ -1,0 +1,11 @@
+{
+    "files": [
+        "src/solution1.ts", "src/solution2.ts"
+    ],
+    "compilerOptions": {
+        "strict": true,   
+        "noImplicitAny": true,
+        "target": "ES2019",
+        "outDir": "dist"
+    }
+}
