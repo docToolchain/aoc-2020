@@ -99,22 +99,6 @@ def count_arrangements_partition(joltages: List[int]) -> int:
     return math.prod(combos)
 
 
-def crazy(joltages: List[int]):
-    """https://github.com/sophiebits/adventofcode/blob/main/2020/day10.py#L40
-    """
-    top = joltages[-1]
-    nums = set(joltages[1:])
-
-    a, b, c = 0, 0, 1
-    for i in range(1, top + 1):
-        if i in nums:
-            a, b, c = b, c, a + b + c
-        else:
-            a, b, c = b, c, 0
-
-    return c
-
-
 def main() -> None:
     joltages = prepare_input(utils.get_input(__file__))
 
