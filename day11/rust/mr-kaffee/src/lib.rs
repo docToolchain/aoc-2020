@@ -6,6 +6,24 @@ pub struct Grid {
 }
 
 impl Grid {
+    pub const DLT: [(isize, isize); 8] = [
+        // east
+        (1, 0),
+        // north-east
+        (1, 1),
+        // north
+        (0, 1),
+        // north-west
+        (-1, 1),
+        // west
+        (-1, 0),
+        // south-west
+        (-1, -1),
+        // south
+        (0, -1),
+        // south-east
+        (1, -1)];
+
     pub fn parse(content: &str) -> Grid {
         let mut data = Vec::new();
         let mut width = 0;
@@ -45,7 +63,7 @@ impl Grid {
         loop {
             grid = match grid.update(depth, threshold) {
                 Some(grid) => grid,
-                None => break
+                None => break,
             };
         };
 
@@ -97,17 +115,12 @@ impl Grid {
     fn count_occupied_at(&self, i: usize, depth: usize) -> usize {
         let x = i % self.width;
         let y = i / self.width;
-
-        let mut cnt = 0;
-        cnt += self.is_next_occupied(x, y, 1, 1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 1, 0, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 1, -1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, -1, 1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, -1, 0, depth) as usize;
-        cnt += self.is_next_occupied(x, y, -1, -1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 0, 1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 0, -1, depth) as usize;
-        cnt
+        Grid::DLT
+            .iter()
+            .map(
+                |(dx, dy)|
+                    self.is_next_occupied(x, y, *dx, *dy, depth) as usize
+            ).sum()
     }
     // end::count_occupied[]
 

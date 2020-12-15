@@ -1,10 +1,8 @@
 
-== Day 4 ==
+The repo including utility functions, unit test etc.
+can be found https://gitlab.com/akoeltringer/advent_of_code[on Gitlab].
 
-The solution is written in Python. The repo including utility functions, unit test etc.
-can be found https://gitlab.com/akoeltringer/advent_of_code[on Gitlab]
-
-=== Code ===
+== Code ==
 
 [source, python, linenums]
 ....

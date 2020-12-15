@@ -25,7 +25,7 @@ I have a function which checks whether the next seat in a direction is occupied
 include::src/lib.rs[tags=is_next_occupied]
 ----
 
-This function is called by another one counting how many seats are occupied (could be more compact with some loops...)
+This function is called by another one counting how many seats are occupied (refactored to use iterators instead of individual calls per direction)
 
 [source,rust,numbered]
 ----

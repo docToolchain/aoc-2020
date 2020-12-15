@@ -156,11 +156,11 @@ impl Ship {
                 Step::South(v) => self.wp.1 -= v,
                 Step::East(v) => self.wp.0 += v,
                 Step::West(v) => self.wp.0 -= v,
-                Step::Fwd(v) => self.pos =
-                    (self.pos.0 + v * self.wp.0, self.pos.1 + v * self.wp.1),
                 Step::Left => self.wp = (-self.wp.1, self.wp.0),
                 Step::Reverse => self.wp = (-self.wp.0, -self.wp.1),
                 Step::Right => self.wp = (self.wp.1, -self.wp.0),
+                Step::Fwd(v) => self.pos =
+                    (self.pos.0 + v * self.wp.0, self.pos.1 + v * self.wp.1),
             };
         } else {
             match instr {

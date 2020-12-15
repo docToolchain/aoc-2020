@@ -1,0 +1,55 @@
+Puzzle: https://adventofcode.com/2020/day/15[Rambunctious RecitationSearch]
+
+== Part 1
+
+Had a bit issues with the _when exactly do I update the last seen_ entry but with a few minutes of debugging got it working on the tests.
+
+[plantuml, day15-p1, png]
+....
+@startuml
+skinparam defaulttextalignment center
+skinparam monochrome true
+skinparam shadowing false
+start
+:init empty store (Hashmap);
+:lastNumber = -1;
+while (for turn 0 to 2020-1)
+  if (game mode?) then (starting numbers)
+    if (turn > 1) then (Y)
+      :add lastNumber->turn-1 to store;
+    endif
+    :lastNumber = starting number[turn];
+  else (last spoken)
+    if (number is) then (new)
+      :diff = 0;
+    else (spoken before)
+      :diff = turn - 1 -store[lastNumber];
+    endif
+    :store[lastNumber] = turn-1;
+    :lastNumber = diff;
+  endif
+endwhile
+:print lastNumber;
+end
+@enduml
+....
+
+== Part 2
+
+At first I thought looping until `30000000` will never work.
+So I took a paper and started thinking about ways to improve my code - I hit **run** anyway and was surprised I got an answer after 5 seconds.
+Guess no need to refactor after all 😆
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
