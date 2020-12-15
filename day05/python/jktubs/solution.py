@@ -34,8 +34,3 @@ if possible_seats == 1:
 else:
     utils.log.warning("solution part 2 ==> possible_seats: {} ==> not unique".format(possible_seats))
 
-
-
-
-
-#utils.log.info("\nsolution part 2 ==> valid passports: {}".format(valid_passports))  # ==> 158
