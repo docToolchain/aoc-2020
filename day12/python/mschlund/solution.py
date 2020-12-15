@@ -32,7 +32,6 @@ def execute_movement_1(ship_pos, direction, line):
     new_dir = int((direction + num/90)) % 4
   return new_pos, new_dir
 
-
 def pos_move(pos, stride, num):
   new_pos = (pos[0] + stride[0]*num,
              pos[1] + stride[1]*num)
@@ -43,7 +42,6 @@ def turn_left(stride):
 
 def turn_right(stride):
   return (stride[1], -stride[0])
-
 
 def move_stride(stride, cmd, num):
   return pos_shift(stride, DIRS.index(cmd), num)
