@@ -57,8 +57,6 @@ def check_passport_extended(data):
     required_content = {"ecl", "pid", "eyr", "hcl", "byr", "iyr", "hgt"}
 
     key_error = 0
-    is_valid = True
-
     passport_fields = {
         "ecl": "",  # ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
         "pid": "",  # pid (Passport ID) - a nine-digit number, including leading zeroes.
@@ -176,4 +174,4 @@ def check_passport_extended(data):
         if hgt < 59 or hgt > 76:
             return False
 
-    return is_valid
+    return True
