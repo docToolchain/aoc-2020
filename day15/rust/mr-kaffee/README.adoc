@@ -1,0 +1,28 @@
+== Day 15: Rambunctious Recitation ==
+
+Rust solution for https://adventofcode.com/2020/day/15[AoC 2020, Day 15]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization, saves you some seconds today)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+The solution idea is to store for every value the last round when it occurred in a map.
+
+The map is initialized with
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=init]
+----
+
+Then rounds are played with
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=play]
+----
+
+I used the same method to solve both parts 1 and 2. I am sure there is a more elegant solution for part 2.
+With compiler optimizations on, brute force solves part 2 in a few seconds...
