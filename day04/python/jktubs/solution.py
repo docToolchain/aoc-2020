@@ -2,7 +2,7 @@ import utils
 
 utils.getVersion()
 
-input = utils.read_file_to_list("input_example.txt")
+input = utils.read_file_to_list("input.txt")
 
 # print(input)
 
@@ -33,7 +33,7 @@ for i in range(1,counter):
     if utils.check_passport_content(passports[i]):
         valid_passports += 1
 
-print("\nsolution part 1 ==> valid passports: {}".format(valid_passports))
+print("\nsolution part 1 ==> valid passports: {}".format(valid_passports)) # ==> 250
 
 
 valid_passports = 0
@@ -41,7 +41,4 @@ for i in range(1,counter):
     if utils.check_passport_extended(passports[i]):
         valid_passports += 1
 
-print("\nsolution part 2 ==> valid passports: {}".format(valid_passports))
-
-#passports[i] = passports[i].split(" ")
-#print(passports)
+print("\nsolution part 2 ==> valid passports: {}".format(valid_passports))  # ==> 158
