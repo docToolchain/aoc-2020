@@ -1,0 +1,42 @@
+== Day 15: Rambunctious Recitation ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/15
+
+For execution enter _kotlin day20015_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+Following the rules of the game for each turn the number spoken is written into a list. If this was the first time, next number spoken is 0, else it is the difference between current turn and last turn the number appeared.
+
+This works for while of turns, but taking the requested turn for part2 it is to slow, so I had to rework.
+
+[source, kotlin, numbered]
+....
+include::day2015_1_2.kts[tags=elves_game_rework_2]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here not the comlete history is stored, only all values appeared at least once in on map, the value itself and it's last turn, and a second map for all values which are have been there at least twice with their second last turn.
+
+This rework is finishing on my device in eclipse in less then 30 seconds, but in gitpod.io I face a 
+
+java.lang.OutOfMemoryError: Java heap space  --> up to now I have not figured out how to solve this.
+
+[source, kotlin, numbered]
+....
+include::day2015_1_2.kts[tags=elves_game_3]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2015_1_2.kts[tags=output]
+....
