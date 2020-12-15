@@ -1,0 +1,26 @@
+== Groovy
+
+Here is another solution written in Groovy.
+First I split the input into a list of Integers:
+[source, groovy]
+....
+include::solution.groovy[tags=splitInput]
+....
+
+=== Part 1:
+Iterate over all numbers and check if the numbers before sum up to the number. If no sum is found, stop the execution and return the number without sum.
+[source, groovy]
+....
+include::solution.groovy[tags=solvePart1]
+....
+When the loop stops, the current accumulator is returned
+
+=== Part 2:
+First I need to get the missing sum from part 1.
+Then I iterate over all number of the input and add them with their following numbers as long their sum is smaller then the missing sum.
+If their sum is the missing sum, I found the contiguous sum and just need to add the smallest and the biggest number to get the solution.
+[source, groovy]
+....
+include::solution.groovy[tags=solvePart2]
+....
+
