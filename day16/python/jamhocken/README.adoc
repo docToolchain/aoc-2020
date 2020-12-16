@@ -1,0 +1,38 @@
+
+Day 16 of year 2020
+https://adventofcode.com/2020/day/16
+
+== What I learned
+
+. My first time using Numpy.
+. I solved the first problem test-driven. This takes getting used to but
+was very useful since I could refactor for problem 2 and easily check
+that everything was still working.
+. Problem 2 was quite a headache for me. :-(
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. I extract a dictionary for the ticket fields,
+a list for my ticket and a list of lists for the other tickets.
+. Problem 1 is fairly straightforward
+.. I go through the tickets and check each entry vs. the fields.
+If the entry is not valid for any field, then the ticket is not valid and
+I sum up the invalid entries.
+.. I refactored for problem 2 to also return a list of the valid fields for
+each entry.
+. Problem 2:
+.. I iterate over all tickets to find out which positions have at least
+valid ticket for each field. I put this into a matrix position x field.
+.. If you multiply this matrix by a "matrix of ones", each column contains
+a list of the numbers between 1 and the number of fields.
+.. You go through all of the positions in this order and find the appropriate field.
+.. Calculate the product as requested.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
