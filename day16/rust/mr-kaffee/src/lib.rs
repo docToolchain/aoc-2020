@@ -1,5 +1,3 @@
-use std::cmp::min;
-
 const YOUR_TICKET: &str = "your ticket:";
 const NEARBY_TICKETS: &str = "nearby tickets:";
 
@@ -52,23 +50,25 @@ pub fn parse(content: &str) -> (Vec<Rule>, Vec<i32>, Vec<Vec<i32>>, i32) {
                 let range2 = (
                     cap[4].parse().expect("Illegal from 2"),
                     cap[5].parse().expect("Illegal to 2"));
-                rules.push(Rule{name, range1, range2});
+                rules.push(Rule { name, range1, range2 });
             }
             1 => {
                 my_pass.extend(line.split(",")
                     .map(|v| v.parse::<i32>().expect("Could not parse number")));
+                assert_eq!(rules.len(), my_pass.len());
             }
             2 => {
                 let pass: Vec<_> = line.split(",")
                     .map(|v| v.parse::<i32>().expect("Could not parse number"))
                     .collect();
+                assert_eq!(rules.len(), pass.len());
                 let invalid = pass.iter()
                     .filter(|v| !rules.iter().any(|rule| rule.matches(**v)))
-                    .sum::<i32>();
-                if invalid == 0 {
+                    .fold((0, 0), |(cnt, sum), v| (cnt + 1, sum + *v));
+                if invalid.0 == 0 {
                     nearby_passes.push(pass);
                 }
-                invalids += invalid;
+                invalids += invalid.1;
             }
             _ => panic!("Illegal mode")
         }
@@ -80,13 +80,12 @@ pub fn parse(content: &str) -> (Vec<Rule>, Vec<i32>, Vec<Vec<i32>>, i32) {
 
 // tag::find_fields[]
 pub fn find_fields(rules: &[Rule], passes: &[Vec<i32>], prefix: &str) -> Vec<(usize, usize)> {
-    let n_f = passes[0].len();
-    let n_r = rules.len();
+    let n = rules.len();
 
-    // i = k_r + k_f * n_r -> k_r = i % n_r, k_f 0 i / n_r
-    let mut candidates = (0..n_r * n_f)
+    // i = k_r + k_f * n -> k_r = i % n, k_f 0 i / n
+    let mut candidates = (0..n * n)
         .map(|i|
-            passes.iter().all(|pass| rules[i % n_r].matches(pass[i / n_r])))
+            passes.iter().all(|pass| rules[i % n].matches(pass[i / n])))
         .collect();
 
     // At this point, we have a matrix with a column for each rule and a row for each field
@@ -96,19 +95,25 @@ pub fn find_fields(rules: &[Rule], passes: &[Vec<i32>], prefix: &str) -> Vec<(us
     //   same field
     // - if a field is a candidate for exactly one rule, no other field can be a candidate for the
     //   same rule
-    while reduce_2d(&mut candidates, n_r, n_f) > 0 {}
+    while reduce_2d(&mut candidates, n) > 0 {}
 
-    // at most one rule per field and vice versa
-    let count = candidates.iter().fold(0, |sum, val| sum + *val as usize);
-    assert!(count <= min(n_f, n_r), "Could not reduce candidates");
+    // exactly one rule per field and vice versa
+    assert!(
+        (0..n).all(|k_r| (0..n)
+            .map(|k_f| candidates[k_r + k_f * n] as u32).sum::<u32>() == 1),
+        "Could not reduce candidates");
+    assert!(
+        (0..n).all(|k_f| (0..n)
+            .map(|k_r| candidates[k_r + k_f * n] as u32).sum::<u32>() == 1),
+        "Could not reduce candidates");
 
     // 1) Map rule indices k_r to a tuple with the corresponding field index k_f wrapped in an
     //    Option
     // 2) Filter out all entries with no matching field or where the rule name does not start with
     //    the given prefix
     // 3) Collect into Vec
-    (0..n_r)
-        .map(|k_r| (k_r, (0..n_f).find(|k_f| candidates[k_r + k_f * n_r])))
+    (0..n)
+        .map(|k_r| (k_r, (0..n).find(|k_f| candidates[k_r + k_f * n])))
         .filter_map(|(k_r, k_f)|
             if k_f.is_some() && rules[k_r].name.starts_with(prefix) {
                 Some((k_r, k_f.unwrap()))
@@ -122,42 +127,44 @@ pub fn find_fields(rules: &[Rule], passes: &[Vec<i32>], prefix: &str) -> Vec<(us
 
 /// Reduce along both dimensions
 /// Return the number of removed candidates
-fn reduce_2d(candidates: &mut Vec<bool>, rows: usize, cols: usize) -> i32 {
-    reduce_1d(candidates, rows, cols, |row, col| row * cols + col) +
-        reduce_1d(candidates, cols, rows, |col, row| row * cols + col)
+fn reduce_2d(candidates: &mut Vec<bool>, n: usize) -> i32 {
+    reduce_1d(candidates, n, |row, col| col + n * row) +
+        reduce_1d(candidates, n, |col, row| col + n * row)
 }
 
 // tag::reduce_1d[]
-/// Reduce along one dimension
+/// Reduce square `n x n` matrix along one dimension
 ///
 /// The function `f` maps positions in dimensions 1 and 2 to a flat index. It should be set to
-/// `|col, row| -> col + cols * row` if the first dimension is the column and the second is the row.
-/// It should be set to `|row, col| -> col -> cols * row` if the first dimension is the row and the
+/// `|col, row| -> col + n * row` if the first dimension is the column and the second is the row.
+/// It should be set to `|row, col| -> col -> n * row` if the first dimension is the row and the
 /// second dimension is the column.
 ///
 /// If there is a row/column in the second dimension, which contains exactly one candidate, this
 /// candidate is removed from all other columns/rows
-fn reduce_1d<F>(candidates: &mut Vec<bool>, n1: usize, n2: usize, f: F) -> i32
+fn reduce_1d<F>(candidates: &mut Vec<bool>, n: usize, f: F) -> i32
     where F: Fn(usize, usize) -> usize
 {
     let mut removed = 0;
-    for k1 in 0..n1 {
+    for k1 in 0..n {
         // find unique in dimension 2
         let mut unique_k2 = None;
-        for k2 in 0..n2 {
+        for k2 in 0..n {
             if candidates[f(k1, k2)] {
-                if unique_k2.is_some() {
+                if unique_k2.is_none() {
+                    // first element found
+                    unique_k2 = Some(k2);
+                } else {
+                    // second element found -> no unique element
                     unique_k2 = None;
                     break;
-                } else {
-                    unique_k2 = Some(k2);
                 }
             }
         }
 
         if let Some(k2) = unique_k2 {
-            for l1 in 0..n1 {
-                if k1 == l1 {
+            for l1 in 0..n {
+                if l1 == k1 {
                     continue;
                 }
 
@@ -224,9 +231,8 @@ nearby tickets:
     fn test_define_fields() {
         let (rules, my_pass, nearby_passes, _) =
             parse(CONTENT_2);
-        let fields = find_fields(&rules, &nearby_passes, "");
-        println!("{:?}", fields);
 
+        let fields = find_fields(&rules, &nearby_passes, "");
         assert_eq!(my_pass[fields[0].1], 12);
         assert_eq!(my_pass[fields[1].1], 11);
         assert_eq!(my_pass[fields[2].1], 13);
