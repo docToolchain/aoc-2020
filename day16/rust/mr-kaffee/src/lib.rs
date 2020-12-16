@@ -82,7 +82,7 @@ pub fn parse(content: &str) -> (Vec<Rule>, Vec<i32>, Vec<Vec<i32>>, i32) {
 pub fn find_fields(rules: &[Rule], passes: &[Vec<i32>], prefix: &str) -> Vec<(usize, usize)> {
     let n = rules.len();
 
-    // i = k_r + k_f * n -> k_r = i % n, k_f 0 i / n
+    // i = r + f * n -> r = i % n, f 0 i / n
     let mut candidates = (0..n * n)
         .map(|i|
             passes.iter().all(|pass| rules[i % n].matches(pass[i / n])))
@@ -99,28 +99,14 @@ pub fn find_fields(rules: &[Rule], passes: &[Vec<i32>], prefix: &str) -> Vec<(us
 
     // exactly one rule per field and vice versa
     assert!(
-        (0..n).all(|k_r| (0..n)
-            .map(|k_f| candidates[k_r + k_f * n] as u32).sum::<u32>() == 1),
+        (0..n).all(|r| (0..n).filter(|f| candidates[r + f * n]).count() == 1),
         "Could not reduce candidates");
     assert!(
-        (0..n).all(|k_f| (0..n)
-            .map(|k_r| candidates[k_r + k_f * n] as u32).sum::<u32>() == 1),
+        (0..n).all(|f| (0..n).filter(|r| candidates[r + f * n]).count() == 1),
         "Could not reduce candidates");
 
-    // 1) Map rule indices k_r to a tuple with the corresponding field index k_f wrapped in an
-    //    Option
-    // 2) Filter out all entries with no matching field or where the rule name does not start with
-    //    the given prefix
-    // 3) Collect into Vec
-    (0..n)
-        .map(|k_r| (k_r, (0..n).find(|k_f| candidates[k_r + k_f * n])))
-        .filter_map(|(k_r, k_f)|
-            if k_f.is_some() && rules[k_r].name.starts_with(prefix) {
-                Some((k_r, k_f.unwrap()))
-            } else {
-                None
-            }
-        )
+    (0..n).filter(|r| rules[*r].name.starts_with(prefix))
+        .map(|r| (r, (0..n).find(|f| candidates[r + f * n]).unwrap()))
         .collect::<Vec<_>>()
 }
 // end::find_fields[]
@@ -128,8 +114,8 @@ pub fn find_fields(rules: &[Rule], passes: &[Vec<i32>], prefix: &str) -> Vec<(us
 /// Reduce along both dimensions
 /// Return the number of removed candidates
 fn reduce_2d(candidates: &mut Vec<bool>, n: usize) -> i32 {
-    reduce_1d(candidates, n, |row, col| col + n * row) +
-        reduce_1d(candidates, n, |col, row| col + n * row)
+    reduce_1d(candidates, n, |y, x| x + n * y) +
+        reduce_1d(candidates, n, |x, y| x + n * y)
 }
 
 // tag::reduce_1d[]
