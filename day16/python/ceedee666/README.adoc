@@ -1,0 +1,29 @@
+== Day 16
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* functools for the `reduce` function
+
+=== Idea
+
+The idea for part one is to convert the rule ranges into a set.
+This way it is easy to check if a given value is valid for a rule. 
+After that the `any` function can be used to check
+if a value is valid for any rule. 
+
+For the second part we now check all values with the same index against 
+the rules. If all values are valid for a given rule the index is the
+position of the rule on the ticket. 
+
+=== What I learned
+
+This took much longer then expected due to a stupid mistake in my `map` and 
+`filter` functions.
+
+=== How to run
+
+Run using:
+`$ python day16 --help`
