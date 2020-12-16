@@ -1,0 +1,31 @@
+== Day 16: Ticket Translation ==
+
+Rust solution for https://adventofcode.com/2020/day/16[AoC 2020, Day 16]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+The most difficult part for the first star was to parse the input correctly:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=parse]
+----
+
+In the second part of the puzzle, I struggled a bit with the fact that in my puzzle input, there is a field for which no rule applies consistently for all passes.
+My assumption was, that this is a bug in my solution, which I was trying to figure out for a while, before I realized that all the "departure" fields were already uniquely identified.
+Since AoC accepted my answer, its maybe not a bug?
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=find_fields]
+----
+
+Once the matrix of candidates is constructed, it is reduced as follows:
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=reduce_1d]
+----
