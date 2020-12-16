@@ -4,8 +4,11 @@ This solution is written in Kotlin.
 
 The original puzzle can be found at https://adventofcode.com/2020/day/15
 
-For execution enter _kotlin day20015_1_2.kts_ in the command line.
+For execution enter (thanks to Peter for finding a way to increase heap space)
 
+ $ export JAVA_OPTS="-Xms256m -Xmx512m"
+ $ kotlin day20015_1_2.kts
+ 
 === First Star
 
 How does it work: +
@@ -26,13 +29,9 @@ How does it work: +
 
 Here not the comlete history is stored, only all values appeared at least once in on map, the value itself and it's last turn, and a second map for all values which are have been there at least twice with their second last turn.
 
-This rework is finishing on my device in eclipse in less then 30 seconds, but in gitpod.io I face a 
-
-java.lang.OutOfMemoryError: Java heap space  --> up to now I have not figured out how to solve this.
-
 [source, kotlin, numbered]
 ....
-include::day2015_1_2.kts[tags=elves_game_3]
+include::day2015_1_2.kts[tags=elves_game_rework_3]
 ....
 
 Finally, print out the solution for both puzzles:
