@@ -1,4 +1,4 @@
-== Day 12:  ==
+== Day 12: Rain Risk ==
 
 Rust solution for https://adventofcode.com/2020/day/12[AoC 2020, Day 12]
 
@@ -10,14 +10,20 @@ Run tests with `cargo test`
 
 The solution is quite straight forward, applying the rules from the puzzle input.
 
-In the second part, you have to figure out how change (x, y) coordinates when the waypoint rotates about the relative origin (the ship).
+In the second part, you have to figure out how to change `(x, y)`-coordinates when the waypoint rotates about the relative origin (the ship).
 
 I use the following data structures (maybe a bit of overhead):
 
 [source,rust,numbered]
-.`Instr` for a single instruction
+.`Heading` for the heading of the ship
 ----
-include::src/lib.rs[tags=Instr]
+include::src/lib.rs[tags=Heading]
+----
+
+[source,rust,numbered]
+.`Step` for a single step
+----
+include::src/lib.rs[tags=Step]
 ----
 
 [source,rust,numbered]
@@ -26,7 +32,7 @@ include::src/lib.rs[tags=Instr]
 include::src/lib.rs[tags=Ship]
 ----
 
-The instructions are applied one by one as follows (with `use_wp` false for part 1 and true for part 2):
+The instructions are applied one by one as follows (with `use_wp = false` for part 1 and `use_wp = true` for part 2):
 [source,rust,numbered]
 ----
 include::src/lib.rs[tags=apply]

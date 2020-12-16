@@ -1,0 +1,24 @@
+== Day 14
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* functools for the `reduce` function
+
+=== Idea
+
+The idea for part one was simply to convert the integers to binary and apply the mask.
+the f-strings in python a pretty helpful for this.
+
+Part two is straight forward with the solution of part one.
+
+=== What I learned
+
+There are quite helpful formatting options in f-strings.
+
+=== How to run
+
+Run using:
+`$ python day14 --help`

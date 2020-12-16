@@ -1,0 +1,66 @@
+== Day 14: Docking Data ==
+
+Rust solution for https://adventofcode.com/2020/day/14[AoC 2020, Day 14]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Today's challenge gave me quite some headaches, especially part two.
+Can't really explain why.
+In the end it was not very complicated.
+
+The bit-mask is modeled as struct, and a single instruction is modeled as an enum with one variant for bit masks and another one for write operations.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=bitmask]
+----
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=instruction]
+----
+
+==== Part 1 ====
+
+For part 1, the bit mask struct has a simple function `apply` which applies the bit mask to a value.
+With this, the solution for part 1 is
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=run_v1]
+----
+
+==== Part 2 ====
+
+To iterate over all combinations of addresses, I implemented an iterator with the struct
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=bitmask_nones]
+----
+
+which is initialized from a `BitMask` as follows:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=bitmask_nones_from]
+----
+
+The only function to implement is the `next` function.
+(The `size_hint` function is optional, it may help to optimize code)
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=iterator_impl]
+----
+
+With this, the solution for part 2 is
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=run_v2]
+----

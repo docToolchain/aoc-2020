@@ -1,0 +1,29 @@
+
+Day 14 of year 2020
+https://adventofcode.com/2020/day/14
+
+== What I learned
+
+. The problem itself was fairly straightforward. My solution isn't super elegant, but works.
+. I finally started testing using pytest.
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. I put the codes into a list of tuples.
+. Problem 1:
+.. If the code is "mask", update the mask.
+.. Otherwise, write the value to the dictionary representing the memory using the mask rules and address.
+. Problem 2:
+.. If the code is "mask", update the mask.
+.. Otherwise, find all of the relevant addresses using the mask.
+.. Add value to the dictionary at all of those addresses
+.. Be sure to hit all of the permutations of bit combos when applying the mask.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

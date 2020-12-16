@@ -1,0 +1,39 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 15: Rambunctious Recitation
+https://adventofcode.com/2020/day/15
+
+=== Info
+
+Elves playin' games: Tell the most recently spoken number's age, i.e. turns since it has been called before. Puzzle result: the 2020th spoken number. 
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Return the 2020th spoken number
+. Split line at commas
+. Don't forget to cast to int
+. Do the iterations 🎶
+
+.Star2: Return the 30 mio.th number
+. Parametrize the iteration count
+
+=== Learned today
+
+* Watch your types
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
