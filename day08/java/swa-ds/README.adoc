@@ -1,0 +1,58 @@
+:day: Day08
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Part 1
+
+Read input, use Parser to create the program, run it and print out the accumulator
+(have to admit that the idea of the state object was stolen from rdmueller ;-)
+
+[source,java, linenums]
+----
+include::{day}.java[tags=mainPart1]
+----
+
+=== The Parser
+
+[source,java, linenums]
+----
+include::{day}.java[tags=parser]
+----
+<1> I have chosen to implement an object oriented solution with the super class `Operation` and derived classes for the specific operations.
+This way new operations can be added easily by creating new subclasses and adding them to the OPERATIONS map,
+following the open-closed principle.
+<2> To reduce code (such as repeated constructors in the subclasses and setter methods) I have decided to set the properties directly
+
+=== The Operations
+
+[source,java, linenums]
+----
+include::{day}.java[tags=ops]
+----
+
+<1> this method is for part 2, for switching operations (create a new op with same value).
+
+=== The Program (VM)
+
+[source,java, linenums]
+----
+include::{day}.java[tags=program]
+----
+<1> We have reached the end of all operations (normal exit)
+<2> We have reached an operation that has been executed before, so instead of entering the infinite loop, we stop with the corresponding exit code.
+<3> We could do this in the operation implementations instead, but then we'd need to implement this in every Operation subclass, or call `super.execute(...)`.
+
+== Part 2
+
+[source,java, linenums]
+----
+include::{day}.java[tags=mainPart2]
+----
+
+<1> For each line of code, create a new Program (from the complete source code of course)
+<2> Get the operation at the current index
+<3> if it's a Jmp, replace it with a Nop
+<4> or else, if it's a Nop, replace it with an Jmp
+<5> Since the program exits normally (instead of the INFINITE_LOOP exit code), we've found our solution.

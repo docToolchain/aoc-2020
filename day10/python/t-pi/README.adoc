@@ -1,0 +1,50 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 10: Adapter Array
+https://adventofcode.com/2020/day/10
+
+=== Info
+
+'Joltage' adapter ladder with only 1-3 jolt difference each for device with max(adapter)+3 jolts
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Find a joltage ladder with *all* adapters for my underpowered device and multiply 1- with 3-step-count
+. Sort list
+. Check validity (max difference == 3)
+. Count 1's and 3's
+. Return
+
+.Star2: Find all valid combinations of joltage ladders and count
+. Recursive hell again...
+. Lean onto day09: Filter list to only valid adapters
+. Recursively run through the list and hope to get the counting right :D
+. Worked with tests, but WAY TOO SLOW with full puzzle input
+
+.Star2 - more efficient solution: 
+. Search for segments where difference < 3. 
+. At difference == 3 there is a bottleneck where all paths cross.
+. Use function get_all_ladders only for segments and multiply results.
+. Returns count in ms :)
+
+=== Learned today
+
+* Getting a bit more steady with recursions
+* Don't trust test only - might still not be fast enough...
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

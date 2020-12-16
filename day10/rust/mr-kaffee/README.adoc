@@ -1,0 +1,58 @@
+== Day 10: Adapter Array ==
+
+Rust solution for https://adventofcode.com/2020/day/10[AoC 2020, Day 10]
+
+Run solution with `cargo run`
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Part one is straight forward (almost boring).
+
+[source,rust,numbered]
+.1. sort
+----
+include::src/main.rs[tags=parse_input]
+----
+
+[source,rust,numbered]
+.2. get deltas
+----
+include::src/main.rs[tags=to_deltas]
+----
+
+[source,rust,numbered]
+.3. count deltas
+----
+include::src/main.rs[tags=count_deltas]
+----
+
+Still managed to implement some bugs in my solution.
+After one wrong attempt, I started implementing tests... (TDD?!)
+
+Part two is more tricky, and the first puzzle this year, where I exploit structure of the puzzle input.
+the fact that the distance between two neighbouring adaptors is either one or three but never two is important!
+
+In addition, all contiguous groups with distance one are no bigger than five adaptors.
+
+Each contiguous group with distance one contributes a factor to the overall number of combinations:
+
+* group of 2: 1 (no contribution)
+* group of 3: 2 (remove the inner element or keep it)
+* group of 4: 4 (remove second or third element or both or none at all)
+* group of 5: 7 (remove one or two of the three inner elements or keep all)
+
+With that, the solution is not so complicated anymore (but still lost an hour with a stupid bug in the `find_one_groups` -> TDD!!):
+
+[source,rust,numbered]
+.4. find contiguous groups with distance one
+----
+include::src/main.rs[tags=find_one_groups]
+----
+
+[source,rust,numbered]
+.5. count combinations
+----
+include::src/main.rs[tags=count_combinations]
+----

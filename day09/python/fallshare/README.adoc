@@ -1,0 +1,10 @@
+== Day 9: Day 9: Encoding Error
+
+For star 1 I tried to apply some functional programming.
+For stasr 2 I switched to itterative brutforce style.
+
+
+[source, python]
+....
+include::solution.py[]
+....

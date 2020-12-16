@@ -1,0 +1,38 @@
+== Day 14: Docking Data ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/14
+
+For execution enter _kotlin day20014_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+Reading puzzle input line by line, mask, memory and the value to write are identifed. Befor writing the value to the memory, mask is applied. Value and mask are represented as strings, so going through the mask char by char, a new string is created as the result of applying the mask to the value. 
+
+I guess there is an much easier method, but today I have not the time to think into that bit business, for me it was faster to work with the strings.
+
+[source, kotlin, numbered]
+....
+include::day2014_1_2.kts[tags=docking]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+This works with the same principle, just now the mask has not to be applied to the value, but on the memory address. Since the memory addresses have to be extended, this is done iterative in a while loop by creating step by step new strings with X replaced by 0 and 1. 
+
+[source, kotlin, numbered]
+....
+include::day2014_1_2.kts[tags=docking_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2014_1_2.kts[tags=output]
+....

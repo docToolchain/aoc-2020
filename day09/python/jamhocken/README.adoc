@@ -1,0 +1,24 @@
+
+Day 9 of year 2020
+https://adventofcode.com/2020/day/9
+
+
+== What I learned
+
+. This one was straightforward at least if you do it brute force.
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. Just take each line and turn it into an integer.
+. For part 1:
+.. I filled a list with the preamble. And I use a window of that length to go through the data and check the sums against the value after the window in a while loop until the condition is met.
+. For part 2, I iterate over 2 indices and create the sum of all entries in that range until I find a sum that equals the solution to part 1. And then use those indices to find a min and max over the codes in that range and add them.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

@@ -1,0 +1,12 @@
+:day: Day09
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Solution
+
+[source,java, linenums]
+----
+include::{day}.java[]
+----

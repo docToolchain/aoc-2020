@@ -1,0 +1,63 @@
+== Day 11: Seating System ==
+
+Rust solution for https://adventofcode.com/2020/day/11[AoC 2020, Day 11]
+
+Run solution with `cargo run` (or `cargo run --release` to see the difference compiler optimization makes).
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Feels like I introduced every possible bug while implementing the solution.
+In addition, I struggled a bit with Rust's ownership and borrowing system...
+
+As always, once the solution works, it looks fairly obvious.
+
+After a bit of clean-up, I have code which solves both parts with two arguments:
+
+* how far to look for seats: 1 for part 1 and infinity (or just a large enough number) for part 2
+* how many neighbouring seats need to be occupied for a set to get free: 4 for part 1, 5 for part 2
+
+I have a function which checks whether the next seat in a direction is occupied
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=is_next_occupied]
+----
+
+This function is called by another one counting how many seats are occupied (refactored to use iterators instead of individual calls per direction)
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=count_occupied]
+----
+
+This function in turn is used by a function to compute a single update step.
+(Again with the fantastic feature to have example code in the documentation which is actually run with `cargo test')
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=update]
+----
+
+And, eventually, another function performs update steps while the grid changes and computes the number of occupied seats once done.
+
+This is where I had some struggle with the ownership/borrowing system.
+The cleanest code within the function is obtained if self is moved into the function, but this results in the original grid not being available after the function call.
+Seems odd to me.
+So this is my final (at least for this commit) version.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=stationary]
+----
+
+This is used as follows:
+
+[source,rust,numbered]
+----
+include::src/main.rs[tags=part1]
+----
+
+Easy, isn't it?
+;)

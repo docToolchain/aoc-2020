@@ -1,4 +1,4 @@
-= Day 8: Handheld Halting =
+== Day 8: Handheld Halting ==
 
 Rust solution for https://https://adventofcode.com/2020/day/8[AoC 2020, day 8].
 
@@ -8,7 +8,7 @@ Run some tests based on example data from
 https://https://adventofcode.com/2020/day/8[puzzle description]
 with `cargo test`
 
-== Part 1 ==
+=== Part 1 ===
 
 Instructions are modeled as an enum type with some derived traits:
 
@@ -24,7 +24,7 @@ Run program and store positions visited in a set until position repeats:
 include::src/main.rs[tags=run]
 ....
 
-== Part 2 ==
+=== Part 2 ===
 
 Alter instructions `nop <--> jmp` one by one until the program terminates without repetition:
 

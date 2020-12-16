@@ -1,0 +1,39 @@
+== Day 10: Adapter Array ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/10
+
+For execution enter _kotlin day2010_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+In the function `jolts()` the puzzle input will be read into a list. The list already is initialized with 0, we have to finde the the max value and add this value plus 3 to the list. After that the list is sorted and all differences are evaluated. Differences of `1` or `3` are counted up and the result of their multiplication is returned.
+
+[source, kotlin, numbered]
+....
+include::day2010_1_2.kts[tags=jolts]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+For the second part I had to enhance the function. Still at the beginning the puzzle input is read into a list and sorted. Since calculation of all variants at once ended up in a memory overflow, a better method had to be implemented.
+So after preparing the puzzle input, a second list is created, which contains all chain links with a distance of `3`. With this list, a loop is started which calculates all variants from start to the next adapter with a difference `3`, then from there to the next adapter with difference `3` and so on. All variants of the chain parts are multiplied up and returned. 
+
+I guess this is not the best solution, but it works.
+
+[source, kotlin, numbered]
+....
+include::day2010_1_2.kts[tags=jolts_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2010_1_2.kts[tags=output]
+....

@@ -1,0 +1,41 @@
+== Day 11: Seating System ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/11
+
+For execution enter _kotlin day20011_1_2.kts_ in the command line.
+
+=== First Star
+
+How does it work: +
+
+The puzzle input is read into a map, and step by step for each posiition the rules for taking a seat or standing up are applied. This is coninued until no change takes place, and the resulting numbers of occupied places are returned.
+
+Update: Peter proposed not to use the coordinates in a string, better to use Pair, so I changed the first part of this programm to use Pairs. At least makes code much more readable and handling easier. (part2 is still the old way, so everybody could compare)
+Thx @Peter!.
+
+For all improvments of suggested by Peter checkout day2011_1_2_rework.kts
+
+[source, kotlin, numbered]
+....
+include::day2011_1_2.kts[tags=create_seat_plan]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here it works pretty much the same way, only the new rules have to be applied, which results in some more effort due to the fact that not only the adjacent seats have to be taken into consideration but the complete direction until a seat is found.
+
+[source, kotlin, numbered]
+....
+include::day2011_1_2.kts[tags=create_seat_plan_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2011_1_2.kts[tags=output]
+....

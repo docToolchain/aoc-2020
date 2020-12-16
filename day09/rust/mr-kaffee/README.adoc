@@ -1,0 +1,40 @@
+== Day 9: Encoding Error ==
+
+Rust solution for https://https://adventofcode.com/2020/day/9[AoC 2020, day 9].
+
+Run with `cargo run`
+
+Run some tests based on example data from with `cargo test`
+
+=== Solution ===
+
+*Step 1*: define a function which checks for validity of a given position:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=check_pos]
+....
+
+Length of the preamble is in paramter `len` to be able to use the same function on the test data.
+
+*Step 2*: define a function that finds the first position which does not pass the check:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=find_fail]
+....
+
+*Step 3*: define for part 2 of the puzzle a function which finds a contiguous range summing up to a given value and returns the sum of the smallest and largest number in that range:
+
+[source,rust,numbered]
+....
+include::src/main.rs[tags=find_contiguous]
+....
+
+=== Pitfalls ===
+
+If you do not look at your input data, you may not realize that they do not fit in a 32bit integer.
+Luckily Rust fails in that case.
+
+If you do not read the puzzle carefully, you might be ending up summing the first and last value in a contiguous range instead of the smallest and the largest.
+In that case, my unit tests proved very useful.

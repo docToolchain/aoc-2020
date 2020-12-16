@@ -1,0 +1,33 @@
+
+Day 10 of year 2020
+https://adventofcode.com/2020/day/10
+
+Updated on 12.12.2020. Previous version had a bug.
+
+== What I learned
+
+. I finally used a list comprehension successfully. The code is a bit more compact than in the previous days.
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. Just take each line and turn it into an integer.
+. For part 1:
+.. I add '0' and 3 more than the maximal adapter to the list. And then sort it.
+.. And then just find the difference between adjacent adapters and do the required math.
+.. This part was pretty straightforward.
+. For part 2
+.. I found a solution that works if the adapters difference is never 2. None of the examples had a difference of 2 in it. My file didn't have a difference of 2 either.
+... I split up the list of differences along the 3 entries. And then for each of these fragments, I calculate the number of combinations with a recursion.
+... There are 2 possible recursions that you can use.
+.... You can calculate the current number of combinations by multiplying the combinations for a width of 1 less and then subtract the width with 4 less from it. Logic: Think about the pattern of adapters used or not as a binary number. 1 is if the adapter is used. 0 if not. You can create a new pattern from a previous one by adding a bit to the start. So, you double it. But, if the new pattern begins with 0, some of those new patterns are invalid. In fact, all of the previous patterns that begin with 001 are now invalid (you would have a triple 0 which is not ok). To subtract them, the number of patterns is then the valid number of combinations from combinations with 4 less width (3 bits taken off of the front of the previous one).
+.... Alternatively, you can implement a recursion for a~n+1~ = a~n~ + a~n-1~ + a~n-2~
+.. After searching around, I found another way to find the combinations that in fact does work with differences of 2. You go through the list of adapters and find which other adapters are no more than 3 away from it. You add up over the list of adapters then the combinations iteratively.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

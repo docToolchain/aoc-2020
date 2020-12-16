@@ -1,0 +1,25 @@
+
+Day 15 of year 2020
+https://adventofcode.com/2020/day/15
+
+== What I learned
+
+. Don't hack, but take a piece of paper and work it through.
+
+== Approach
+
+. I read the file in using .readlines.
+. I process the file data. I put the numbers as keys into a dictionary with consecutive
+numbers as the values.
+. Problem 1 and Problem 2:
+.. You just keep track of the last time each number was spoken.
+.. For problem 2, I had to refactor since I had some expensive copies of lists /
+dictionaries that were not really necessary. And then it ran in finite time.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

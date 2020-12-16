@@ -1,0 +1,39 @@
+== Day 13: Shuttle Search ==
+
+Rust solution for https://adventofcode.com/2020/day/13[AoC 2020, Day 13]
+
+My favorite challenge in this year so far!
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Part 1 is straight forward:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=find_earliest_departure]
+----
+
+Part 2 is more tricky.
+I solved it using the https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm[Extended Euclidean Algorithm] to compute the multiplicative inverse of an integer modulo another integer.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=find_time]
+----
+
+I find it quite amazing that the solution only takes a couple of microseconds.
+After comparing with other solutions, I realized that the key for performance is to go bus by bus and not so much how to solve the linear equations with a module.
+Searching for those solutions iteratively is merely slower. I implemented a variant:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=find_time_iteratively]
+----
+
+
+I have to admit it took me quite a while to get the algorithm right.
+In addition to test driven development, properly writing down your algorithm before you try to encode it in an iterator adaptor definitely helps.

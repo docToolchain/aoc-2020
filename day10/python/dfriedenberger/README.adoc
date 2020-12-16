@@ -1,0 +1,23 @@
+Day 10 of year 2020
+https://adventofcode.com/2020/day/10
+
+TIP: Do not waste energy in how to calc possibilities. For star 2 puzzle a static array is sufficiently.
+[source, python]
+....
+include::solution.py[tags=possibilities]
+....
+
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....
