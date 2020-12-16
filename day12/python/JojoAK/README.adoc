@@ -1,0 +1,35 @@
+
+Day 12 of year 2020
+https://adventofcode.com/2020/day/12
+
+== Approach
+
+. Star 1
+.. read input, initialize coordinates with 0
+.. go through each command, divide command in action and value
+.. use heading mod 360 for standardized heading
+.. execute commands accordingly - no big deal today :)
+. Star 2
+.. introduce new sets of coordinates for waypoint
+.. go through each command, divide command in action and value
+.. execute commands accordingly
+.. trickiest thing of the day: rotating the waypoint around the ships position using some trigonometry
+. Hints
+.. maybe not so nice that once the waypoint is rotated around the ship, the coordinates become floats. Maybe I should have handled that better. Anyways, still works :)
+
+== Run script
+- Run the solution for star 1 with `python Day_12_1.py`
+- Run the solution for star 2 with `python Day_12_2.py`
+
+== Source code
+=== Star 1:
+[source, python]
+....
+include::Day_12_1.py[]
+....
+
+=== Star 2:
+[source, python]
+....
+include::Day_12_2.py[]
+....

@@ -7,15 +7,17 @@ fn read_input() -> String {
 }
 
 fn main() {
-    let list = Instr::parse(&read_input());
+    let steps = Step::parse(&read_input());
 
+    // run solution part 1, without waypoints => use_wp = false
     let mut ship = Ship::new();
-    ship.apply_all(&list, false);
+    ship.apply_all(&steps, false);
     println!("Ship: {:?} at distance {}", ship, ship.distance());
     assert_eq!(ship.distance(), 1_106);
 
+    // run solution part 2, with waypoints => use_wp = true
     let mut ship = Ship::new();
-    ship.apply_all(&list, true);
+    ship.apply_all(&steps, true);
     println!("Ship: {:?} at distance {}", ship, ship.distance());
     assert_eq!(ship.distance(), 107_281);
 }

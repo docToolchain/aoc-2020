@@ -1,15 +1,53 @@
 == Day 08
 
 This solution is written in python.
-
+We use pipenv to manage dependencies.
 
 Run using:
+$ pipenv install
+$ pipenv shell
 $ python solution.py
 
+The input defines a graph with nodes the line-numbers and weighted edges between them.
+The weight of an edge is simply the amount by which acc is increased when executing the program.
 
+We read in a program-graph using the function "read_graph" below:
 
+```python
+def parse_line(i, line, G):
+  split_line = line.split(' ')
+  instruction = split_line[0]
+  if instruction == 'acc':
+    dest = i+1
+    weight = int(split_line[1])
+  elif instruction == 'nop':
+    dest = i+1
+    weight = 0
+  elif instruction == 'jmp':
+    dest = i+int(split_line[1])
+    weight = 0
+  G.add_edge(i, dest, weight=weight)
+
+def read_graph(input_string):
+  all_lines = input_string.split('\n')
+  G = nx.DiGraph()
+  for i, line in enumerate(all_lines):
+    parse_line(i, line, G)
+  return G
+```
 
 === First Star
 
+After reading in the graph of the program, we just calculate
+the total weight until closing a cycle.
+This is basically a depth-first-search and we implement
+it recursively (storing the nodes we have already visited in a python set)
+
 === Second Star
 
+This solution is _very_ dirty and there is definitely a more elegant way.
+But since the program only consists of ~600 lines we do not bother.
+The idea is that we generate ~600 mutated programs
+(where we swap a jmp for a nop or vice versa), parse the resulting string-representation
+(yes very very dirty and inefficient...), check the graph for cycles and if
+cycle-free we compute the final value of the accumulator.

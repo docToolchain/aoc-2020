@@ -1,0 +1,26 @@
+
+Day 13 of year 2020
+https://adventofcode.com/2020/day/13
+
+== What I learned
+
+. If brute force doesn't work, think about the problem itself before trying to optimize your run time.
+
+== Approach
+
+. I read the file in using .readlines() and immediately put the earliest departure into a variable.
+. I process the next line of the file. I put each bus ID and its position in the ID list (counting x's) into a tuple in a list.
+. Problem 1:
+.. I just use a modulo to find the right bus. 
+. Problem 2:
+.. Brute force is a really bad idea.
+.. Key Insight: Go through the problem iteratively. Find the solution for just the first 2 IDs. Any solution will be that timestamp + a multiple of those 2 IDs.Then find the timestamp that includes the 3rd ID. etc.
+.. I put in some extra logic for the pathological case that the timestamp could be zero.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

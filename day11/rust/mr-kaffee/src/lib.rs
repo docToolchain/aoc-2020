@@ -6,6 +6,24 @@ pub struct Grid {
 }
 
 impl Grid {
+    pub const DLT: [(isize, isize); 8] = [
+        // east
+        (1, 0),
+        // north-east
+        (1, 1),
+        // north
+        (0, 1),
+        // north-west
+        (-1, 1),
+        // west
+        (-1, 0),
+        // south-west
+        (-1, -1),
+        // south
+        (0, -1),
+        // south-east
+        (1, -1)];
+
     pub fn parse(content: &str) -> Grid {
         let mut data = Vec::new();
         let mut width = 0;
@@ -24,67 +42,85 @@ impl Grid {
         Grid { data, width, height }
     }
 
-    // tag::run[]
-    pub fn run(&self, depth: usize, threshold: usize) -> usize {
-        let mut cnt = 1;
-        let mut upd = self.update(depth, threshold);
-        while upd.1 {
-            cnt += 1;
-            upd = upd.0.update(depth, threshold);
+    pub fn count_occupied(&self) -> usize {
+        self.data.iter().filter(|c| **c == '#').count()
+    }
+
+    // tag::stationary[]
+    /// Get a stationary grid
+    /// Return `None` if self is already stationary or a `Some(grid)` with a new, stationary grid.
+    ///
+    /// This function returns an Option<Grid>, since it cannot return self which was not moved
+    /// into the function.
+    pub fn stationary(&self, depth: usize, threshold: usize) -> Option<Grid> {
+        // if grid is already stationary return `None`
+        let mut grid = match self.update(depth, threshold) {
+            Some(grid) => grid,
+            None => return None,
         };
 
-        println!("Settled after {} rounds with depth: {}, threshold: {}.",
-                 cnt, depth, threshold);
+        // update grid until it is stationary
+        loop {
+            grid = match grid.update(depth, threshold) {
+                Some(grid) => grid,
+                None => break,
+            };
+        };
 
-        upd.0.data.iter().filter(|c| **c == '#').count()
+        // return stationary grid
+        Some(grid)
     }
-    // end::run[]
+    // end::stationary[]
 
     // tag::update[]
     /// Perform update step.
     ///
-    /// Returns a pair `(updated_grid: Grid, changed: bool)`, where `updated_grid` is a new grid
-    /// instance with an updated version of `self` and `changed` is a flag indicating whether the
-    /// grid actually changed.
+    /// Returns an Option<Grid> which is `Some(grid)` in case the grid was actually updated and
+    /// `None` if the self is not changed by an update.
     ///
     /// # Examples
     ///
     /// ```
     /// let g1 = mr_kaffee_2020_11::Grid::parse("#.\n.L");
-    /// let (g2, changed) = g1.update(1, 4);
-    /// assert_eq!(changed, g1 != g2);
+    /// let mut g2 = g1.update(1, 4);
+    /// while let Some(g) = g2 {
+    ///     assert_ne!(g, g1);
+    ///     g2 = g.update(1, 4);
+    /// }
     /// ```
-    pub fn update(&self, depth: usize, threshold: usize) -> (Grid, bool) {
+    pub fn update(&self, depth: usize, threshold: usize) -> Option<Grid> {
+        let mut changed = false;
         let data = self.data.iter().enumerate().map(|(i, v)|
             match v {
-                '.' => '.',
-                'L' if self.count_occupied(i, depth) == 0 => '#',
-                '#' if self.count_occupied(i, depth) >= threshold => 'L',
+                'L' if self.count_occupied_at(i, depth) == 0 => {
+                    changed = true;
+                    '#'
+                }
+                '#' if self.count_occupied_at(i, depth) >= threshold => {
+                    changed = true;
+                    'L'
+                }
                 v => *v,
             }).collect();
 
-        let grid = Grid { data, width: self.width, height: self.height };
-        let changed = &grid != self;
-
-        (grid, changed)
+        if changed {
+            Some(Grid { data, ..*self })
+        } else {
+            None
+        }
     }
     // end::update[]
 
     // tag::count_occupied[]
-    fn count_occupied(&self, i: usize, depth: usize) -> usize {
+    fn count_occupied_at(&self, i: usize, depth: usize) -> usize {
         let x = i % self.width;
         let y = i / self.width;
-
-        let mut cnt = 0;
-        cnt += self.is_next_occupied(x, y, 1, 1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 1, 0, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 1, -1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, -1, 1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, -1, 0, depth) as usize;
-        cnt += self.is_next_occupied(x, y, -1, -1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 0, 1, depth) as usize;
-        cnt += self.is_next_occupied(x, y, 0, -1, depth) as usize;
-        cnt
+        Grid::DLT
+            .iter()
+            .map(
+                |(dx, dy)|
+                    self.is_next_occupied(x, y, *dx, *dy, depth) as usize
+            ).sum()
     }
     // end::count_occupied[]
 
@@ -92,12 +128,12 @@ impl Grid {
     fn is_next_occupied(&self, x: usize, y: usize, dx: isize, dy: isize, depth: usize) -> bool {
         let mut x = x as isize;
         let mut y = y as isize;
-        let mut cnt = 0;
+        let mut d = 0;
         loop {
-            cnt += 1;
+            d += 1;
             x += dx;
             y += dy;
-            if cnt > depth ||
+            if d > depth ||
                 x < 0 || x >= self.width as isize ||
                 y < 0 || y >= self.height as isize {
                 return false;
@@ -192,24 +228,24 @@ LLL####LL#
     #[test]
     fn test_grid_update_part1() {
         let grid = Grid::parse(CONTENT0);
-        let (grid, ..) = grid.update(1, 4);
+        let grid = grid.update(1, 4).unwrap();
         assert_eq!(grid, Grid::parse(CONTENT1));
-        let (grid, ..) = grid.update(1, 4);
+        let grid = grid.update(1, 4).unwrap();
         assert_eq!(grid, Grid::parse(CONTENT2));
     }
 
     #[test]
     fn test_grid_run_part1() {
         let grid = Grid::parse(CONTENT0);
-        let cnt = grid.run(1, 4);
+        let grid = grid.stationary(1, 4).unwrap();
 
-        assert_eq!(cnt, 37);
+        assert_eq!(grid.count_occupied(), 37);
     }
 
     #[test]
     fn test_grid_count_occupied_1() {
         let grid = Grid::parse(CONTENT1);
-        let cnt = grid.count_occupied(9, grid.data.len());
+        let cnt = grid.count_occupied_at(9, grid.data.len());
         println!("Found {} occupied seats", cnt);
         assert!(cnt < 5);
     }
@@ -219,25 +255,26 @@ LLL####LL#
         let grid = Grid::parse(CONTENT5);
         let (idx, _) = grid.data.iter().enumerate().find(|(_, v)| **v == 'L').expect("No empty seat!");
         println!("Empty seat at {}", idx);
-        assert_eq!(grid.count_occupied(idx, grid.data.len()), 8);
+        assert_eq!(grid.count_occupied_at(idx, grid.data.len()), 8);
     }
 
     #[test]
     fn test_grid_update_part2() {
         let grid = Grid::parse(CONTENT0);
-        let (grid, ..) = grid.update(grid.data.len(), 5);
+        let grid = grid.update(grid.data.len(), 5).unwrap();
         assert_eq!(grid, Grid::parse(CONTENT1), "step 1");
-        let (grid, ..) = grid.update(grid.data.len(), 5);
+        let grid = grid.update(grid.data.len(), 5).unwrap();
         assert_eq!(grid, Grid::parse(CONTENT3), "step 2");
-        let (grid, ..) = grid.update(grid.data.len(), 5);
+        let grid = grid.update(grid.data.len(), 5).unwrap();
         assert_eq!(grid, Grid::parse(CONTENT4), "step 3");
     }
 
     #[test]
     fn test_grid_run_part2() {
         let grid = Grid::parse(CONTENT0);
-        let cnt = grid.run(grid.data.len(), 5);
+        let depth = grid.data.len();
+        let grid = grid.stationary(depth, 5).unwrap();
 
-        assert_eq!(cnt, 26);
+        assert_eq!(grid.count_occupied(), 26);
     }
 }

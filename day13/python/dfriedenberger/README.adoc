@@ -1,0 +1,18 @@
+Day 13 of year 2020
+https://adventofcode.com/2020/day/13
+
+TIP: Brute force is not possible. Ask yourself why prime numbers are used.
+
+=== First Star
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+[source, python]
+....
+include::solution.py[tags=starTwo]
+....

@@ -1,0 +1,23 @@
+== Day 13
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+
+=== Idea
+
+The idea for part one is to simply calculate the modulo of arrival time and the
+bus ID. The waiting time is the bus id minus the moduli. The smallest value is the solution.
+
+I needed some googling to find out that the Chinese Remainder Theorem can be used to solve this puzzle. After that I reread the section in this book http://weitz.de/KMFI/ to beeing able to implement it. 
+
+=== What I learned
+
+Got reminded of the Chinese Remainder Theorem.
+
+=== How to run
+
+Run using:
+`$ python day13.py --help`

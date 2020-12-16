@@ -1,0 +1,43 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 13: Shuttle Search
+https://adventofcode.com/2020/day/13
+
+=== Info
+
+Shuttle bus catching: Find the nextest bus leaving to next airport stop
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Find next bus number from my timestamp on
+. Straightforward iteration with modulo
+
+.Star2: Find perfext sequence of bus departures
+. Hmm, this one was hard to crack for me
+. Had to rely on AoC subreddit for hints first AND to local slack colleagues, as my test implementation worked on the Wikipedia data, but not on the test nor the puzzle data
+. Thanks to @jamhocken's implementation as a guidance while I implemented my 'own' version
+
+=== Learned today
+
+* Chinese Remainder Theorem and corresponding Sieving method
+* That there's a difference to 
+** (a*i) % c == d, vs
+** (a*i + d) % c == 0 (this one worked...)
+* Still, it's been a long time since real mathematics :)
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

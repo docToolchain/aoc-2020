@@ -1,0 +1,29 @@
+Puzzle: https://adventofcode.com/2020/day/13[Shuttle Search]
+
+== Part 1
+
+Created a little function that calculates the time until next departure for a given bus.
+Played around with ruby array magic and voilà pretty easy solution for part1.
+
+== Part 2
+
+Ooof.
+This was more difficult than I would like to admit.
+First started looping with dT of the first bus but realized this brute force won't finish.
+Actually had to peek at a solution and still failed to implement it correctly.
+
+TIL: need to brush up on maths and CS basics.. 😔
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
