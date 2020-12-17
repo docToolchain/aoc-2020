@@ -1,0 +1,25 @@
+== Day 17: Conway Cubes ==
+
+Rust solution for https://adventofcode.com/2020/day/16[AoC 2020, Day 16]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Today I just duplicated my code for part 2. Did not try to generalize it.
+
+Parse into a grid and then do update steps.
+
+[source,rust,numbered]
+.Parse
+----
+include::src/lib.rs[tags=parse]
+----
+
+[source,rust,numbered]
+.Update
+----
+include::src/lib.rs[tags=update]
+----
