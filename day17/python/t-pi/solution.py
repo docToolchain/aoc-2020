@@ -39,8 +39,6 @@ def get_adjacent(node, pocket):
     adjacent_nodes = [(z, x, y, w)
                       for z in range(nz-1, nz+2) for x in range(nx-1, nx+2) for y in range(ny-1, ny+2) for w in range(nw-1, nw+2)]
     adjacent_nodes.remove(node)
-#    print(node, adjacent_nodes, sum([pocket[n]
-#                                     for n in adjacent_nodes if n in pocket.keys()]))
     return sum([pocket[n] for n in adjacent_nodes if n in pocket.keys()])
 
 
@@ -58,7 +56,6 @@ def iterate_pocket(pocket, limits, star):
     ''' Generate new iteration of pocket_status by checking rules
         Star = 1 -> 4th dimension w is kept fixed at 0
     '''
-    # new_pocket = copy.deepcopy(pocket)
     new_pocket = dict()
     new_limits = list()
     for lim in limits:
