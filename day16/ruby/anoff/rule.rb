@@ -17,7 +17,7 @@ end
 
 class RuleSet
   attr_reader :rules, :validValues
-  def initialize()
+  def initialize
     @rules = Array.new
     @validValues = Array.new
   end
@@ -35,3 +35,23 @@ class RuleSet
   end
 end
 
+class Tickets
+  attr_reader :tickets
+  def initialize
+    @tickets = []
+    @ticketSize = 0
+  end
+  def add(ticket)
+    @tickets.append(ticket.split(",").map(&:to_i))
+    if @ticketSize == 0
+      @ticketSize = @tickets[0].size
+    end
+  end
+  def getField(n)
+    values = Array.new(@tickets.size)
+    for i in (0..(@tickets.size-1))
+      values[i] = @tickets[i][n]
+    end
+    return values
+  end
+end

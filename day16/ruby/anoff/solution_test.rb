@@ -29,4 +29,38 @@ class TestSolution < Test::Unit::TestCase
     rules, ticketMine, ticketsNearby = readInput("./input_test.txt")
     assert_equal 71, part1(rules, ticketMine, ticketsNearby)
   end
+  
+  def test_Tickets
+    t = Tickets.new
+    t.add("11,12,13")
+    t.add("3,9,18")
+    t.add("15,1,5")
+    assert_equal [12, 9, 1], t.getField(1)
+  end
+
+  def test_findFieldNames
+    rules, ticketMine, ticketsNearby = readInput("./input_test2.txt")
+    rs = RuleSet.new
+    for rule in rules
+      name, ranges = rule.split(": ")
+      range1, range2 = ranges.split(" or ")
+      r = Rule.new(name, range1, range2)
+      rs.add(r)
+    end
+
+    validTickets = Tickets.new
+    for ticket in ticketsNearby
+      isValid = true
+      for value in ticket.split(",")
+        if not rs.valid?(value.to_i)
+          isValid = false
+        end
+      end
+      if isValid
+        validTickets.add(ticket)
+      end
+    end
+    validTickets.add(ticketMine)
+    assert_equal ["row", "class", "seat"], findFieldNames(validTickets, rs)
+  end
 end
