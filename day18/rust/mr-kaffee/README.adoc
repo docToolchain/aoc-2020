@@ -1,0 +1,14 @@
+== Day 18:  ==
+
+Rust solution for https://adventofcode.com/2020/day/16[AoC 2020, Day 16]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+[source,rust,numbered]
+----
+include::src/lib.rs[]
+----

@@ -1,40 +1,37 @@
 use std::collections::HashSet;
 use std::cmp::{min, max};
 
+#[macro_use]
+extern crate itertools;
+
 #[derive(Debug, PartialEq)]
-pub struct BBox3 {
-    x_rg: (isize, isize),
-    y_rg: (isize, isize),
-    z_rg: (isize, isize),
+pub struct BBox {
+    lims: Vec<(isize, isize)>,
 }
 
-impl Default for BBox3 {
-    fn default() -> Self {
-        BBox3 {
-            x_rg: (isize::MAX, isize::MIN),
-            y_rg: (isize::MAX, isize::MIN),
-            z_rg: (isize::MAX, isize::MIN),
+impl BBox {
+    pub fn of_dim(dim: usize) -> Self {
+        BBox { lims: (0..dim).map(|_| (isize::MAX, isize::MIN)).collect() }
+    }
+
+    pub fn update(&mut self, x: &[isize]) {
+        assert_eq!(self.lims.len(), x.len());
+
+        for d in 0..self.lims.len() {
+            self.lims[d] = (min(self.lims[d].0, x[d]), max(self.lims[d].1, x[d] + 1));
         }
     }
 }
 
-impl BBox3 {
-    pub fn update(&mut self, x: isize, y: isize, z: isize) {
-        self.x_rg = (min(self.x_rg.0, x), max(self.x_rg.1, x + 1));
-        self.y_rg = (min(self.y_rg.0, y), max(self.y_rg.1, y + 1));
-        self.z_rg = (min(self.z_rg.0, z), max(self.z_rg.1, z + 1));
-    }
-}
-
-pub fn parse3(content: &str, z: isize) -> (HashSet<(isize, isize, isize)>, BBox3) {
+pub fn parse3(content: &str, z: isize) -> (HashSet<(isize, isize, isize)>, BBox) {
     let mut map = HashSet::new();
-    let mut bbox = BBox3::default();
+    let mut bbox = BBox::of_dim(3);
     content.lines().enumerate().for_each(|(y, line)| {
         line.chars().enumerate().for_each(|(x, c)|
             {
                 if c == '#' {
                     map.insert((x as isize, y as isize, z));
-                    bbox.update(x as isize, y as isize, z);
+                    bbox.update(&[x as isize, y as isize, z]);
                 }
             }
         );
@@ -42,8 +39,8 @@ pub fn parse3(content: &str, z: isize) -> (HashSet<(isize, isize, isize)>, BBox3
     (map, bbox)
 }
 
-pub fn update_steps3(map: &HashSet<(isize, isize, isize)>, bbox: &BBox3, steps: isize)
-                     -> (HashSet<(isize, isize, isize)>, BBox3) {
+pub fn update_steps3(map: &HashSet<(isize, isize, isize)>, bbox: &BBox, steps: isize)
+                     -> (HashSet<(isize, isize, isize)>, BBox) {
     assert!(steps > 0, "steps > 0 required");
 
     let (mut map, mut bbox) = update3(map, bbox);
@@ -55,80 +52,46 @@ pub fn update_steps3(map: &HashSet<(isize, isize, isize)>, bbox: &BBox3, steps: 
     (map, bbox)
 }
 
-pub fn update3(map: &HashSet<(isize, isize, isize)>, bbox: &BBox3)
-               -> (HashSet<(isize, isize, isize)>, BBox3) {
+pub fn update3(map: &HashSet<(isize, isize, isize)>, bbox: &BBox)
+               -> (HashSet<(isize, isize, isize)>, BBox) {
     let mut map_upd = HashSet::new();
-    let mut bbox_upd = BBox3::default();
+    let mut bbox_upd = BBox::of_dim(3);
 
-    for x in bbox.x_rg.0 - 1..bbox.x_rg.1 + 1 {
-        for y in bbox.y_rg.0 - 1..bbox.y_rg.1 + 1 {
-            for z in bbox.z_rg.0 - 1..bbox.z_rg.1 + 1 {
-                let mut cnt = 0;
-                for k in 0..27 {
-                    if k == 13 {
-                        continue;
-                    }
-                    let dx = k % 3 - 1;
-                    let dy = (k % 9) / 3 - 1;
-                    let dz = k / 9 - 1;
+    for (x, y, z) in iproduct!(
+            bbox.lims[0].0 - 1..bbox.lims[0].1 + 1,
+            bbox.lims[1].0 - 1..bbox.lims[1].1 + 1,
+            bbox.lims[2].0 - 1..bbox.lims[2].1 + 1)
+    {
+        let mut cnt = 0;
+        for k in 0..27 {
+            if k == 13 { continue; }
 
-                    if map.contains(&(x + dx, y + dy, z + dz)) {
-                        cnt += 1;
-                        if cnt > 3 {
-                            break;
-                        }
-                    }
-                }
-                let active = map.contains(&(x, y, z));
-                if (active && cnt >= 2 && cnt <= 3) || (!active && cnt == 3) {
-                    map_upd.insert((x, y, z));
-                    bbox_upd.update(x, y, z);
-                }
+            if map.contains(&(x + k % 3 - 1,
+                              y + (k / 3) % 3 - 1,
+                              z + k / 9 - 1)) {
+                cnt += 1;
+                if cnt > 3 { break; }
             }
+        }
+        if cnt == 3 || (cnt == 2 && map.contains(&(x, y, z))) {
+            map_upd.insert((x, y, z));
+            bbox_upd.update(&[x, y, z]);
         }
     };
 
     (map_upd, bbox_upd)
 }
 
-#[derive(Debug, PartialEq)]
-pub struct BBox4 {
-    x_rg: (isize, isize),
-    y_rg: (isize, isize),
-    z_rg: (isize, isize),
-    w_rg: (isize, isize),
-}
-
-impl Default for BBox4 {
-    fn default() -> Self {
-        BBox4 {
-            x_rg: (isize::MAX, isize::MIN),
-            y_rg: (isize::MAX, isize::MIN),
-            z_rg: (isize::MAX, isize::MIN),
-            w_rg: (isize::MAX, isize::MIN),
-        }
-    }
-}
-
-impl BBox4 {
-    pub fn update(&mut self, x: isize, y: isize, z: isize, w: isize) {
-        self.x_rg = (min(self.x_rg.0, x), max(self.x_rg.1, x + 1));
-        self.y_rg = (min(self.y_rg.0, y), max(self.y_rg.1, y + 1));
-        self.z_rg = (min(self.z_rg.0, z), max(self.z_rg.1, z + 1));
-        self.w_rg = (min(self.w_rg.0, w), max(self.w_rg.1, w + 1));
-    }
-}
-
 // tag::parse[]
-pub fn parse4(content: &str, z: isize, w: isize) -> (HashSet<(isize, isize, isize, isize)>, BBox4) {
+pub fn parse4(content: &str, z: isize, w: isize) -> (HashSet<(isize, isize, isize, isize)>, BBox) {
     let mut map = HashSet::new();
-    let mut bbox = BBox4::default();
+    let mut bbox = BBox::of_dim(4);
     content.lines().enumerate().for_each(|(y, line)| {
         line.chars().enumerate().for_each(|(x, c)|
             {
                 if c == '#' {
                     map.insert((x as isize, y as isize, z, w));
-                    bbox.update(x as isize, y as isize, z, w);
+                    bbox.update(&[x as isize, y as isize, z, w]);
                 }
             }
         );
@@ -137,8 +100,8 @@ pub fn parse4(content: &str, z: isize, w: isize) -> (HashSet<(isize, isize, isiz
 }
 // end::parse[]
 
-pub fn update_steps4(map: &HashSet<(isize, isize, isize, isize)>, bbox: &BBox4, steps: isize)
-                     -> (HashSet<(isize, isize, isize, isize)>, BBox4) {
+pub fn update_steps4(map: &HashSet<(isize, isize, isize, isize)>, bbox: &BBox, steps: isize)
+                     -> (HashSet<(isize, isize, isize, isize)>, BBox) {
     assert!(steps > 0, "steps > 0 required");
 
     let (mut map, mut bbox) = update4(map, bbox);
@@ -151,39 +114,32 @@ pub fn update_steps4(map: &HashSet<(isize, isize, isize, isize)>, bbox: &BBox4, 
 }
 
 // tag::update[]
-pub fn update4(map: &HashSet<(isize, isize, isize, isize)>, bbox: &BBox4)
-               -> (HashSet<(isize, isize, isize, isize)>, BBox4) {
+pub fn update4(map: &HashSet<(isize, isize, isize, isize)>, bbox: &BBox)
+               -> (HashSet<(isize, isize, isize, isize)>, BBox) {
     let mut map_upd = HashSet::new();
-    let mut bbox_upd = BBox4::default();
+    let mut bbox_upd = BBox::of_dim(4);
 
-    for x in bbox.x_rg.0 - 1..bbox.x_rg.1 + 1 {
-        for y in bbox.y_rg.0 - 1..bbox.y_rg.1 + 1 {
-            for z in bbox.z_rg.0 - 1..bbox.z_rg.1 + 1 {
-                for w in bbox.w_rg.0 - 1..bbox.w_rg.1 + 1 {
-                    let mut cnt = 0;
-                    for k in 0..81 {
-                        if k == 40 {
-                            continue;
-                        }
-                        let dx = k % 3 - 1;
-                        let dy = (k % 9) / 3 - 1;
-                        let dz = (k % 27) / 9 - 1;
-                        let dw = k / 27 - 1;
+    for (x, y, z, w) in iproduct!(
+            bbox.lims[0].0 - 1..bbox.lims[0].1 + 1,
+            bbox.lims[1].0 - 1..bbox.lims[1].1 + 1,
+            bbox.lims[2].0 - 1..bbox.lims[2].1 + 1,
+            bbox.lims[3].0 - 1..bbox.lims[3].1 + 1)
+    {
+        let mut cnt = 0;
+        for k in 0..81 {
+            if k == 40 { continue; }
 
-                        if map.contains(&(x + dx, y + dy, z + dz, w + dw)) {
-                            cnt += 1;
-                            if cnt > 3 {
-                                break;
-                            }
-                        }
-                    }
-                    let active = map.contains(&(x, y, z, w));
-                    if (active && cnt >= 2 && cnt <= 3) || (!active && cnt == 3) {
-                        map_upd.insert((x, y, z, w));
-                        bbox_upd.update(x, y, z, w);
-                    }
-                }
+            if map.contains(&(x + k % 3 - 1,
+                              y + (k / 3) % 3 - 1,
+                              z + (k / 9) % 3 - 1,
+                              w + k / 27 - 1)) {
+                cnt += 1;
+                if cnt > 3 { break; }
             }
+        }
+        if cnt == 3 || (cnt == 2 && map.contains(&(x, y, z, w))) {
+            map_upd.insert((x, y, z, w));
+            bbox_upd.update(&[x, y, z, w]);
         }
     };
 
@@ -195,11 +151,9 @@ pub fn update4(map: &HashSet<(isize, isize, isize, isize)>, bbox: &BBox4)
 mod tests {
     use super::*;
 
-    const CONTENT: &str = ".#.
-..#
-###";
+    const CONTENT: &str = ".#.\n..#\n###";
 
-    fn exp_map() -> HashSet<(isize, isize, isize)> {
+    fn exp_map3() -> HashSet<(isize, isize, isize)> {
         let mut map = HashSet::new();
         map.insert((1, 0, 0));
         map.insert((2, 1, 0));
@@ -210,45 +164,43 @@ mod tests {
     }
 
     #[test]
-    fn test_parse() {
+    fn test_parse3() {
         let (map, bbox) = parse3(CONTENT, 0);
-        assert_eq!(map, exp_map());
-        assert_eq!(bbox, BBox3 { x_rg: (0, 3), y_rg: (0, 3), z_rg: (0, 1) })
+        assert_eq!(map, exp_map3());
+        assert_eq!(bbox, BBox { lims: vec![(0, 3), (0, 3), (0, 1)] })
     }
 
-    fn exp_map_upd() -> HashSet<(isize, isize, isize)> {
+    fn exp_map_upd3() -> HashSet<(isize, isize, isize)> {
         let mut map = HashSet::new();
 
-        map.insert((0, 1, -1));
-        map.insert((2, 2, -1));
-        map.insert((1, 3, -1));
+        let cont1 = "...\n#..\n..#\n.#.";
+        let cont2 = "...\n#.#\n.##\n.#.";
 
-        map.insert((0, 1, 0));
-        map.insert((2, 1, 0));
-        map.insert((1, 2, 0));
-        map.insert((2, 2, 0));
-        map.insert((1, 3, 0));
-
-        map.insert((0, 1, 1));
-        map.insert((2, 2, 1));
-        map.insert((1, 3, 1));
+        for z in -1..2 {
+            let (layer, _) = if z == 0 {
+                parse3(cont2, z)
+            } else {
+                parse3(cont1, z)
+            };
+            map.extend(layer);
+        }
 
         map
     }
 
     #[test]
-    fn test_update() {
+    fn test_update3() {
         let (map, bbox) = parse3(CONTENT, 0);
 
         println!("{:?}", map);
         let (map, bbox) = update3(&map, &bbox);
 
         println!("{:?}", bbox);
-        for z in bbox.z_rg.0..bbox.z_rg.1 {
+        for z in bbox.lims[2].0..bbox.lims[2].1 {
             println!("z = {}", z);
-            for y in bbox.y_rg.0..bbox.y_rg.1 {
+            for y in bbox.lims[1].0..bbox.lims[1].1 {
                 print!(" ");
-                for x in bbox.x_rg.0..bbox.x_rg.1 {
+                for x in bbox.lims[0].0..bbox.lims[0].1 {
                     if map.contains(&(x, y, z)) { print!("#"); } else { print!(".") }
                 }
                 println!();
@@ -256,49 +208,25 @@ mod tests {
             println!();
         }
 
-        assert_eq!(map, exp_map_upd());
+        assert_eq!(map, exp_map_upd3());
     }
 
     fn exp_map_upd4() -> HashSet<(isize, isize, isize, isize)> {
         let mut map = HashSet::new();
 
-        map.insert((0, 1, -1, -1));
-        map.insert((2, 2, -1, -1));
-        map.insert((1, 3, -1, -1));
+        let cont1 = "...\n#..\n..#\n.#.";
+        let cont2 = "...\n#.#\n.##\n.#.";
 
-        map.insert((0, 1, 0, -1));
-        map.insert((2, 2, 0, -1));
-        map.insert((1, 3, 0, -1));
-
-        map.insert((0, 1, 1, -1));
-        map.insert((2, 2, 1, -1));
-        map.insert((1, 3, 1, -1));
-
-        map.insert((0, 1, -1, 0));
-        map.insert((2, 2, -1, 0));
-        map.insert((1, 3, -1, 0));
-
-        map.insert((0, 1, 0, 0));
-        map.insert((2, 1, 0, 0));
-        map.insert((1, 2, 0, 0));
-        map.insert((2, 2, 0, 0));
-        map.insert((1, 3, 0, 0));
-
-        map.insert((0, 1, 1, 0));
-        map.insert((2, 2, 1, 0));
-        map.insert((1, 3, 1, 0));
-
-        map.insert((0, 1, -1, 1));
-        map.insert((2, 2, -1, 1));
-        map.insert((1, 3, -1, 1));
-
-        map.insert((0, 1, 0, 1));
-        map.insert((2, 2, 0, 1));
-        map.insert((1, 3, 0, 1));
-
-        map.insert((0, 1, 1, 1));
-        map.insert((2, 2, 1, 1));
-        map.insert((1, 3, 1, 1));
+        for z in -1..2 {
+            for w in -1..2 {
+                let (layer, _) = if z == 0 && w == 0 {
+                    parse4(cont2, z, w)
+                } else {
+                    parse4(cont1, z, w)
+                };
+                map.extend(layer);
+            }
+        }
 
         map
     }
@@ -311,12 +239,12 @@ mod tests {
         let (map, bbox) = update4(&map, &bbox);
 
         println!("{:?}", bbox);
-        for w in bbox.w_rg.0..bbox.w_rg.1 {
-            for z in bbox.z_rg.0..bbox.z_rg.1 {
+        for w in bbox.lims[3].0..bbox.lims[3].1 {
+            for z in bbox.lims[2].0..bbox.lims[2].1 {
                 println!("z = {}, w = {}", z, w);
-                for y in bbox.y_rg.0..bbox.y_rg.1 {
+                for y in bbox.lims[1].0..bbox.lims[1].1 {
                     print!(" ");
-                    for x in bbox.x_rg.0..bbox.x_rg.1 {
+                    for x in bbox.lims[0].0..bbox.lims[0].1 {
                         if map.contains(&(x, y, z, w)) { print!("#"); } else { print!(".") }
                     }
                     println!();
