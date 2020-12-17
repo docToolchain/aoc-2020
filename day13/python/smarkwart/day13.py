@@ -1,9 +1,7 @@
 import sys
-import re
+import threading
+import multiprocessing as mp
 import os
-
-def cls():
-    os.system('cls' if os.name=='nt' else 'clear')
 
 def get_input_data_as_list(file_name):
     """ 
@@ -14,33 +12,32 @@ def get_input_data_as_list(file_name):
         data_list = input_file.readlines()
     return data_list
 
-def parse_instructions(instruction_list):
-    """
-    Parses the instruction strings into a dictionary
-    """
-    instruction_dict = []
-    for instruction in instruction_list:
-        regex_match = re.match(r"(?P<direction>\w)(?P<value>\d*)",instruction)
-        if regex_match:
-            instruction_dict.append(regex_match.groupdict())
-    return instruction_dict
+def parse_bus_note(input_data):
+    earliest_timestamp = int(input_data[0])
+    all_buses = input_data[1].split(',')
 
-def find_earliest_departure(start_time, buses, max_wait_time):
+    buses_in_service = [int(id) for id in all_buses if id != 'x']
+    patched_bus_list = [int(id) if id != 'x' else 1 for id in all_buses]
+
+    buses_in_service.sort()
+    return earliest_timestamp, buses_in_service, patched_bus_list
+
+def find_earliest_departure(start_time, buses):
     """
     Returns: bus_id, time_of_departure
     """
-    for time_of_departure in range (start_time, start_time + max_wait_time):
+    for time_of_departure in range (start_time, start_time + min(buses)):
         for bus_id in buses:
             if time_of_departure % bus_id == 0:
                 return bus_id, time_of_departure
     return -1, -1
 
-def print_timetable(start_time, buses, lines_to_print):
+def print_timetable(start_time, buses):
     print("time", end='')
     for bus in buses:
         print(f"\t{bus}", end='')
     print("")
-    for time in range (start_time, start_time + lines_to_print):
+    for time in range (start_time, start_time + max(buses)):
         print(time, end='')
         for bus in buses:
             if time % bus == 0:
@@ -49,19 +46,26 @@ def print_timetable(start_time, buses, lines_to_print):
                 print(f"\t.", end='')
         print("")
 
-cls()
+def find_subsequent_time(buses):
+    increment = buses[0]
+    time = buses[0]
+    for idx,bus_id in enumerate(buses):
+        while ((time+idx) % bus_id) != 0 or ((time+idx+1) % buses[idx+1]) !=0:
+            time += increment
+        # next entry is already last bus
+        if buses[idx+1] == buses[-1]:
+            return time
+        increment *= buses[idx+1]
 
 input_data = get_input_data_as_list(sys.argv[1])
 
-earliest_timestamp = int(input_data[0])
-bus_ids = input_data[1].split(',')
+start_time, buses_in_service, all_buses = parse_bus_note(input_data)
 
-buses_in_service = [int(id) for id in bus_ids if id != 'x']
-buses_in_service.sort()
+#print_timetable(start_time, buses_in_service)
 
-print_timetable(earliest_timestamp, buses_in_service, max(buses_in_service))
+bus_id, time_of_departure = find_earliest_departure(start_time, buses_in_service)
 
-bus_id, time_of_departure = find_earliest_departure(earliest_timestamp, buses_in_service, min(buses_in_service))
+print(f"Bus {bus_id} will depart at {time_of_departure} which is {time_of_departure - start_time} minutes from now on. Puzzle #1 solution is: {bus_id * (time_of_departure - start_time)}")
 
-print(f"Bus {bus_id} will depart at {time_of_departure} which is {time_of_departure - earliest_timestamp} minutes from now on. Puzzle #1 solution is: {bus_id * (time_of_departure - earliest_timestamp)}")
-
+time_x = find_subsequent_time(all_buses)
+print(f"Start time for subsequent bus departure: {time_x}")
