@@ -1,0 +1,30 @@
+Puzzle: https://adventofcode.com/2020/day/16[Ticket Translation]
+
+== Part 1
+
+Decided to go class-based again.
+Created a class for `Rule` and a superclass `RuleSet` that contains multiple rules.
+To make the number checking more efficient I decided to create an Array that holds all the valid values from all rules.
+This made checking the individual tickets very fast as it only required a bit precomputation once.
+
+== Part 2
+
+
+== Solution
+
+[source, ruby]
+....
+include::rule.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
