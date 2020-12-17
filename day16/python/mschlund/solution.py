@@ -31,7 +31,6 @@ def check_other_tickets(section, ranges):
         ticket_erroneous = True
     if not ticket_erroneous:
       valid_tickets.append(line)
-
   return error_rate, valid_tickets
 
 
