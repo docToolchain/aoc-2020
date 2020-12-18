@@ -77,12 +77,30 @@ def evaluate_parentheses(expression, star):
     return result
 
 
+def evaluate_parentheses_smart(expression, star):
+    ''' Crawl through string expression for parentheses.
+        Inspiration from repo colleagues: start with closing parenthesis. Makes it much easier :)
+        Returns result as int.
+        Parentheses allowed.
+    '''
+    evaluate = evaluate_straight
+    if (star == 2):
+        evaluate = evaluate_advanced
+    while (max_level := expression.count(')') > 0):
+        right = expression.find(')')
+        left = expression[:right].rfind('(')
+        sub_result = evaluate(expression[left:right].strip('()'))
+        expression = expression[:left] + str(sub_result) + expression[right+1:]
+    result = evaluate(expression)
+    return result
+
+
 def do_the_maths(expression_list, star=1):
     ''' Iterate through the homework list and sums up the line results
     '''
     math_sum = 0
     for line in expression_list:
-        math_sum += evaluate_parentheses(line, star)
+        math_sum += evaluate_parentheses_smart(line, star)
     return math_sum
 
 
