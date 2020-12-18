@@ -1,9 +1,9 @@
 use std::fs;
-use mr_kaffee_2020_17::*;
+use mr_kaffee_2020_17_1::*;
 use std::time::Instant;
 
 fn read_input() -> String {
-    fs::read_to_string("input.txt")
+    fs::read_to_string("../input.txt")
         .expect("Could not read from file.")
 }
 
