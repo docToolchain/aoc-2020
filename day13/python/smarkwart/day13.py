@@ -1,7 +1,4 @@
 import sys
-import threading
-import multiprocessing as mp
-import os
 
 def get_input_data_as_list(file_name):
     """ 
