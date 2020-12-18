@@ -12,20 +12,22 @@ fn main() {
     let instant_main = Instant::now();
 
     // read file
-    // let content = read_input();
+    let content = read_input();
+    let token_lines = Token::parse(&content);
 
     // solve part 1
     let instant_part = Instant::now();
-    let sol = 0;
+    let sol = token_lines.iter()
+        .map(|items| evaluate1(items)).sum::<isize>();
     println!("Solution part 1 done in {:?}: {}", instant_part.elapsed(), sol);
-    // assert_eq!(sol, 0);
-
+    assert_eq!(sol, 8_929_569_623_593);
 
     // solve part 2
     let instant_part = Instant::now();
-    let sol = 0;
+    let sol = token_lines.iter()
+        .map(|items| evaluate2(items)).sum::<isize>();
     println!("Solution part 2 done in {:?}: {}", instant_part.elapsed(), sol);
-    // assert_eq!(sol, 0);
+    assert_eq!(sol, 231_235_959_382_961);
 
     // print elapsed time
     println!("Total time: {:?}", instant_main.elapsed());
