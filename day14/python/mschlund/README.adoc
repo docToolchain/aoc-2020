@@ -1,0 +1,15 @@
+== Day 14
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+
+=== First Star
+
+
+=== Second Star
+
+
