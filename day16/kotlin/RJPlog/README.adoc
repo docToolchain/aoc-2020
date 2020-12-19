@@ -1,0 +1,39 @@
+== Day 16: Ticket Translation ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/16
+
+ $ kotlin day2016_1_2.kts
+ 
+=== First Star
+
+How does it work: +
+
+Today I won both stars, but I am not happy with the solution. I was not concentrated, and so there is no real structure in the code, I brachiated through, especially in part 2, which results in a very complicated code structure difficult to maintain. I am happy that there is now third part, where you have to enhance the code.
+
+[source, kotlin, numbered]
+....
+include::day2016_1_2.kts[tags=ticket]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Here the complete set of valid tickets is checked which row fits, then this row is deleted from inputs and tickets, and the process starts again. If the fitting limit set includes departure, the result will be multiplied. 
+I guess this is pretty stupid, there must be a better way to judge in the first round to sort the relations accoring to the number of violations. For this amount of data it works, but it is still ineffective. 
+
+Looks like I have more variables defined than input data :-)
+
+[source, kotlin, numbered]
+....
+include::day2016_1_2.kts[tags=ticket_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2016_1_2.kts[tags=output]
+....

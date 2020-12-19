@@ -1,0 +1,37 @@
+== Day 18: Operation Order ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/18
+
+ $ kotlin day2018_1_2.kts
+ 
+=== First Star
+
+How does it work: +
+
+All lines of the puzzle input are read into a list. For each entry in that list the results are calculated by stripping down to parts with don't contain brackets any more. For these parts the result is calculated. In the original equation the calculated part of the equation is replaced with the result and with this equation the procedure is repeated, until there are no brackets any more.
+For all list entrys the results are summed up as the result of part 1  
+
+[source, kotlin, numbered]
+....
+include::day2018_1_2.kts[tags=new_math]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+This works the same way as part1, only the rules for calculation are changed, therefore the algorithm sligtly changed
+
+[source, kotlin, numbered]
+....
+include::day2018_1_2.kts[tags=new_math_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2018_1_2.kts[tags=output]
+....

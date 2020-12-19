@@ -1,0 +1,20 @@
+{
+  "name": "wschaef",
+  "version": "1.0.0",
+  "description": "Solutions for Advent of Code",
+  "scripts": {
+    "compile-watch": "tsc --watch",
+    "run:1": "node dist/solution1.js",
+    "run:2": "node dist/solution2.js",
+    "run:all": "tsc && node dist/solution1.js && node dist/solution2.js",
+    "start": "onchange 'src/*.ts' -- npm run run:all"
+  },
+  "author": "Waldemar Schäfer",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.14.10",
+    "onchange": "^7.1.0"
+  },
+  "type": "module",
+  "dependencies": {}
+}
