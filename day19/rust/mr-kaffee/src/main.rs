@@ -15,19 +15,19 @@ fn main() {
     let content = read_input();
 
     // parse
-    let (map, mut rules, patterns) = parse(&content);
+    let (mut rules, texts) = parse(&content);
 
     // solve part 1
     let instant_part = Instant::now();
-    let sol = matches(&map, &rules, patterns);
+    let sol = matches(&rules, texts);
     println!("Solution part 1 done in {:?}: {}", instant_part.elapsed(), sol);
     assert_eq!(sol, 226);
 
     // solve part 2
     let instant_part = Instant::now();
-    rules.insert(8, Rule::Alternative(8, vec![42], vec![42, 8]));
-    rules.insert(11, Rule::Alternative(8, vec![42, 31], vec![42, 11, 31]));
-    let sol = matches(&map, &rules, patterns);
+    rules.insert(8, Rule::Alternative(vec![42], vec![42, 8]));
+    rules.insert(11, Rule::Alternative(vec![42, 31], vec![42, 11, 31]));
+    let sol = matches(&rules, texts);
     println!("Solution part 2 done in {:?}: {}", instant_part.elapsed(), sol);
     assert_eq!(sol, 355);
 

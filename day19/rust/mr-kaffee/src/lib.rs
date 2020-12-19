@@ -1,17 +1,17 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 // tag::rule[]
 #[derive(Debug, PartialEq)]
 pub enum Rule {
-    Sequence(usize, Vec<usize>),
-    Alternative(usize, Vec<usize>, Vec<usize>),
+    Sequence(Vec<usize>),
+    Alternative(Vec<usize>, Vec<usize>),
+    Leaf(char),
 }
 // end::rule[]
 
 impl Rule {
-    pub fn parse(content: &str) -> (HashMap<usize, Rule>, HashMap<char, usize>) {
-        let mut map = HashMap::new();
-        let mut rule = HashMap::new();
+    pub fn parse(content: &str) -> HashMap<usize, Rule> {
+        let mut rules = HashMap::new();
 
         for line in content.lines() {
             let mut parts = line.split(": ");
@@ -19,103 +19,65 @@ impl Rule {
             let line = parts.next().expect("No Content");
             if line.starts_with("\"") {
                 let c = line[1..].chars().next().expect("No character");
-                map.insert(c, id);
+                rules.insert(id, Rule::Leaf(c));
             } else {
-                let mut parts = line.split(" | ");
-                let opt_a: Vec<_> = parts.next().expect("No list")
-                    .split(" ")
-                    .map(|part| part.parse::<usize>().expect("Could not parse"))
+                let patterns: Vec<Vec<_>> = line.split(" | ")
+                    .map(|sequence| sequence.split(" ").map(|v|
+                        v.parse::<usize>().expect("Illegal rule ref")).collect())
                     .collect();
-                let opt_b: Option<Vec<_>> = parts.next().map(|list|
-                    list.split(" ")
-                        .map(|part| part.parse::<usize>().expect("Could not parse"))
-                        .collect());
-                rule.insert(id, if let Some(opt_b) = opt_b {
-                    Rule::Alternative(id, opt_a, opt_b)
-                } else {
-                    Rule::Sequence(id, opt_a)
+                rules.insert(id, match patterns.len() {
+                    1 => Rule::Sequence(patterns[0].clone()),
+                    2 => Rule::Alternative(patterns[0].clone(), patterns[1].clone()),
+                    _ => panic!("Bad rule"),
                 });
             }
         }
 
-        (rule, map)
+        rules
     }
 }
 
-pub fn parse(content: &str) -> (HashMap<char, usize>, HashMap<usize, Rule>, &str) {
+pub fn parse(content: &str) -> (HashMap<usize, Rule>, &str) {
     let mut parts = content.split("\n\n");
-    let rules = parts.next().expect("No rules");
-    let patterns = parts.next().expect("No patterns");
 
-    let (rules, map) = Rule::parse(rules);
-
-    (map, rules, patterns)
+    (Rule::parse(parts.next().expect("No rules")),
+     parts.next().expect("No texts"))
 }
 
-pub fn matches(map: &HashMap<char, usize>, rules: &HashMap<usize, Rule>, content: &str) -> usize {
-    // set of leaf nodes
-    let mut leaves = HashSet::new();
-    map.iter().for_each(|(_, v)| { leaves.insert(*v); });
-
+pub fn matches(rules: &HashMap<usize, Rule>, texts: &str) -> usize {
     // sequence of rule 0 is start pattern
-    let cand_0 = if let Some(Rule::Sequence(_, seq)) = rules.get(&0) {
-        seq
+    let pattern = if let Some(Rule::Sequence(pattern)) = rules.get(&0) {
+        pattern
     } else {
-        panic!("No rule 0 found.");
+        panic!("No rule 0 as sequence found.");
     };
 
-    content.lines().filter(|line| {
-        let content: Vec<_> = line.chars()
-            .map(|c| *map.get(&c).expect("Illegal char."))
-            .collect();
-        matches_int(&leaves, rules, &cand_0, &content)
-    }).count()
+    texts.lines().filter(|text|
+        matches_int(rules, &pattern, &text.chars().collect::<Vec<_>>())).count()
 }
 
 // tag::match_int[]
-fn matches_int(
-    leaves: &HashSet<usize>,
-    rules: &HashMap<usize, Rule>,
-    cand: &[usize],
-    content: &[usize]) -> bool
-{
-    let mut start = 0;
-    while leaves.contains(&cand[start]) {
+fn matches_int(rules: &HashMap<usize, Rule>, pattern: &[usize], text: &[char]) -> bool {
+    let mut k = 0;
+    while let Some(Rule::Leaf(c)) = rules.get(&pattern[k]) {
         // heads do not match, return false
-        if cand[start] != content[start] {
-            return false;
-        }
+        if *c != text[k] { return false; }
+        k += 1;
+
         // if all matches return true
-        start += 1;
-        if start == content.len() && start == cand.len() {
-            return true;
-        }
-        // if not all matches and content or cand exhausted, return false
-        if start >= content.len() || start >= cand.len() {
-            return false;
-        }
+        if k == text.len() && k == pattern.len() { return true; }
+
+        // if not all matches and content or candidate exhausted, return false
+        if k >= text.len() || k >= pattern.len() { return false; }
     };
 
-    match rules.get(&cand[start]) {
-        Some(Rule::Sequence(_, a)) => {
-            let mut next = Vec::with_capacity(cand.len() - start - 1 + a.len());
-            a.iter().for_each(|a| next.push(*a));
-            cand[start + 1..].iter().for_each(|a| next.push(*a));
-            return matches_int(leaves, rules, &next, &content[start..]);
-        }
-        Some(Rule::Alternative(_, a, b)) => {
-            let mut next1 = Vec::with_capacity(cand.len() - start - 1 + a.len());
-            a.iter().for_each(|a| next1.push(*a));
-            cand[start + 1..].iter().for_each(|a| next1.push(*a));
-
-            let mut next2 = Vec::with_capacity(cand.len() - start - 1 + b.len());
-            b.iter().for_each(|a| next2.push(*a));
-            cand[start + 1..].iter().for_each(|a| next2.push(*a));
-
-            return matches_int(leaves, rules, &next1, &content[start..]) ||
-                matches_int(leaves, rules, &next2, &content[start..]);
-        }
-        None => panic!("Not rule found"),
+    match rules.get(&pattern[k]) {
+        Some(Rule::Sequence(a)) =>
+            matches_int(rules, &[&a, &pattern[k + 1..]].concat(), &text[k..]),
+        Some(Rule::Alternative(a, b)) =>
+            matches_int(rules, &[&a, &pattern[k + 1..]].concat(), &text[k..]) ||
+                matches_int(rules, &[&b, &pattern[k + 1..]].concat(), &text[k..]),
+        _ => panic!("Unexpected leaf node or rule not found"),
     }
 }
 // end::match_int[]
@@ -194,50 +156,45 @@ aabbbbbaabbbaaaaaabbbbbababaaaaabbaaabba";
 
     #[test]
     fn test_rule_parse() {
-        let (rules, map) = Rule::parse(RULES);
+        let rules = Rule::parse(RULES);
 
         let mut exp_rules = HashMap::new();
-        exp_rules.insert(0, Rule::Sequence(0, vec![4, 1, 5]));
-        exp_rules.insert(1, Rule::Alternative(1, vec![2, 3], vec![3, 2]));
-        exp_rules.insert(2, Rule::Alternative(2, vec![4, 4], vec![5, 5]));
-        exp_rules.insert(3, Rule::Alternative(3, vec![4, 5], vec![5, 4]));
-
-        let mut exp_map = HashMap::new();
-        exp_map.insert('a', 4);
-        exp_map.insert('b', 5);
+        exp_rules.insert(0, Rule::Sequence(vec![4, 1, 5]));
+        exp_rules.insert(1, Rule::Alternative(vec![2, 3], vec![3, 2]));
+        exp_rules.insert(2, Rule::Alternative(vec![4, 4], vec![5, 5]));
+        exp_rules.insert(3, Rule::Alternative(vec![4, 5], vec![5, 4]));
+        exp_rules.insert(4, Rule::Leaf('a'));
+        exp_rules.insert(5, Rule::Leaf('b'));
 
         assert_eq!(rules, exp_rules);
-        assert_eq!(map, exp_map);
     }
 
     #[test]
     fn test_matches_single() {
-        let (rules, map) = Rule::parse(RULES);
-        assert_eq!(matches(&map, &rules, "ababbb"), 1);
-        assert_eq!(matches(&map, &rules, "bababa"), 0);
-        assert_eq!(matches(&map, &rules, "abbbab"), 1);
-        assert_eq!(matches(&map, &rules, "aaabbb"), 0);
-        assert_eq!(matches(&map, &rules, "aaaabbb"), 0);
+        let rules = Rule::parse(RULES);
+        assert_eq!(matches(&rules, "ababbb"), 1);
+        assert_eq!(matches(&rules, "bababa"), 0);
+        assert_eq!(matches(&rules, "abbbab"), 1);
+        assert_eq!(matches(&rules, "aaabbb"), 0);
+        assert_eq!(matches(&rules, "aaaabbb"), 0);
     }
 
     #[test]
     fn test_matches_multi() {
-        let (map, rules, patterns) =
-            parse(CONTENT);
+        let (rules, texts) = parse(CONTENT);
 
-        assert_eq!(matches(&map, &rules, patterns), 2);
+        assert_eq!(matches(&rules, texts), 2);
     }
 
     #[test]
     fn test_matches_part2() {
-        let (map, mut rules, patterns) =
-            parse(CONTENT2);
+        let (mut rules, texts) = parse(CONTENT2);
 
-        assert_eq!(matches(&map, &rules, patterns), 3);
+        assert_eq!(matches(&rules, texts), 3);
 
-        rules.insert(8, Rule::Alternative(8, vec![42], vec![42, 8]));
-        rules.insert(11, Rule::Alternative(8, vec![42, 31], vec![42, 11, 31]));
+        rules.insert(8, Rule::Alternative(vec![42], vec![42, 8]));
+        rules.insert(11, Rule::Alternative(vec![42, 31], vec![42, 11, 31]));
 
-        assert_eq!(matches(&map, &rules, patterns), 12);
+        assert_eq!(matches(&rules, texts), 12);
     }
 }
