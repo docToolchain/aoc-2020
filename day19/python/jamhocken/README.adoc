@@ -1,0 +1,31 @@
+
+Day 19 of year 2020
+https://adventofcode.com/2020/day/19
+
+== What I learned
+
+. I worked some more with sets in Python today.
+
+== Approach
+
+. I read in the data and "process" it.
+.. I put the rules into a dictionary with list of lists as values.
+.. I put the patterns into a list.
+.. I also check which rules contain only the letters "a" or "b". These are put into a set.
+. I create a (large) set containing all valid patterns based on the rules.
+. For Problem 1, you just check if each pattern is in the set of valid patterns and sum those.
+. For Problem 2:
+.. The rules now have the special property that all patterns must end with
+at least one pattern from rule 31 (n times). Preceded by at least one more pattern from
+the rule 42 (n+1 times).
+
+The hardest part was figuring out that last part. Once that was clear, it was
+straightforward.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
