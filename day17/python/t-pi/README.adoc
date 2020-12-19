@@ -1,0 +1,48 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 17: Conway Cubes
+https://adventofcode.com/2020/day/17
+
+=== Info
+
+No more game of life; this gets serious - or even hyper-serious :)
+3D Game of Life, with rules:
+
+* "neighbor" = -1 .. +1 in any direction
+* active cube with 2 or 3 neighbours -> inactive
+* inactive with 3 neighbors -> active
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+Starting point: AoC2020-day11...
+Convert data to dict {(coordinate tuple): status = 0 or 1}
+Define initial limits set for all considered dimensions
+
+.Star1: Boot 6 cycles and count active nodes
+. Iterate through timesteps, blowing up dimension limit slowly by 1 in every direction per step
+. Count active nodes after initial boot sequence of 6 iterations
+
+.Star2: Refactor for 4 dimensions
+. Only little refactoring needed to consider 4th dimension
+
+=== Learned today
+
+* Looked up Conway Cubes
+* Remember the limits of range(). Had to add several +1's... 🙄
+* Getting better still at comprehensions
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

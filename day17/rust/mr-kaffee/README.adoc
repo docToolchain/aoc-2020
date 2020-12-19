@@ -1,0 +1,53 @@
+== Day 17: Conway Cubes ==
+
+Rust solution for https://adventofcode.com/2020/day/17[AoC 2020, Day 17]
+
+Run solution with `cargo run` in sub-directory `./var1/` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test` in sub-directory `./var1/`
+
+=== Solution ===
+
+Today I just duplicated my code for part 2. Did not try to generalize it.
+
+Parse into a grid and then do update steps.
+
+[source,rust,numbered]
+.Parse
+----
+include::var1/src/lib.rs[tags=parse]
+----
+
+[source,rust,numbered]
+.Update
+----
+include::var1/src/lib.rs[tags=update]
+----
+
+=== Solution revisited ===
+
+I now added a kind-of generic solution in sub-directory `./var2/`.
+
+Learned a lot no Rust traits but ended up with more code (Removal of redundant code leads to ~ 160% of code based on file size and ~ 200% runtime).
+
+[source,rust,numbered]
+.Parse
+----
+include::var2/src/lib.rs[tags=parse]
+----
+
+[source,rust,numbered]
+.Update
+----
+include::var2/src/lib.rs[tags=update]
+----
+
+The key for having generic functions for parsing and updating is the `Coordinate` trait which is implemented as follows.
+
+[source,rust,numbered]
+.Coordinate
+----
+include::var2/src/lib.rs[tags=coordinate]
+----
+
+So actually, this code is not really generic, but it delegates all the differences to the specific implementations of coordinates with 3 or 4 dimensions.

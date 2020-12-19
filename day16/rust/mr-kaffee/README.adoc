@@ -1,0 +1,37 @@
+== Day 16: Ticket Translation ==
+
+Rust solution for https://adventofcode.com/2020/day/16[AoC 2020, Day 16]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+The most difficult part for the first star was to parse the input correctly:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=parse]
+----
+
+In the second part of the puzzle, I struggled a bit with the fact that in my puzzle input, there is a field for which no rule matches consistently for all passes.
+My assumption was, that this is a bug in my solution, which I was trying to figure out for a while, before I realized that all the "departure" fields were already uniquely identified, ... and my answer was accepted.
+
+Looking at the problem a second time, I realized my bug (obviously it was a bug).
+In the first part of the puzzle, I discarded all passes for which the sum of the invalid fields was greater than zero.
+This kept the pass with an invalid field equal to zero in my list for the second part of the puzzle, for which later on no rule matches.
+
+TIL: Sum over elements equal to zero does not imply count of elements equal to zero.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=find_fields]
+----
+
+Once the matrix of candidates is constructed, it is reduced as follows:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=reduce_1d]
+----

@@ -6,19 +6,20 @@ fn main() {
 
     let content = "0,6,1,7,2,19,20";
 
-    let (mut map,  last) = init(content);
-    let start = map.len() as isize + 1;
+    let (mut map,  last, start) = init(content);
 
     // solve part 1
     let instant_part = Instant::now();
     let last = play(&mut map, last, start, 2020);
-    println!("Solution part 1 done in {:?}: {}", instant_part.elapsed(), last);
+    println!("Solution part 1 done in {:?}: {}; map size: {}",
+             instant_part.elapsed(), last, map.len());
     assert_eq!(last, 706);
 
     // solve part 2
     let instant_part = Instant::now();
     let last = play(&mut map, last, 2020, 30_000_000);
-    println!("Solution part 2 done in {:?}: {}", instant_part.elapsed(), last);
+    println!("Solution part 2 done in {:?}: {}; map size: {}",
+             instant_part.elapsed(), last, map.len());
     assert_eq!(last, 19_331);
 
     println!("Total time: {:?}", instant_main.elapsed());
