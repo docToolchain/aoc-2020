@@ -53,3 +53,7 @@ def get_total_weight(G, s):
     print('The shiny gold bag contains {} bags.'.format(needed_bags))
 ```
 
+[source, python]
+....
+include::solution.py[]
+....

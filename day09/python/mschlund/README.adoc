@@ -42,3 +42,8 @@ def find_contiguous_seq(all_numbers, target):
       seq.pop(0)
   return []
 ```
+
+[source, python]
+....
+include::solution.py[]
+....

@@ -51,7 +51,6 @@ def iterate_until_stable(board, step_function):
   return new_board
 ```
 
-
 === Second Star
 
 With some additions the solution is similar to the first:
@@ -60,3 +59,8 @@ With some additions the solution is similar to the first:
 the seats on the board (the "step_function" used as input to the iterate_until_stable-function).
 - We iterate the update-function until the board does not change any more (the "iterate_until_stable" function).
 
+
+[source, python]
+....
+include::solution.py[]
+....

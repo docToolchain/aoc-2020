@@ -59,3 +59,7 @@ of the corresponding numbers on our ticket:
     print('Product of all departure-fields: {}'.format(math.prod([my_ticket[i] for i in departure_indices])))
 ```
 
+[source, python]
+....
+include::solution.py[]
+....

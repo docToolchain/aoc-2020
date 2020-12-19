@@ -38,3 +38,8 @@ def turn_left(stride):
 def turn_right(stride):
   return (stride[1], -stride[0])
 ```
+
+[source, python]
+....
+include::solution.py[]
+....

@@ -17,3 +17,8 @@ otherwise the behaviour is exactly like for the first exercise.
 Exactly one of the positions must equal the letter so we take the
 logical 'xor' of the two comparisions.
 Further note that 'xor' is logically equivalent to '!='.
+
+[source, python]
+....
+include::solution.py[]
+....
