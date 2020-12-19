@@ -1,0 +1,35 @@
+== Day 19: Monster Messages ==
+
+Rust solution for https://adventofcode.com/2020/day/19[AoC 2020, Day 19]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Again one that caused some headaches.
+I head a solution working from the pattern backwards to rule zero, which worked on the small examples was lost in combinations on the real input running out of memory.
+I tried to simplify the set of rules by eliminating all rules without pipes by substituting them into the rules with pipes.
+Did not really help.
+
+Then I started to look at the solution manually from rule zero to the pattern I was searching for which brought me on the right trip.
+
+Here is my solution, which actually works for both, part 1 and part 2.
+
+First, I parse the rules into an enum type Rule
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=rule]
+----
+
+Second, I start expanding the pattern of rule 0 by looking only at the first element in each step.
+If the first element is a leaf, it either matches the first element of the pattern and I proceed with the second element or it does not match and I discard that branch of my search.
+
+No changes of the algorithm were required for part 2. Just replaced the rules.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=match_int]
+----
