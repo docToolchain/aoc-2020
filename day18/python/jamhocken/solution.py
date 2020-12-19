@@ -42,14 +42,9 @@ def do_math(input_string):
 
 def do_math2(input_string):
     last_par = input_string.rfind(")")
-
     while last_par != -1:
         opening_par = find_opening_par(input_string)
-        if last_par == len(input_string)-1:
-            input_string = input_string[:opening_par]+str(do_math2(input_string[opening_par+1:last_par]))
-        else:
-            input_string = input_string[:opening_par] + str(do_math2(input_string[opening_par + 1:last_par])) +\
-                input_string[last_par+1:len(input_string)]
+        input_string = input_string.replace(input_string[opening_par:last_par+1], str(do_math2(input_string[opening_par+1:last_par])))
         last_par = input_string.rfind(")")
 
     fragments = input_string.split("*")
@@ -58,18 +53,19 @@ def do_math2(input_string):
 
     return math.prod(results)
 
-with open("input.txt",'r') as code_file:
-    all_code_file = code_file.readlines()
+def main():
+    with open("input.txt",'r') as code_file:
+        all_code_file = code_file.readlines()
 
-operations_list = process_input(all_code_file)
+    operations_list = process_input(all_code_file)
 
-math_results = [do_math(operation) for operation in operations_list]
+    math_results = [do_math(operation) for operation in operations_list]
 
-print("The sum of the answers to all problems in the initial homework is", sum(math_results))
+    print("The sum of the answers to all problems in the initial homework is", sum(math_results))
 
-math_results = [do_math2(operation) for operation in operations_list]
+    math_results = [do_math2(operation) for operation in operations_list]
 
-print("The sum of the answers to all problems in the advanced math homework is", sum(math_results))
+    print("The sum of the answers to all problems in the advanced math homework is", sum(math_results))
 
-
+main()
 
