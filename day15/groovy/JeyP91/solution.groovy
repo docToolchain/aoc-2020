@@ -50,20 +50,12 @@ void test() {
     assert solve(input4, 2020) == 78
     assert solve(input5, 2020) == 438
     assert solve(input6, 2020) == 1836
-    println("Test part 1 solved")
 
     assert solve(input0, 30000000) == 175594
-    println("input0 solved")
     assert solve(input1, 30000000) == 2578
-    println("input1 solved")
     assert solve(input2, 30000000) == 3544142
-    println("input2 solved")
     assert solve(input3, 30000000) == 261214
-    println("input3 solved")
     assert solve(input4, 30000000) == 6895259
-    println("input4 solved")
     assert solve(input5, 30000000) == 18
-    println("input5 solved")
     assert solve(input6, 30000000) == 362
-    println("input6 solved")
 }
