@@ -1,0 +1,32 @@
+== Day 15
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+
+=== First Star
+Our solution is the most naive translation of the exercise-text (using a list,
+we store all the numbers and for each new number we traverse the whole list to
+find when it has been uttered last). This solution has (at least) quadratic complexity
+(disregarding the size of the numbers involved)
+For N=2020, we don't care -- the real runtime is still only one second.
+
+=== Second Star
+
+For N = 30,000,000 the naive solution from before is out of the question -- we need
+a linear-time solution.
+The straightforward idea is hashing: For each new number, we look it up in a dictionary and if it
+is not there we update the dictionary and return 0, if it is there we update the dictionary and utter the
+difference from the current turn to the turn stored in the dictionary.
+The real execution of the program takes some seconds (~20) and it is a good idea to explore the runtime needed
+by using N=1000, N=10000; N =100000, etc. to get a feeling for the runtime.
+(in my first try I killed the program after 10 seconds and printed out the iteration-count
+(which takes ages -- note to self: printing is slow!))
+
+[source, python]
+....
+include::solution.py[]
+....

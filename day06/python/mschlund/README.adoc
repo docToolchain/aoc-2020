@@ -25,3 +25,7 @@ The idea is similar as before: the answers given by each person are put in a set
 the sets (=answers from each group) are intersected to get the questions, where everybody
 of a single group answered yes.
 
+[source, python]
+....
+include::solution.py[]
+....
