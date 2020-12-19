@@ -29,9 +29,9 @@ Long solvePart1(ArrayList<String> input) {
     // end::solvePart1[]
 }
 
-int solvePart2(ArrayList<String> input) {
+Long solvePart2(ArrayList<String> input) {
     // tag::solvePart2[]
-    ArrayList<Integer> values = new ArrayList()
+    HashMap<Long, Long> values = new HashMap()
     String currentMask = ""
     for(int i = 0; i < input.size(); i++) {
         if(input[i].startsWith("mask")) {
@@ -43,11 +43,16 @@ int solvePart2(ArrayList<String> input) {
             ArrayList addresses = getAllAddresses(address, currentMask)
             int value = getValueFromInput(input[i])
             addresses.forEach{Long singleAddress ->
-                values = writeValuePart2(values, value, singleAddress)
+                values.put(singleAddress, value)
             }
         }
     }
-    return values.sum()
+    Long sum = 0
+    // values.values().sum() is giving a wrong value most likely because of Integer Overflowg
+    values.values().forEach{
+        sum += it
+    }
+    return sum
     // end::solvePart2[]
 }
 
@@ -87,22 +92,13 @@ ArrayList<Long> writeValuePart1(ArrayList<Long> values, String currentMask, Long
     return values
 }
 
-ArrayList<Long> writeValuePart2(ArrayList<Long> values, Long value, Long address) {
-    while(values.size < address + 1) {
-        values.add(0)
-    }
-    values.set(address as int, value)
-    return values
-}
-
 ArrayList<Long> getAllAddresses(Long address, String mask) {
     ArrayList<Long> addresses = new ArrayList()
     int index = mask.indexOf('X')
-    Long addressZeroed = address & ~(1 << (mask.length() - index - 1))
-    Long addressOned = address | 1 << (mask.length() - index - 1)
-    if(address < 0 || addressOned < 0) {
-        println("FAIL")
-    }
+    Long maskZeroed = ~(1 as long << ((mask.length() - index - 1)) as long)
+    Long addressZeroed = address & maskZeroed
+    Long maskOned = 1 as long << (mask.length() - index - 1) as long
+    Long addressOned = address | maskOned
     int xCount = mask.count('X')
     if(xCount == 1) {
         addresses.add(addressZeroed)
@@ -140,5 +136,4 @@ void test() {
     assert addresses[2] == 58
     assert addresses[3] == 59
     assert solvePart2(input2) == 208
-    println('Tests passed\n')
 }
