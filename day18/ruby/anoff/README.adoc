@@ -13,6 +13,17 @@ Because no multi-digit numbers occur in the equation it is easy to treat each ch
 
 == Part 2
 
+For part2 I chose an approach where I replace parts of the equation step by step using regular expressions.
+
+* remove all spaces
+* solve all `a+b` that do not include parentheses (regex yay)
+* remove all `(a)` useless brackets
+* solve all `(a*b)` (regex yay)
+* remove all `(a)` useless brackets
+* for all parts within parentheses, call itself recursively
+* remove all `(a)` useless brackets
+
+Loop the entire thing until the equation itself is only a number.
 
 == Solution
 
