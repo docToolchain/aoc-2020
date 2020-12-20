@@ -1,0 +1,7 @@
+== Day 12: Rain Risk
+
+
+[source, python]
+....
+include::solution.py[]
+....
