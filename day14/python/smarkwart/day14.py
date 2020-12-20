@@ -40,30 +40,21 @@ def decoder_v1(instructions):
 
 def decoder_v2(instructions):
     mask_string = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-    memory = []
-    for line_number, instruction in enumerate(instructions):
-        print(f"Line {line_number} \t{instruction}")
+    memory = {}
+    for instruction in instructions:
         if instruction["command"] == "mask":
             mask_string = instruction["value"]
         elif instruction["command"] == "mem":
             addresses = get_addresses_from_mask(int(instruction["parameter"]), mask_string)
             set_value_at_addresses(int(instruction["value"]), addresses, memory)
-    return sum_of_data(memory)
+    return sum(memory.values())
 
 def set_value_at_addresses(value, addresses, memory):
     for address in addresses:
-        index = get_index_of_address_from_memory(address, memory)
-        if index == None:
-            memory.append({'address': address, 'value': value})
-        else:
-            memory[index]['value'] = value
+        memory[address] = value
 
 def get_index_of_address_from_memory(address, memory):
     return next((idx for idx, item in enumerate(memory) if item["address"] == address), None)
-
-def sum_of_data(memory):
-    values = [item['value'] for item in memory]
-    return(sum(values))
 
 def parse_instructions(input_data):
     instruction_dict = []
