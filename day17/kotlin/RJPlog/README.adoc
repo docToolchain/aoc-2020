@@ -1,0 +1,36 @@
+== Day 17: Conway Cubes ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/17
+
+ $ kotlin day2017_1_2.kts
+ 
+=== First Star
+
+How does it work: +
+
+A kind of rework of day11's algorithm, had to find out how to increase the unknown space outside by extending grid by add additional layer turn by turn.
+
+[source, kotlin, numbered]
+....
+include::day2017_1_2.kts[tags=grid]
+....
+
+
+=== Second Star
+
+How does it work: +
+
+Just an enhancement of part1, replacing Triple by Quadruple. Quadruple is not provided by kotlin, but stackoverflow helped :-)
+
+[source, kotlin, numbered]
+....
+include::day2017_1_2.kts[tags=grid_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2017_1_2.kts[tags=output]
+....

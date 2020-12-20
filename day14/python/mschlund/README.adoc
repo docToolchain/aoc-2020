@@ -1,0 +1,37 @@
+== Day 14
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+
+=== First Star
+
+The solution is straightforward.
+Note that the mask-computation can be simply emulated with an "or" followed by an "and"
+(where we regard the "X" as "1" in the "and", and as "0" in the "or")
+
+```python
+def update_bitmask_1(new_mask):
+  and_mask = int(new_mask.replace('X', '1'), 2)
+  or_mask = int(new_mask.replace('X', '0'), 2)
+  return or_mask, and_mask
+
+def update_mem_andor(mem, loc, val, or_mask, and_mask):
+  mem[loc] = (val | or_mask) & and_mask
+  return mem
+```
+
+=== Second Star
+
+After pondering far too long about how to generate 2^n and/or-masks from a mask with wildcards and then
+using our solution for star-1, we re-implemented everything from scratch, using very simple but stupid
+list-comprehensions to get our result-bitstring with "X"s. Then we use a recursive generation of all possible
+results where "X" is replaced by "0" or "1".
+
+[source, python]
+....
+include::solution.py[]
+....

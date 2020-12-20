@@ -1,0 +1,38 @@
+== Day 18: Operation Order ==
+
+Rust solution for https://adventofcode.com/2020/day/18[AoC 2020, Day 18]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Today was much more difficult for me than it should have been :(.
+My first solution for part 1 was not useable at all to solve part 2...
+
+I first parse the input into tokens:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=token]
+----
+
+Next I convert the tokens in an expression tree implemented as follows:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=expression]
+----
+
+The conversion is done as.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=to_expression]
+----
+
+The function `to_expression` calls itself recursively.
+The parameter `greedy` controls whether it should parse only the next value or until the end.
+This is how I differentiate between parts 1 and 2. In part 1, I parse only the next value (`greedy = false`) after `Plus` and `Times`.
+In part 2, I parse all tokens after `Times` (`greedy = true`).

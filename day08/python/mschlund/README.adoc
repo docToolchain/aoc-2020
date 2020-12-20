@@ -51,3 +51,9 @@ The idea is that we generate ~600 mutated programs
 (where we swap a jmp for a nop or vice versa), parse the resulting string-representation
 (yes very very dirty and inefficient...), check the graph for cycles and if
 cycle-free we compute the final value of the accumulator.
+
+
+[source, python]
+....
+include::solution.py[]
+....

@@ -1,0 +1,44 @@
+== Day 20: Jurassic Jigsaw ==
+
+Rust solution for https://adventofcode.com/2020/day/20[AoC 2020, Day 20]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+A day to forget.
+Just got lost in transformations...
+
+Some words on the solution...
+
+Here's a function to check whether two tiles match on a given side.
+The transformation of the source tile is given as an argument, the matching transformation of the target tile, if any, is returned by the function.
+If there is none, the function returns `None`
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=match]
+----
+
+A key ingredient in this function and later matching operations is the function `apply_transformation` which transforms a flat index to any of the 8 combinations that can be obtained by rotating and flipping.
+See comments in the function.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=apply_transformation]
+----
+
+The biggest part was to solve the puzzle.
+My first version worked for the example but not for the real data.
+I chose to start from a corner to simplify the process.
+If you are interested in the details on the `find_corner` function, checkout the code.
+Essentially it finds a tile with two boundaries not matching to any other tile together with the transformation which turns those two boundaries in the up and left directions.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=solve]
+----
+
+All the rest is diligence work.

@@ -1,0 +1,49 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 16: Ticket Translation
+https://adventofcode.com/2020/day/16
+
+=== Info
+
+Foreign Ticket Garblage: Deduce fields on illisible ticket from statistics.
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+Data is split into three blocks + bonus block (all integer values as int)
+
+* Rules: dict {field name: [(range limits),]
+* Bonus block: set with all ranges combined
+* My ticket: sorted ticket data list
+* Statistics from other passengers' tickets: list of sorted ticket data lists
+
+.Star1: Compute ticket error rate from invalid tickets
+. Run all tickets agains all-ranges-set
+. Sum up invalid numbers and sort out invalid tickets
+. Return sum
+
+.Star2: Identify ticket fields and multiply 'departure' fields
+. Build dict {column index in sorted ticket data: [matching rule names]}
+. Clean dict by combing out all rules with only one matching rule
+. Identify 'departure' fields' indexes
+. Return product of my ticket data at found indices
+
+=== Learned today
+
+* More features of list, set and dict comprehensions
+* Avoiding again to use `re`... 😌
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....
