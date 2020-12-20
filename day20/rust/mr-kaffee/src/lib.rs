@@ -31,20 +31,24 @@ impl Tile {
         tiles
     }
 
-    // tag::apply_transformation[]
-    fn apply_transformation(idx: isize, n: isize, trafo: usize) -> usize {
-        // idx = x + k * y
-        // Transformations
-        // identity:      (x, y) -> (      x,       y) || idx =>       idx % n + n * (        idx / n)
-        // rot_90:        (x, y) -> (n-1 - y,       x) || idx => n-1 - idx / n + n * (        idx % n)
-        // rot_180:       (x, y) -> (n-1 - x, n-1 - y) || idx => n-1 - idx % n + n * (n - 1 - idx / n)
-        // rot_270:       (x, y) -> (      y, n-1 - x) || idx =>       idx / n + n * (n - 1 - idx % n)
-        // flip           (x, y) -> (n-1 - x,       y) || idx => n-1 - idx % n + n * (        idx / n)
-        // flop_rot_90    (x, y) -> (n-1 - y, n-1 - x) || idx => n-1 - idx / n + n * (n - 1 - idx % n)
-        // flip_rot_180   (x, y) -> (      x, n-1 - y) || idx =>       idx % n + n * (n - 1 - idx / n)
-        // flop_rot_270   (x, y) -> (      y,       x) || idx =>       idx / n + n * (        idx % n)
+    // tag::get[]
+    fn get(&self, idx: isize, t: usize) -> char {
+        // idx = x + n * y
+        // x = idx % n
+        // y = idx / n
+        //
+        // 0 identity:    (x, y) -> (      x,       y), idx =>       x + n * (        y)
+        // 1 rot_90:      (x, y) -> (n-1 - y,       x), idx => n-1 - y + n * (        x)
+        // 2 rot_180:     (x, y) -> (n-1 - x, n-1 - y), idx => n-1 - x + n * (n - 1 - y)
+        // 3 rot_270:     (x, y) -> (      y, n-1 - x), idx =>       y + n * (n - 1 - x)
+        // 4 flip         (x, y) -> (n-1 - x,       y), idx => n-1 - x + n * (        Y)
+        // 5 flop_rot_90  (x, y) -> (n-1 - y, n-1 - x), idx => n-1 - y + n * (n - 1 - x)
+        // 6 flip_rot_180 (x, y) -> (      x, n-1 - y), idx =>       x + n * (n - 1 - y)
+        // 7 flip_rot_270 (x, y) -> (      y,       x), idx =>       y + n * (        x)
 
-        let idx = match trafo {
+        let n = self.n as isize;
+
+        let idx = match t {
             0 => idx,
             1 => n - 1 - idx / n + n * (idx % n),
             2 => n - 1 - idx % n + n * (n - 1 - idx / n),
@@ -56,12 +60,12 @@ impl Tile {
             _ => panic!("Illegal transformation"),
         };
 
-        idx as usize
+        self.data[idx as usize]
     }
-    // end::apply_transformation[]
+    // end::get[]
 
     // tag::match[]
-    pub fn matches(&self, other: &Self, transformation: usize, side: usize) -> Option<usize> {
+    pub fn matches(&self, other: &Self, t: usize, side: usize) -> Option<usize> {
         if self.n != other.n {
             return None;
         }
@@ -76,51 +80,67 @@ impl Tile {
             _ => panic!("Illegal side"),
         };
 
-        (0..8).find(|t| (0..n).all(|k|
-            self.data[Tile::apply_transformation(f1.0 + f1.1 * k, n, transformation)] ==
-                other.data[Tile::apply_transformation(f2.0 + f2.1 * k, n, *t)]))
+        (0..8).find(|t_other| (0..n).all(|k|
+            self.get(f1.0 + f1.1 * k, t) == other.get(f2.0 + f2.1 * k, *t_other)))
     }
     // end::match[]
 
-    pub fn find_pattern(&self, transformation: usize, pattern: &[char], width: usize, idx0: usize) -> Option<usize> {
-        let width = width as isize;
-        let height = pattern.len() as isize / width;
-        let n = self.n as isize;
+    // tag::find_pattern[]
+    pub fn find_pattern(&self, t: usize, pattern: &[char], width: usize, idx0: usize)
+                        -> Option<usize>
+    {
+        let w_pat = width as isize;
+        let h_pat = pattern.len() as isize / w_pat;
+        let w_tile = self.n as isize;
 
-        let mut idx = idx0 as isize;
-        while idx < n * n {
-            let mut ok = true;
-            for idx_pattern in 0..height * width {
-                if pattern[idx_pattern as usize] == ' ' {
+        let mut idx_tile_start = idx0 as isize;
+        while idx_tile_start < w_tile * w_tile {
+            if idx_tile_start / w_tile + h_pat > w_tile {
+                // pattern height does not fit, give up
+                break;
+            }
+            if idx_tile_start % w_tile + w_pat > w_tile {
+                // pattern width does not fit, go to next row
+                idx_tile_start = w_tile * (idx_tile_start / w_tile + 1);
+                continue;
+            }
+
+            let mut found = true;
+            for idx_pat in 0..h_pat * w_pat {
+                if pattern[idx_pat as usize] == ' ' {
+                    // if pattern character is blank, ignore character in picture
                     continue;
                 }
 
-                let x = idx_pattern % width;
-                let y = idx_pattern / width;
-                let idx_tile = idx + x + y * n;
-                if idx_tile < 0 || idx_tile >= n * n {
-                    ok = false;
-                    break;
-                }
+                // determine idx in tile
+                let x_pat = idx_pat % w_pat;
+                let y_pat = idx_pat / w_pat;
+                let idx_tile = idx_tile_start + x_pat + y_pat * w_tile;
 
-                let idx_tile = Tile::apply_transformation(idx_tile, n, transformation);
-                if self.data[idx_tile] != '#' {
-                    ok = false;
+                // apply transformation
+                if self.get(idx_tile, t) != '#' {
+                    // no '#' => not found
+                    found = false;
                     break;
                 }
             }
 
-            if ok {
-                return Some(idx as usize);
+            // still found after all checks => match
+            if found {
+                return Some(idx_tile_start as usize);
             }
 
-            idx += 1;
+            // search in next position
+            idx_tile_start += 1;
         }
 
+        // nothing found
         None
     }
 }
+// end::find_pattern[]
 
+// tag::find_corner[]
 pub fn find_corner(tiles: &[Tile]) -> (usize, usize) {
     let (tile_id, neighbors) = tiles.iter().enumerate().map(|(k, tile1)| {
         (k, (0..4).map(|side| {
@@ -142,6 +162,7 @@ pub fn find_corner(tiles: &[Tile]) -> (usize, usize) {
 
     (tile_id, t)
 }
+// end::find_corner[]
 
 pub fn corners_checksum(width: usize, solution: &[(Tile, usize)]) -> usize {
     let mut checksum = solution[0].0.id;
@@ -169,7 +190,7 @@ pub fn solve(tiles: &[Tile]) -> (usize, Vec<(Tile, usize)>) {
 
     // top row
     for k in 1..width {
-        // right
+        // move on to the right => side = 1
         let (pos, t) = tiles.iter().enumerate().map(|(pos, tile2)| {
             let (tile1, t) = &solution[k - 1];
             (pos, tile1.matches(tile2, *t, 1))
@@ -180,29 +201,33 @@ pub fn solve(tiles: &[Tile]) -> (usize, Vec<(Tile, usize)>) {
     }
 
     for y in 1..width {
-        // right
-        let (pos, t) = tiles.iter().enumerate().map(|(pos, tile2)| {
-            let (tile1, t) = &solution[width * (y - 1)];
-            (pos, tile1.matches(tile2, *t, 2))
-        }).find(|(_, t)| t.is_some()).unwrap();
+        // first element in row, move down from previous row => side = 2
+        let (pos, t) =
+            tiles.iter().enumerate().map(|(pos, tile2)| {
+                let (tile1, t) = &solution[width * (y - 1)];
+                (pos, tile1.matches(tile2, *t, 2))
+            }).find(|(_, t)| t.is_some()).unwrap();
         let t = t.unwrap();
         let tile = tiles.remove(pos);
         solution.push((tile, t));
 
         for x in 1..width {
+            // find tiles which match to the left and to the top
             let idx = x + width * y;
             let up = idx - width;
             let left = idx - 1;
-            let (pos, t, _) = tiles.iter().enumerate().map(|(pos, tile2)| {
-                let (tile_up, t_up) = &solution[up];
-                let (tile_left, t_left) = &solution[left];
-                (
-                    pos,
-                    tile_up.matches(tile2, *t_up, 2),
-                    tile_left.matches(tile2, *t_left, 1)
-                )
-            }).find(|(_, t_up, t_left)|
-                t_up.is_some() && t_left.is_some() && t_up.unwrap() == t_left.unwrap()).unwrap();
+            let (pos, t, _) =
+                tiles.iter().enumerate().map(|(pos, tile2)| {
+                    let (tile_up, t_up) = &solution[up];
+                    let (tile_left, t_left) = &solution[left];
+                    (
+                        pos,
+                        tile_up.matches(tile2, *t_up, 2),
+                        tile_left.matches(tile2, *t_left, 1)
+                    )
+                }).find(|(_, t_up, t_left)|
+                    t_up.is_some() && t_left.is_some() &&
+                        t_up.unwrap() == t_left.unwrap()).unwrap();
             let t = t.unwrap();
             let tile = tiles.remove(pos);
             solution.push((tile, t))
@@ -213,6 +238,7 @@ pub fn solve(tiles: &[Tile]) -> (usize, Vec<(Tile, usize)>) {
 }
 // end::solve[]
 
+// tag::get_picture[]
 pub fn get_picture(width: usize, solution: &[(Tile, usize)]) -> Tile {
     let width = width as isize;
     let n = solution[1].0.n as isize;
@@ -227,8 +253,7 @@ pub fn get_picture(width: usize, solution: &[(Tile, usize)]) -> Tile {
                     let y = row * (n - 2) + y_tile - 1;
                     let x = col * (n - 2) + x_tile - 1;
                     let (tile, t) = &solution[(col + width * row) as usize];
-                    let idx = Tile::apply_transformation(x_tile + n * y_tile, n, *t);
-                    picture[(x + w * y) as usize] = tile.data[idx];
+                    picture[(x + w * y) as usize] = tile.get(x_tile + n * y_tile, *t);
                 }
             }
         }
@@ -236,6 +261,7 @@ pub fn get_picture(width: usize, solution: &[(Tile, usize)]) -> Tile {
 
     Tile { id: 0, n: w as usize, data: picture }
 }
+// end::get_picture[]
 
 pub fn find_monsters(picture: &Tile) -> (Vec<usize>, usize) {
     let monster: Vec<_> = MONSTER.chars().collect();
@@ -243,7 +269,9 @@ pub fn find_monsters(picture: &Tile) -> (Vec<usize>, usize) {
     let mut monsters = Vec::new();
     for t in 0..8 {
         let mut idx = 0;
-        while let Some(i) = picture.find_pattern(t, &monster, MONSTER_WIDTH, idx) {
+        while let Some(i) = picture.find_pattern(
+            t, &monster, MONSTER_WIDTH, idx,
+        ) {
             monsters.push(i);
             idx = i + 1;
         }
@@ -255,11 +283,13 @@ pub fn find_monsters(picture: &Tile) -> (Vec<usize>, usize) {
     (monsters, 0)
 }
 
+// tag::get_roughness[]
 pub fn get_roughness(picture: &Tile, monsters: usize) -> usize {
     let a = MONSTER.chars().filter(|c| *c == '#').count();
     let b = picture.data.iter().filter(|c| **c == '#').count();
     b - monsters * a
 }
+// end::get_roughness[]
 
 #[cfg(test)]
 mod tests {
