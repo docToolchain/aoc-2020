@@ -14,18 +14,20 @@ impl Tile {
 
         let tile_parts = input.split("\n\n");
         for part in tile_parts {
-            if part.len() == 0 {
-                continue;
-            }
+            if part.len() == 0 { continue; }
+
             let mut parts = part.split(":\n");
+
             let id = parts.next().expect("No ID part")[5..]
                 .parse::<usize>()
                 .expect("Could not parse ID");
             let data = parts.next().expect("No data part");
-            let len0 = data.len();
+
+            let len = data.len();
+
             let data: Vec<_> = data.replace("\n", "").chars().collect();
-            let n = len0 - data.len() + 1;
-            tiles.push(Tile { id, n, data });
+
+            tiles.push(Tile { id, n: len - data.len() + 1, data });
         }
 
         tiles
@@ -91,17 +93,17 @@ impl Tile {
     {
         let w_pat = width as isize;
         let h_pat = pattern.len() as isize / w_pat;
-        let w_tile = self.n as isize;
+        let n_tile = self.n as isize;
 
         let mut idx_tile_start = idx0 as isize;
-        while idx_tile_start < w_tile * w_tile {
-            if idx_tile_start / w_tile + h_pat > w_tile {
+        loop {
+            if idx_tile_start / n_tile + h_pat > n_tile {
                 // pattern height does not fit, give up
                 break;
             }
-            if idx_tile_start % w_tile + w_pat > w_tile {
+            if idx_tile_start % n_tile + w_pat > n_tile {
                 // pattern width does not fit, go to next row
-                idx_tile_start = w_tile * (idx_tile_start / w_tile + 1);
+                idx_tile_start = n_tile * (idx_tile_start / n_tile + 1);
                 continue;
             }
 
@@ -115,7 +117,7 @@ impl Tile {
                 // determine idx in tile
                 let x_pat = idx_pat % w_pat;
                 let y_pat = idx_pat / w_pat;
-                let idx_tile = idx_tile_start + x_pat + y_pat * w_tile;
+                let idx_tile = idx_tile_start + x_pat + y_pat * n_tile;
 
                 // apply transformation
                 if self.get(idx_tile, t) != '#' {
@@ -142,11 +144,10 @@ impl Tile {
 
 // tag::find_corner[]
 pub fn find_corner(tiles: &[Tile]) -> (usize, usize) {
-    let (tile_id, neighbors) = tiles.iter().enumerate().map(|(k, tile1)| {
-        (k, (0..4).map(|side| {
-            let found = tiles.iter()
-                .enumerate()
-                .filter(|(j, _)| *j != k)
+    let (pos, neighbors) = tiles.iter().enumerate().map(|(pos1, tile1)| {
+        (pos1, (0..4).map(|side| {
+            let found = tiles.iter().enumerate()
+                .filter(|(pos2, _)| *pos2 != pos1)
                 .any(|(_, tile2)| tile1.matches(tile2, 0, side).is_some());
             (found as usize) << side
         }).sum::<usize>())
@@ -160,7 +161,7 @@ pub fn find_corner(tiles: &[Tile]) -> (usize, usize) {
         _ => panic!("Illegal unmatched boundary combination"),
     };
 
-    (tile_id, t)
+    (pos, t)
 }
 // end::find_corner[]
 
@@ -185,52 +186,41 @@ pub fn solve(tiles: &[Tile]) -> (usize, Vec<(Tile, usize)>) {
 
     // top left corner
     let (top_left, t) = find_corner(&tiles);
-    let tile = tiles.remove(top_left);
-    solution.push((tile, t));
+    solution.push((tiles.remove(top_left), t));
 
     // top row
     for k in 1..width {
         // move on to the right => side = 1
-        let (pos, t) = tiles.iter().enumerate().map(|(pos, tile2)| {
-            let (tile1, t) = &solution[k - 1];
-            (pos, tile1.matches(tile2, *t, 1))
-        }).find(|(_, t)| t.is_some()).unwrap();
-        let t = t.unwrap();
-        let tile = tiles.remove(pos);
-        solution.push((tile, t));
+        let (tile1, t) = &solution[k - 1];
+        let (pos, t) = tiles.iter().enumerate().map(|(pos, tile2)|
+            (pos, tile1.matches(tile2, *t, 1)))
+            .filter_map(|(pos, t)| t.map(|t| (pos, t))).next().unwrap();
+        solution.push((tiles.remove(pos), t));
     }
 
     for y in 1..width {
         // first element in row, move down from previous row => side = 2
-        let (pos, t) =
-            tiles.iter().enumerate().map(|(pos, tile2)| {
-                let (tile1, t) = &solution[width * (y - 1)];
-                (pos, tile1.matches(tile2, *t, 2))
-            }).find(|(_, t)| t.is_some()).unwrap();
-        let t = t.unwrap();
-        let tile = tiles.remove(pos);
-        solution.push((tile, t));
+        let (tile1, t) = &solution[width * (y - 1)];
+        let (pos, t) = tiles.iter().enumerate().map(|(pos, tile2)|
+            (pos, tile1.matches(tile2, *t, 2)))
+            .filter_map(|(pos, t)| t.map(|t| (pos, t))).next().unwrap();
+        solution.push((tiles.remove(pos), t));
 
         for x in 1..width {
             // find tiles which match to the left and to the top
             let idx = x + width * y;
-            let up = idx - width;
-            let left = idx - 1;
-            let (pos, t, _) =
-                tiles.iter().enumerate().map(|(pos, tile2)| {
-                    let (tile_up, t_up) = &solution[up];
-                    let (tile_left, t_left) = &solution[left];
-                    (
-                        pos,
-                        tile_up.matches(tile2, *t_up, 2),
-                        tile_left.matches(tile2, *t_left, 1)
-                    )
-                }).find(|(_, t_up, t_left)|
-                    t_up.is_some() && t_left.is_some() &&
-                        t_up.unwrap() == t_left.unwrap()).unwrap();
-            let t = t.unwrap();
-            let tile = tiles.remove(pos);
-            solution.push((tile, t))
+            let (tile_up, t_up) = &solution[idx - width];
+            let (tile_left, t_left) = &solution[idx - 1];
+            let (pos, t) =
+                tiles.iter().enumerate().map(|(pos, tile2)| (
+                    pos,
+                    tile_up.matches(tile2, *t_up, 2),
+                    tile_left.matches(tile2, *t_left, 1)
+                ))
+                    .filter(|(_, t_up, t_left)| t_up == t_left)
+                    .filter_map(|(pos, t, _)| t.map(|t| (pos, t)))
+                    .next().unwrap();
+            solution.push((tiles.remove(pos), t))
         }
     }
 
@@ -267,17 +257,17 @@ pub fn find_monsters(picture: &Tile) -> (Vec<usize>, usize) {
     let monster: Vec<_> = MONSTER.chars().collect();
 
     let mut monsters = Vec::new();
+
     for t in 0..8 {
-        let mut idx = 0;
-        while let Some(i) = picture.find_pattern(
-            t, &monster, MONSTER_WIDTH, idx,
+        let mut idx_start = 0;
+        while let Some(idx) = picture.find_pattern(
+            t, &monster, MONSTER_WIDTH, idx_start,
         ) {
-            monsters.push(i);
-            idx = i + 1;
+            monsters.push(idx);
+            idx_start = idx + 1;
         }
-        if monsters.len() > 0 {
-            return (monsters, t);
-        }
+
+        if monsters.len() > 0 { return (monsters, t); }
     }
 
     (monsters, 0)

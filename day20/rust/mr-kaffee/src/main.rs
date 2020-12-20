@@ -22,7 +22,7 @@ fn main() {
     let (width, solution) = solve(&tiles);
     let sol = corners_checksum(width, &solution);
     println!("Solution part 1 done in {:?}: {}", instant_part.elapsed(), sol);
-    assert!(sol < 97_037_306_166_193);
+    assert_eq!(sol, 20_033_377_297_069);
 
     // solve part 2
     let instant_part = Instant::now();
