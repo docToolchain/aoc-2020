@@ -1,0 +1,36 @@
+Puzzle: https://adventofcode.com/2020/day/21[Allergen Assessment]
+
+== Part 1
+
+Proceeded as following to create a list of allergens
+* go through all lines once
+  * create a Hash with allergen->Array of Arrays with each occurrence of the allergen and possible ingredients it may map to
+* loop through all allergens (in the hash)
+  * only keep those ingredients that appear in every line the ingredient shows up
+* loop through all allergens until each one has been mapped to an ingredient
+  * start with allergens with least number of possible ingredients
+  * remove all ingredients that have already been mapped to an allergen
+  * if only one ingredient is possible -> assign it to the allergen
+
+For the actual part1 just loop through all words and count those that are not allergens.
+
+== Part 2
+
+== Solution
+
+[source, ruby]
+....
+include::allergenmap.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

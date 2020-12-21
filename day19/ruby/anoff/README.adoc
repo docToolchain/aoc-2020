@@ -1,4 +1,4 @@
-Puzzle: https://adventofcode.com/2020/day/20[Monster Messages]
+Puzzle: https://adventofcode.com/2020/day/19[Monster Messages]
 
 == Part 1
 
