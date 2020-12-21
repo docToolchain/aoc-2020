@@ -1,0 +1,45 @@
+Puzzle: https://adventofcode.com/2020/day/16[Ticket Translation]
+
+== Part 1
+
+Decided to go class-based again.
+Created a class for `Rule` and a superclass `RuleSet` that contains multiple rules.
+To make the number checking more efficient I decided to create an Array that holds all the valid values from all rules.
+This made checking the individual tickets very fast as it only required a bit precomputation once.
+
+== Part 2
+
+Thought this was easy.. but actually fucked up again.
+My error this time: After calculating all possible field names I sorted the array to find the field with only one option.
+Did not consider that this actually messed with the order of fields if I only consider the index of the sorted array.
+Fixed by dragging along the index in the original fields list to correctly assign the fieldname to the (original) field index.
+
+What I do:
+
+* filter out all invalid tickets (copied from part1)
+* for each field (n-th value of every ticket) check which rules are valid
+* store all possible fieldnames (matching rules) in an array where index=same index as in the field of the ticket
+* sort the array of possible fieldnames by the number of possible names
+  * make sure to include the original index before sorting (fucked this one up..)
+* start with the field that only has one possible name
+  * add it to the list of actual fieldnames using the original index
+  * for all future fields: check if the fieldname has already been assigned in a previous step, if not this is the on new fieldname that matches
+
+== Solution
+
+[source, ruby]
+....
+include::rule.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....
