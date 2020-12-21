@@ -76,3 +76,12 @@ a|{anoff}
 a| Setting up a debugger is worth ith.
 a| There is an important difference between `Array.fill(<value>)` and `Array.map{|v| <value>}` if your value is an empty Array. The first one creates an Array where each element refers to the same new Array (_fill by reference_), whereas the latter creates a new Array for each element in the parent Array - what you usually want.
 |====
+
+=== Day 19
+|====
+
+a|{anoff}
+a| Tests lie! Even if everything is green your code might still be doing the wrong thing.
+a| Regular Expressions are powerful..and more performance efficient than I thought.
+|====
+
