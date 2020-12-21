@@ -27,10 +27,12 @@ fn main() {
     // solve part 2
     let instant_part = Instant::now();
     let picture = get_picture(width, &solution);
-    let (monsters, _) = find_monsters(&picture);
+    let (monsters, _t) = find_monsters(&picture, MONSTER, MONSTER_WIDTH);
     let sol = get_roughness(&picture, monsters.len());
     println!("Solution part 2 done in {:?}: {}", instant_part.elapsed(), sol);
     assert_eq!(sol, 2_084);
+
+    // substitute_monsters(&picture, _t, &monsters, MONSTER, MONSTER_WIDTH).print(_t);
 
     // print elapsed time
     println!("Total time: {:?}", instant_main.elapsed());
