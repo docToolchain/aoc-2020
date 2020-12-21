@@ -27,44 +27,43 @@ def move_ship_star2(commands):
     y_wp = 1
     x = 0
     y = 0
-    #north = 0, east = 1, south = 2, west = 3
-    angle = 90
+   
 
     for command in commands:
-        print(f"Ship: {x},{y} - Wp: {x_wp}, {y_wp}")
+        #print(f"{command['instruction'] }{command['value']} Ship: {x},{y} - Wp: {x_wp}, {y_wp}")
         #move the waypoint
-        if command["instruction"] == "N":
-            x_wp += command["value"]
-        elif command["instruction"] == "S":
-            x_wp -= command["value"]
-        elif command["instruction"] == "E":
+        if command["instruction"]== "N":
             y_wp += command["value"]
-        elif command["instruction"] == "W":
+        elif command["instruction"] == "S":
             y_wp -= command["value"]
+        elif command["instruction"] == "E":
+            x_wp += command["value"]
+        elif command["instruction"] == "W":
+            x_wp -= command["value"]
         #rotate the waypoint
         elif command["instruction"] == "L":
-            dx = x_wp
-            dy = y_wp
-            x_wp = -dy
-            y_wp = +dx
+            times = int(command["value"]/90)
+            for i in range(times):  
+                dx = x_wp
+                dy = y_wp
+                x_wp = -dy
+                y_wp = +dx
             
         elif command["instruction"] == "R":
-            dx = x_wp
-            dy = y_wp
-            x_wp = +dy
-            y_wp = -dx
-        elif command["instruction"] == "F":
-          
-            x += x_wp * command["value"]
-            y += y_wp * command["value"]          
+            times = int(command["value"]/90)
+            for i in range(times):  
+                dx = x_wp
+                dy = y_wp
+                x_wp = +dy
+                y_wp = -dx
+            
+        elif command["instruction"] == "F":          
+            x = x + x_wp * command["value"]
+            y = y + y_wp * command["value"]          
         else:
             print("This should never happen")
 
-        #print(f"Ship: {x},{y} - Wp: {x_wp}, {y_wp}")
     return x, y
-
-
-
 
 
 if __name__ == "__main__":

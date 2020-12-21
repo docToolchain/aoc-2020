@@ -1,5 +1,5 @@
 == Day 12: Rain Risk
-
+Not much to say.
 
 [source, python]
 ....
