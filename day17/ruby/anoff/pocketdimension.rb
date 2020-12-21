@@ -6,10 +6,11 @@ class PocketDimension
     @xmax = 0
     @ymin = 0
     @ymax = 0
+    @neighborMap = Array.new
+    @activeFields = Array.new
   end
   def addLayer(layer)
     @layers.append(layer)
-    self.updateRange
   end
   def getLayer(z)
     for l in @layers
@@ -58,43 +59,83 @@ class PocketDimension
   end
 
   def cycle
-    for l in @layers
-      l.calcNextState(self)
-    end
-    for l in @layers
-      l.applyNextState
-    end
     self.updateRange
+    for z, ix in @neighborMap.each_with_index
+      l = self.getLayer(ix + @zmin)
+      for field in l.activeFields
+        z[field.y][field.x+1] += 1
+        z[field.y+1][field.x+1] += 1
+        z[field.y-1][field.x+1] += 1
+        z[field.y+1][field.x] += 1
+        z[field.y-1][field.x] += 1
+        z[field.y][field.x-1] += 1
+        z[field.y+1][field.x-1] += 1
+        z[field.y-1][field.x-1] += 1
+        if ix > 0
+          @neighborMap[ix-1][field.y][field.x+1] += 1
+          @neighborMap[ix-1][field.y+1][field.x+1] += 1
+          @neighborMap[ix-1][field.y-1][field.x+1] += 1
+          @neighborMap[ix-1][field.y][field.x] += 1
+          @neighborMap[ix-1][field.y+1][field.x] += 1
+          @neighborMap[ix-1][field.y-1][field.x] += 1
+          @neighborMap[ix-1][field.y][field.x-1] += 1
+          @neighborMap[ix-1][field.y+1][field.x-1] += 1
+          @neighborMap[ix-1][field.y-1][field.x-1] += 1
+        end
+        if ix < @neighborMap.size-1
+          @neighborMap[ix+1][field.y][field.x+1] += 1
+          @neighborMap[ix+1][field.y+1][field.x+1] += 1
+          @neighborMap[ix+1][field.y-1][field.x+1] += 1
+          @neighborMap[ix+1][field.y][field.x] += 1
+          @neighborMap[ix+1][field.y+1][field.x] += 1
+          @neighborMap[ix+1][field.y-1][field.x] += 1
+          @neighborMap[ix+1][field.y][field.x-1] += 1
+          @neighborMap[ix+1][field.y+1][field.x-1] += 1
+          @neighborMap[ix+1][field.y-1][field.x-1] += 1
+        end
+      end
+    end
+
+    for z, ix in @neighborMap.each_with_index
+      l = self.getLayer(ix + @zmin)
+      @activeFields...
+    end
   end
   def updateRange
     @xmin = 10e3
     @xmax = 0
     @ymin = 10e3
     @ymax = 0
-    zmin = 10e3
-    zmax = 0
+    @zmin = 10e3
+    @zmax = 0
     for layer in @layers
       @xmin = [@xmin, layer.xmin].min
       @xmax = [@xmax, layer.xmax].max
       @ymin = [@ymin, layer.ymin].min
       @ymax = [@ymax, layer.ymax].max
       if layer.activeFields.size > 0
-        zmin = [zmin, layer.z].min
-        zmax = [zmax, layer.z].max
+        @zmin = [@zmin, layer.z].min
+        @zmax = [@zmax, layer.z].max
       end
     end
-    if self.getLayer(zmin-1).nil?
-      l = Layer.new(zmin-1)
+    if self.getLayer(@zmin-1).nil?
+      l = Layer.new(@zmin-1)
       self.addLayer(l)
     end
-    if self.getLayer(zmax+1).nil?
-      l = Layer.new(zmax+1)
+    if self.getLayer(@zmax+1).nil?
+      l = Layer.new(@zmax+1)
       self.addLayer(l)
     end
     @xmin -= 1
     @xmax += 1
     @ymin -= 1
     @ymax += 1
+    @neighborMap = # [z][y][x]
+      Array.new(@zmax-@zmin+1) # z-level
+      .map {|z|
+        Array.new(@ymax-@ymin+1) # y
+        .map{|y| Array.new(@xmax-@xmin+1).fill(0)} # x
+      }
   end
   def print
     for l in @layers

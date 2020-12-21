@@ -26,21 +26,8 @@ class Layer
     return false
   end
   def calcNextState(pocketDimension)
-    for y in (pocketDimension.ymin..pocketDimension.ymax)
-      for x in (pocketDimension.xmin..pocketDimension.xmax)
-        p = Pos2D.new(x, y)
-        if @activeFields.include?(p)
-          activeNeighbors = pocketDimension.getNeighbors(p.x, p.y, @z)
-          if activeNeighbors == 2 || activeNeighbors == 3
-            @nextActiveFields.append(p)
-          end
-        else
-          activeNeighbors = pocketDimension.getNeighbors(p.x, p.y, @z)
-          if activeNeighbors == 3
-            @nextActiveFields.append(p)
-          end
-        end
-      end
+    for field in @activeFields
+      
     end
   end
   def applyNextState

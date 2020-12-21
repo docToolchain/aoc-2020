@@ -10,6 +10,14 @@ Worked fine after I got the logic for expanding the pocketdimension correctly.
 
 == Part 2
 
+Trying to first optimize my performance (part1 took 5s), I decided to change the update logic.
+First implementation looped through each field and for each field checking all 26 neighbors.
+This means every field is checked 26 times per cycle.
+
+Refactoring approach #1:
+* Create a 4 dimensional array of integers
+* Loop through each field and if it is active, increase all neighbors in the integer-array by 1
+* loop through the integer array and check for neighbor conditions 2/3
 
 == Solution
 
