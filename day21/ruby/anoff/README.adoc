@@ -16,6 +16,17 @@ For the actual part1 just loop through all words and count those that are not al
 
 == Part 2
 
+This was super easy thanks to Ruby Array magic!
+And the fact that I somewhat made exactly the right design choice for part1 when it comes to data structures..
+
+[source, ruby]
+....
+am.allergens
+  .keys.sort
+  .map{|k| am.allergens[k]}
+  .join(",")
+....
+
 == Solution
 
 [source, ruby]

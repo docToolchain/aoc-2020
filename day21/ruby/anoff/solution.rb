@@ -21,11 +21,15 @@ end
 
 
 def part2 (input)
-  3
+  am = AllergenMap.new(input)
+  am.allergens
+    .keys.sort
+    .map{|k| am.allergens[k]}
+    .join(",")
 end
 
 if __FILE__ == $PROGRAM_NAME
   input = readInput("./input.txt")
-  puts "Solution for part1: #{part1(input)}" # 2603 too high
-  #puts "Solution for part2: #{part2(input)}"
+  puts "Solution for part1: #{part1(input)}"
+  puts "Solution for part2: #{part2(input)}"
 end
