@@ -1,0 +1,43 @@
+== Day 21: Allergen Assessment ==
+
+Rust solution for https://adventofcode.com/2020/day/21[AoC 2020, Day 21]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+After two days which were quite challenging for me, an easier one today.
+
+After parsing the input, first build a map with allergens as keys and candidate ingredients of values by checking for every allergen which ingredients are contained in all foods that contain the allergen:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=build_allergen_map]
+----
+
+The union of all the candidate ingredients is the set of ingredients which contain allergens, everything not contained in this union is safe.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=count_without_allergens]
+----
+
+In the next step, the allergen map is reduced to map each allergen to exactly one ingredient iteratively.
+In each iteration, the ingredients mapped to settled allergens are removed from the candidate lists and the allergens with candidate lists of length 1 are settled.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=reduce_allergen_map]
+----
+
+Finally, the _canonical dangerous ingredients list_ is assembled
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=assemble_list]
+----
+
+
+
