@@ -1,0 +1,23 @@
+== Day 19
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* the python regex library
+
+=== Idea
+
+The idea for part one is to convert the rules into a regex.
+
+
+=== What I learned
+
+I should learn more regular expression syntax. Remembering the `(` earlier would have saved me
+quite some time....
+
+=== How to run
+
+Run using:
+`$ python day19 --help`
