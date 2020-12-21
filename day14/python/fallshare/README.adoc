@@ -1,0 +1,6 @@
+== Day 11: Seating System
+
+[source, python]
+....
+include::solution.py[]
+....
