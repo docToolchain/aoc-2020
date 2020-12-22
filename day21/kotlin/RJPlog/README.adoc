@@ -31,5 +31,5 @@ include::day2021_1_2.kts[tags=allergen_2]
 Finally, print out the solution for both puzzles:
 [source, kotlin, numbered]
 ....
-include::day2019_1_2.kts[tags=output]
+include::day2021_1_2.kts[tags=output]
 ....
