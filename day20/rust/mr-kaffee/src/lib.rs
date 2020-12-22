@@ -218,7 +218,7 @@ fn append(solution: &mut VecDeque<(Tile, usize)>, tiles: &mut Vec<Tile>,
         };
 
         // find matching tile
-        // there three cases when an element matches
+        // there are three cases when an element matches
         // a) there is no neighbor in other row and direct neighbor matches -> first row
         // b) neighbor in other row and direct neighbor matches -> same row
         // c) neighbor in other row matches but not direct neighbor -> new row
@@ -229,7 +229,7 @@ fn append(solution: &mut VecDeque<(Tile, usize)>, tiles: &mut Vec<Tile>,
             .filter_map(|(pos2, tile2, t2)|
                 match tile1.matches(tile2, *t1, s1) {
                     Some(t) if t2.unwrap_or(Some(t)) == Some(t) => Some((pos2, t)),
-                    _ if t2.flatten().is_some() => Some((pos2, t2.flatten().unwrap())),
+                    None if t2.flatten().is_some() => Some((pos2, t2.flatten().unwrap())),
                     _ => None,
                 }).next();
         if let Some((pos2, t2)) = result {
