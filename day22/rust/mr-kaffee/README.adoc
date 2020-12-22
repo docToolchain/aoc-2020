@@ -1,0 +1,29 @@
+== Day 22: Crab Combat ==
+
+Rust solution for https://adventofcode.com/2020/day/22[AoC 2020, Day 22]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+I was very happy to find a reference to https://adventofcode.com/2019/day/22[Day 22 of the 2019 edition: Slam Shuffle], one of my all-time favorites.
+
+The solution for today was however not really related to the solution of last year's Slam Shuffle.
+
+Part 1 - the warm-up
+
+[source,rust,numbered]
+.Non-recursive Combat
+----
+include::src/lib.rs[tags=play]
+----
+
+Part 2 - slightly more tricky
+
+[source,rust,numbered]
+.Recursive Combat
+----
+include::src/lib.rs[tags=play_recursive]
+----
