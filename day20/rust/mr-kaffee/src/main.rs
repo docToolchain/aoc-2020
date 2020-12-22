@@ -24,6 +24,12 @@ fn main() {
     println!("Solution part 1 done in {:?}: {}", instant_part.elapsed(), sol);
     assert_eq!(sol, 20_033_377_297_069);
 
+    let instant_part = Instant::now();
+    let (width_v2, solution_v2) = solve_variant(&tiles);
+    let sol_v2 = corners_checksum(width_v2, &solution_v2);
+    println!("Solution part 1 (variant) done in {:?}: {}", instant_part.elapsed(), sol_v2);
+    assert_eq!(sol_v2, sol);
+
     // solve part 2
     let instant_part = Instant::now();
     let picture = get_picture(width, &solution);
