@@ -96,9 +96,6 @@ def find_fields(valid_tickets, rules):
                     if entry != field:
                         if mapping_table[field][0] in  mapping_table[entry]: 
                             mapping_table[entry].remove(mapping_table[field][0])
-                #remove field form not identified fields
-                #remove rule from all other fields
-
     return mapping_table
 
 
@@ -113,7 +110,7 @@ if __name__ == "__main__":
     mapping_table = find_fields(valid_tickets, rules)
     my_ticket = tickets[0]
     ticket_product = 1
-    
+
     for field in ['departure location', 'departure station', 'departure platform', 'departure track', 'departure date', 'departure time']:
         index = 0
         for key, value in mapping_table.items():
