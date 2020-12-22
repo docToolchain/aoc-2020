@@ -1,0 +1,16 @@
+== Day 15: Rambunctious Recitation
+
+=== Star 1
+I decided to use a dictionary to keep track of all mentioned numbers.
+I further decided to store the history how often a number is called in a list that acts as the value in the dictionary.
+
+=== Star 2
+Oh well. Let's do a performance check of the algorithm that I have developed for Star 1.
+Heavily playing around with lists and dicitonaries might be not the best choice if performance is a concern.
+But I can tell that my algorithm will terminate in a finite time.
+Hence I decided to not refactor it and instead I waited for the required result.
+
+[source, python]
+....
+include::solution.py[]
+....
