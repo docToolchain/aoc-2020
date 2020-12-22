@@ -1,0 +1,16 @@
+== Day 16
+
+
+For this day I tried to use python list comprehension in order to solve the puzzles.
+
+=== Usage
+
+python day16.py
+
+First enter the number of the game then how many turns to play
+
+
+[source, python]
+....
+include::day16.py[]
+....
