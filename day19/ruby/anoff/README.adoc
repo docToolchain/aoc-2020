@@ -1,0 +1,34 @@
+Puzzle: https://adventofcode.com/2020/day/19[Monster Messages]
+
+== Part 1
+
+Decided to go for the obvious _calculate once and then check against a giant dictionary_ approach.
+Was unsure if this approach will explode the CPU again but could not think of anything better.
+
+Had a fuckup (again..) because my rule logic only worked with two pairs of rules being combined - however there are some rules that have three components.
+After fixing this the solution ran 37 seconds to provide an answer.. guess this code will not survive for part2.
+
+== Part 2
+
+This was a lot of trial & error (5 attempts on the actual input), mostly because my tests passed again with flawed logic that was only revealed in the real scenario.
+
+I solved this by - again - creating a dictionary up until the point where it gets recursive, then I took out my old friend regex and built this beauty: `/^#{rule42}{#{n+1},}#{rule31}{#{n}}$/`
+
+== Solution
+
+[source, ruby]
+....
+include::rule.rb[]
+....
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

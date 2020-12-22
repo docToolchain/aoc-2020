@@ -68,3 +68,20 @@ a| Indexing an `Array` in Ruby is only possible with single integer indexes or a
 a| Ruby has fun `Vector` and `Matrix` operators that would have been fun to play with if you need multiplications instead of sums.
 a| TDD or die! When I don't test stuff I always overlook details in the puzzle that are hard to debug later on. Test early, test often.
 |====
+
+=== Day 16
+|====
+
+a|{anoff}
+a| Setting up a debugger is worth ith.
+a| There is an important difference between `Array.fill(<value>)` and `Array.map{|v| <value>}` if your value is an empty Array. The first one creates an Array where each element refers to the same new Array (_fill by reference_), whereas the latter creates a new Array for each element in the parent Array - what you usually want.
+|====
+
+=== Day 19
+|====
+
+a|{anoff}
+a| Tests lie! Even if everything is green your code might still be doing the wrong thing.
+a| Regular Expressions are powerful..and more performance efficient than I thought.
+|====
+

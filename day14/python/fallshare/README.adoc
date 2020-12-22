@@ -1,0 +1,11 @@
+== Day 14: Docking Data
+
+Star 1 was quite straightforward.
+For Star 2 I decided to use a recursive funtion to create all possible permutations of the address.
+I struggeled a little bit with the datatype turning strings into lists into integers into whatever.
+But since I am already 7 days behind I decided to not refactor my code and to continue with day 15.
+
+[source, python]
+....
+include::solution.py[]
+....
