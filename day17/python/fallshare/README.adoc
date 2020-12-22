@@ -1,0 +1,7 @@
+== Day 17: Conway Cubes
+
+
+[source, python]
+....
+include::solution.py[]
+....
