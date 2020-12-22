@@ -39,11 +39,8 @@ pub fn play_recursive(mut decks: (VecDeque<usize>, VecDeque<usize>)) -> (bool, u
 
         if a <= decks.0.len() && b <= decks.1.len() {
             // recurse
-            let (a_wins_int, _) = play_recursive((
-                decks.0.iter().take(a).cloned().collect(),
-                decks.1.iter().take(b).cloned().collect()
-            ));
-            a_wins = a_wins_int
+            a_wins = play_recursive((decks.0.iter().take(a).cloned().collect(),
+                                     decks.1.iter().take(b).cloned().collect())).0;
         }
 
         // winner takes cards
@@ -78,7 +75,7 @@ pub fn play(mut decks: (VecDeque<usize>, VecDeque<usize>)) -> (bool, usize) {
         }
     }
 
-    (!decks.0.is_empty(), calc_score(if decks.1.is_empty() { &decks.1 } else { &decks.1 }))
+    (!decks.0.is_empty(), calc_score(if decks.0.is_empty() { &decks.1 } else { &decks.0 }))
 }
 // end::play[]
 

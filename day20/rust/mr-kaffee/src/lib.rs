@@ -83,8 +83,8 @@ impl Tile {
     }
 
     // tag::match[]
-    pub fn matches(&self, other: &Self, t: usize, side: usize) -> Option<usize> {
-        if self.n != other.n {
+    pub fn matches(&self, tile: &Self, t: usize, side: usize) -> Option<usize> {
+        if self.n != tile.n {
             return None;
         }
 
@@ -97,7 +97,7 @@ impl Tile {
         };
 
         (0..8).find(|t_other| (0..self.n).all(|k|
-            self.get(f1.0 + f1.1 * k, t) == other.get(f2.0 + f2.1 * k, *t_other)))
+            self.get(f1.0 + f1.1 * k, t) == tile.get(f2.0 + f2.1 * k, *t_other)))
     }
     // end::match[]
 
@@ -190,58 +190,44 @@ pub fn corners_checksum(width: usize, solution: &[(Tile, usize)]) -> usize {
 // tag::solution_variant[]
 /// Appends tiles to solution until no more tile is found
 ///
-/// Works in two directions, depending on argument `forward`
+/// Works in two directions, depending on argument `fwd`
 ///
-/// If solution length is larger than `width`, next tiles are checked against neighbor in row above
-/// if `forward` is `true` or row below if `forward` is false.
+/// If solution length is larger than `w`, next tiles are checked against neighbor in row above
+/// if `fwd` is `true` or row below if `fwd` is false.
 ///
 /// If neighbor from other row matches and direct neighbor does not match, new row is assumed. The
 /// function does not check that each row actually has `width` elements, which should be the case
 /// for a well formed problem.
-fn append(solution: &mut VecDeque<(Tile, usize)>, tiles: &mut Vec<Tile>,
-          width: usize, forward: bool)
-{
+fn append(solution: &mut VecDeque<(Tile, usize)>, tiles: &mut Vec<Tile>, w: usize, fwd: bool) {
     // determine search directions
-    let (s1, s2) = if forward { (1, 2) } else { (3, 0) };
+    let (s_n, s_o) = if fwd { (1, 2) } else { (3, 0) };
     while !tiles.is_empty() {
-        // define previous element
-        let (tile1, t1) =
-            if forward { solution.back().unwrap() } else { solution.front().unwrap() };
-
-        // define neighbor in other row, may be None
-        let other = if solution.len() < width {
-            None
-        } else if forward {
-            Some(&solution[solution.len() - width])
+        // neighbor and other row elements
+        let ((tile_n, t_n), other) = if fwd {
+            (solution.back().unwrap(), solution.iter().rev().skip(w - 1).next())
         } else {
-            Some(&solution[width - 1])
+            (solution.front().unwrap(), solution.iter().skip(w - 1).next())
         };
 
-        // find matching tile
-        // there three cases when an element matches
-        // a) there is no neighbor in other row and direct neighbor matches -> first row
-        // b) neighbor in other row and direct neighbor matches -> same row
-        // c) neighbor in other row matches but not direct neighbor -> new row
-        let result = tiles.iter().enumerate()
-            .map(|(pos2, tile2)|
-                (pos2, tile2, other.map(|(tile_o, to)|
-                    tile_o.matches(tile2, *to, s2))))
-            .filter_map(|(pos2, tile2, t2)|
-                match tile1.matches(tile2, *t1, s1) {
-                    Some(t) if t2.unwrap_or(Some(t)) == Some(t) => Some((pos2, t)),
-                    _ if t2.flatten().is_some() => Some((pos2, t2.flatten().unwrap())),
-                    _ => None,
-                }).next();
-        if let Some((pos2, t2)) = result {
-            // if matching tile was found, remove it from tiles and add it to the solution
-            if forward {
-                solution.push_back((tiles.remove(pos2), t2));
-            } else {
-                solution.push_front((tiles.remove(pos2), t2));
-            }
-        } else {
-            // no matching tile found, give up
-            break;
+        // find matching tile with transformation
+        // there are three cases when an element matches
+        // a) neighbor matches, there is no other -> add in first row
+        // b) neighbor and other match with same transformation -> add in same row
+        // c) neighbor does not match, other matches -> add in next row
+        match tiles.iter().enumerate()
+            .filter_map(|(pos, tile)| match (
+                tile_n.matches(tile, *t_n, s_n),
+                other.map(|(tile_o, t_o)| tile_o.matches(tile, *t_o, s_o)).flatten()
+            ) {
+                (Some(ta), None) if other.is_none() => Some((pos, ta)),
+                (Some(ta), Some(tb)) if ta == tb => Some((pos, ta)),
+                (None, Some(tb)) => Some((pos, tb)),
+                _ => None,
+            }).next().map(|(pos, t)| (tiles.remove(pos), t))
+        {
+            Some(value) if fwd => solution.push_back(value),
+            Some(value) => solution.push_front(value),
+            _ => break,
         }
     }
 }

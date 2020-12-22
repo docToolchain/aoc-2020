@@ -26,6 +26,7 @@ fn count_with_required_fields(passports: &Vec<Passport>) -> usize {
         .count()
 }
 
+// tag::count_valid[]
 fn count_valid(passports: &Vec<Passport>) -> usize {
     // checker instance instantiates regular expressions once
     let checker = Checker::new();
@@ -35,6 +36,7 @@ fn count_valid(passports: &Vec<Passport>) -> usize {
         .filter(|passport| checker.is_valid(&passport))
         .count()
 }
+// end::count_valid[]
 
 #[derive(Debug, PartialEq, Default)]
 struct Passport {
@@ -106,6 +108,7 @@ impl Passport {
     }
 }
 
+// tag::checker[]
 struct Checker {
     re_hcl: Regex,
     re_ecl: Regex,
@@ -167,6 +170,7 @@ impl Checker {
         true
     }
 }
+// end::checker[]
 
 #[cfg(test)]
 mod tests {
