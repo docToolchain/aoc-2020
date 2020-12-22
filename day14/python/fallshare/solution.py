@@ -55,38 +55,42 @@ def process_instructions_star2(instructions):
             bit_mask = instruction['bit_mask']
         else:
             cur_address = list(format(instruction['address'], '036b'))
-            new_adress = list(format(0, '036b'))
+            new_address = list(format(0, '036b'))
 
             for i in range(35, -1, -1):              
                 if bit_mask[i] == 'X':
-                    new_adress[i] = 'X'
+                    new_address[i] = 'X'
                 elif bit_mask[i] == '0':
-                    new_adress[i] = cur_address[i]
+                    new_address[i] = cur_address[i]
                 elif bit_mask[i] == '1':
-                    new_adress[i] = 1
-
-            #permutate throug all possible adresse and write to memoy
+                    new_address[i] = '1'
 
 
-            #memory[instruction[new_adress]] = instruction['value']
+            addresses = permutate([''.join(new_address)])
+            
+            for address in addresses:
+                write_address = list_to_int(address)
+                memory[write_address] = instruction['value']
     return memory
 
 def permutate(addresses):
-    print()
-    print(addresses)
+
     all_addresses = list()
     for address in addresses:
         address = list(address)
         i =  0
+        
         while i < 36:
             if address[i] == 'X':
                 var1_address = address.copy()
                 var1_address[i] = '0'
                 var2_address = address.copy()
                 var2_address [i] = '1'
-                all_addresses.append(permutate([var1_address, var2_address]))
+                all_addresses.extend(permutate([''.join(var1_address), ''.join(var2_address)]))
                 break
             i += 1
+        if i == 36:
+            all_addresses.append(''.join(address))
     return all_addresses
 
 def list_to_int(list_input):
@@ -115,6 +119,3 @@ if __name__ == "__main__":
     for memory_cell in memory.items():
         total_value += memory_cell[1]
     print(f"Star 2: The total sum of all values in all memory cells is: {total_value}")
-
-
-    print(permutate(['0000000000000000000000000000001110XX']))
