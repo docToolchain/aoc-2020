@@ -1,0 +1,35 @@
+
+Day 21 of year 2020
+https://adventofcode.com/2020/day/21
+
+== What I learned
+
+. Copying a list and not deepcopy can sometimes create trouble.
+. This one was cool for me. It reminded me of those cool logic puzzles that I solved as a kid.
+"Sally, Bill and Ted are in a room. One of them has blue eyes. ..."
+
+== Approach
+
+. I read in the data and "process" it.
+.. I put all allergens into a set.
+.. I put all ingredients into a set.
+.. I created a list of tuples with a set of allergens and ingredients for each food item.
+. Problem 1:
+.. I determine for each ingredient which allergens it cannot be.
+.. If that set for an ingredient is the set of all allergens, then that ingredient cannot contain allergens.
+.. Then I remove those from the ingredient lists for the food items and count how many I remove.
+.. That count is the answer.
+. Problem 2:
+.. For each allergene, I go over the food items and if that item is marked with the allergene,
+I put those ingredients into a set. For each further food item, I create the intersectin of its
+ingredients and that set. And put it into a dictionary with the allergene as a key.
+.. There is now one allergene with a set of only one ingredient. Remove that ingredient everywhere,
+and at leat one further allergne has a set with only one element. etc.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
