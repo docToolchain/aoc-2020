@@ -11,7 +11,7 @@ Run tests with `cargo test`
 A day to forget.
 Just got lost in transformations...
 
-It's a lot about transformations. There are eight in total to represent all possible rotations and flips (see comments in code below). Those transformations are applied to a _flat_ index `idx = x + n * y`, where `n` is the width of a square tile. The function below yields data at a given coordinate after transformation:
+It's a lot about transformations. There are eight in total to represent all possible rotations and flips (see comments in code below). Those transformations are applied to a _flat_ index `idx = x + n * y`, where `n` is the width of a square tile. The functions below are used to get and set data at a given coordinate after transformation:
 
 [source,rust,numbered]
 ----
@@ -58,7 +58,7 @@ And the monster is searched in the picture using
 
 [source,rust,numbered]
 ----
-include::src/lib.rs[tags=get_picture]
+include::src/lib.rs[tags=find_pattern]
 ----
 
 I was happy that the monsters do not overlap (at least in my case). That made calculating the roughness very easy:
