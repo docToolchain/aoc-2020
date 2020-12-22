@@ -1,0 +1,21 @@
+== Day 22
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+
+=== Idea
+
+Use lists to represnet the decks. Part one was straight forward. Had a little error in the
+recursion in part two.
+
+=== What I learned
+
+Recursions are sometimes difficult.
+
+=== How to run
+
+Run using:
+`$ python day22 --help`
