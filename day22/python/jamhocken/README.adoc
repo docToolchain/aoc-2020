@@ -1,0 +1,27 @@
+
+Day 22 of year 2020
+https://adventofcode.com/2020/day/22
+
+== What I learned
+
+. This one was straightforward.
+
+== Approach
+
+. I read in the data and "process" it.
+.. I put each of the decks into a list.
+. Problem 1:
+.. Straightforward. Pop the cards, compare them, put them at the end of the right deck. Repeat until a deck is empty.
+. Problem 2:
+.. Like problem 1.
+.. Implemented infinite loop protection with a list of tuples of lists.
+.. Added check for recursive combat and recursively called using slices of the decks.
+.. I put a switch into the function call, since in the outerloop, I only need the winning deck.  In any inner loop, I only need the winner.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
