@@ -74,12 +74,13 @@ def solve_star1(equation):
     return equation
         
 def solve_star2(equation):
+    #print(f"Start {equation}")
     while len(equation) != 1:
         if equation[0] == "(":
             left_bracket = 0
             right_bracket = get_right_closing_bracket(equation)
             #calculate result of equation
-            result = solve_star1(equation[1:right_bracket])
+            result = solve_star2(equation[1:right_bracket])
             equation = equation[0:left_bracket] + list(result) + equation[right_bracket + 1:]
         elif equation[0].isdecimal():
             operand1 = int(equation[0])
@@ -87,17 +88,18 @@ def solve_star2(equation):
             operand2 = 0
 
             if operator == "*":
-
-
-            if equation[2] == "(":
+                operand2_last_index = len(equation)
+                operand2 = int(solve_star2(equation[2:])[0]) 
+            elif equation[2] == "(":
                 left_bracket = 2
                 right_bracket = get_right_closing_bracket(equation)
                 operand2_last_index = right_bracket + 1
-                operand2 = int(solve_star1(equation[3:right_bracket])[0])              
+                operand2 = int(solve_star2(equation[3:right_bracket])[0])              
             else:
                 operand2 = int(equation[2])
                 operand2_last_index = 3
             if operator == "+":
+                #loese erste den rechten teil der gleichung
                 result = str(operand1 + operand2)
             elif operator == "*":
                  result = str(operand1 * operand2)
@@ -108,7 +110,7 @@ def solve_star2(equation):
                 
         else:
             raise ValueError("this should never happen")
-   
+    #print(f"End {equation}")
     return equation
 
 
@@ -117,14 +119,14 @@ if __name__ == "__main__":
     equations  = read_input_file("input.txt")
     equation_sum = 0
     for equation in equations:
-        print(int(solve_star1(equation)[0]))
+        #print(int(solve_star1(equation)[0]))
         equation_sum += int(solve_star1(equation)[0])
     
     print(f"Star 1: Sum off all equations is {equation_sum}")
 
     equation_sum = 0
     for equation in equations:
-        print(int(solve_star1(equation)[0]))
+        #print(int(solve_star2(equation)[0]))
         equation_sum += int(solve_star2(equation)[0])
     
     print(f"Star 2: Sum off all equations is {equation_sum}")

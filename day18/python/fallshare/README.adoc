@@ -1,8 +1,5 @@
 == Day 18: Operation Order
-
-=== Star 1
-
-=== Star 2
+I slowly start to like recursion :)
 
 [source, python]
 ....
