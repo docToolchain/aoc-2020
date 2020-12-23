@@ -1,0 +1,20 @@
+== Day 17: Conway Cubes
+
+Awesome! Conway's game of life in 3D in 4D.
+
+=== Star 1
+I went for a pretty itterative approach.
+git reset --hard origin/master
+[source, python]
+....
+include::solution_star1.py[]
+....
+
+=== Star 2
+I decided to create a hard copy of the star 1 functions and enhace them by anohter dimension.
+Unfortunatley a missed indentation caused some issues and I lost some time with debugging.
+
+[source, python]
+....
+include::solution_star2.py[]
+....
