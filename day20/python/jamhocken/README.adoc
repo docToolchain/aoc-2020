@@ -1,0 +1,44 @@
+
+Day 20 of year 2020
+https://adventofcode.com/2020/day/20
+
+== What I learned
+
+. Using variables within regex in Python
+. Finding strings "in place" in regex in Python
+
+== Approach
+
+. I read in the data and "process" it.
+.. I create a dictionary containing all of the tile pieces
+.. I create a dictionary containing the 4 border strings of each tile piece.
+. Problem 1:
+.. I find all neighbors of each tile piece and put them into a dictionary.
+.. I also find the side of the element on which that neighbor is.
+.. Find the corners by finding all elements with only 2 neighbors.
+.. This part was quite easy.
+. Problem 2:
+.. I put the puzzle together.
+... I start in a corner and reorient one of its neighbors and start the first edge of the overall image.
+... I follow that edge until the next corner.
+... Then, I add neighbors to the current puzzle, piece by piece, and only considering neighbors that haven't already been placed.
+.... Essentially, this completes the image row by row.
+... "Reorient the pieces" involves one of 8 transformations (including identity). Multiple rotations of 90 degrees. And flipping vertically followed by rotations.
+.. I rotate everything to put the first tile piece in the upper left corner of the overall image.
+.. I strip the borders off of each piece and create one big list of strings representing the overall image.
+.. I reorient the overall image repeatedly until sea monsters show up.
+... To find the sea monsters, I flatten the overall image into a really long string and do a regex for the sea monster pattern.
+
+After all was said and done, it looks pretty straightforward. But, I had trouble testing and debugging the process of
+putting the whole picture together. It was difficult for me to keep track of when to flip and rotata.
+
+Limitations:
+If a piece would have a side that is symmetrical, the code may not work. This is fixable, but I didn't bother.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
