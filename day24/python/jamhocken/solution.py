@@ -28,21 +28,19 @@ def location(instruction):
     return (east,northeast)
 
 def automat(tiles_set,cycles):
+    vectors = [[0,0],[1,0],[-1,0],[0,1],[0,-1],[-1,1],[1,-1]]
     for cycle in range(cycles):
-        max_east = max([item[0] for item in tiles_set])
-        min_east = min([item[0] for item in tiles_set])
-        max_ne = max([item[1] for item in tiles_set])
-        min_ne = min([item[1] for item in tiles_set])
-        overkill_max = max(max_east,max_ne)
-        overkill_min = min(min_east,min_ne)
+        new_position_set = set()
         tiles_set_temp = tiles_set.copy()
-        for x in range(overkill_min-2,overkill_max+2):
-            for y in range(overkill_min-2,overkill_max+2):
-                neighbors = find_neighbors(tiles_set,(x,y))
-                if (x,y) in tiles_set:
-                    if neighbors == 0 or neighbors > 2:
-                        tiles_set_temp.remove((x,y))
-                elif neighbors == 2: tiles_set_temp.add((x,y))
+        for tile in tiles_set:
+            for vector in vectors:
+                new_position = tuple([a + b for a, b in zip(list(tile), vector)])
+                if new_position not in new_position_set:
+                    new_position_set.add(new_position)
+                    neighbors = find_neighbors(tiles_set, new_position)
+                    if new_position in tiles_set:
+                        if neighbors == 0 or neighbors > 2: tiles_set_temp.remove(new_position)
+                    elif neighbors == 2: tiles_set_temp.add(new_position)
         tiles_set = tiles_set_temp
     return tiles_set
 
