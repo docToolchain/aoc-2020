@@ -1,34 +1,31 @@
-use std::cell::RefCell;
 use std::cmp::min;
 
 // tag::play_round[]
-pub fn play_round(list: &[Item], curr: usize) -> usize {
+pub fn play_round(list: &mut Vec<Item>, curr: usize) -> usize {
     // get current item
-    let curr = &list[curr];
-    let curr_next = curr.next.borrow().clone();
+    let curr_next = list[curr].next;
 
     // get next three items
-    let n1 = &list[*curr.next.borrow()];
-    let n2 = &list[*n1.next.borrow()];
-    let n3 = &list[*n2.next.borrow()];
-    let n3_next = *n3.next.borrow();
+    let n1 = curr_next;
+    let n2 = list[n1].next;
+    let n3 = list[n2].next;
+    let n3_next = list[n3].next;
 
     // find destination item
-    let mut dest = *curr.low.borrow();
-    while &list[dest] == n1 || &list[dest] == n2 || &list[dest] == n3 {
-        dest = *list[dest].low.borrow();
+    let mut dest = list[curr].low;
+    while dest == n1 || dest == n2 || dest == n3 {
+        dest = list[dest].low;
     }
-    let dest = &list[dest];
-    let dest_next = *dest.next.borrow();
+    let dest_next = list[dest].next;
 
     // update next links
     // [.. curr] [n1 n2 n3] [.. dest] => [.. curr] [.. dest] [n1 n2 n3]
-    curr.next.replace(n3_next);
-    dest.next.replace(curr_next);
-    n3.next.replace(dest_next);
+    list[curr].next = n3_next;
+    list[dest].next = curr_next;
+    list[n3].next = dest_next;
 
     // update current
-    *curr.next.borrow()
+    list[curr].next
 }
 // end::play_round[]
 
@@ -41,12 +38,11 @@ pub fn play_rounds(data: &[usize], len: usize, rounds: usize) -> (Vec<Item>, usi
 }
 
 pub fn get_checksum_1(list: &[Item], low: usize) -> usize {
-    let low = &list[low];
-    let mut curr = &list[*low.next.borrow()];
+    let mut curr = list[low].next;
     let mut checksum = 0;
     loop {
-        checksum = checksum * 10 + curr.value;
-        curr = &list[*curr.next.borrow()];
+        checksum = checksum * 10 + list[curr].value;
+        curr = list[curr].next;
         if curr == low {
             break;
         }
@@ -55,10 +51,9 @@ pub fn get_checksum_1(list: &[Item], low: usize) -> usize {
 }
 
 pub fn get_checksum_2(list: &[Item], low: usize) -> usize {
-    let low = &list[low];
-    let n1 = &list[*low.next.borrow()];
-    let n2 = &list[*n1.next.borrow()];
-    n1.value * n2.value
+    let n1 = list[low].next;
+    let n2 = list[n1].next;
+    list[n1].value * list[n2].value
 }
 
 #[cfg(test)]
@@ -71,15 +66,15 @@ mod tests {
         let len = 20;
         let (list, _head, _low) = Item::from(&data, len);
         for k in 0..len {
-            assert_eq!(*list[k].next.borrow(), (k + 1) % len);
-            assert_eq!(list[*list[k].low.borrow()].value, (list[k].value + len - 2) % len + 1);
+            assert_eq!(list[k].next, (k + 1) % len);
+            assert_eq!(list[list[k].low].value, (list[k].value + len - 2) % len + 1);
         }
     }
 
     #[test]
     fn test_play_round() {
         let data = vec![3, 8, 9, 1, 2, 5, 4, 6, 7];
-        let (list, mut head, _low) = Item::from(&data, data.len());
+        let (mut list, mut head, _low) = Item::from(&data, data.len());
         let exp = vec![
             vec![2, 8, 9, 1, 5, 4, 6, 7, 3],
             vec![5, 4, 6, 7, 8, 9, 1, 3, 2],
@@ -94,13 +89,13 @@ mod tests {
         ];
 
         for exp in exp {
-            head = play_round(&list, head);
+            head = play_round(&mut list, head);
 
             let mut curr = head;
             let mut act = Vec::with_capacity(exp.len());
             loop {
                 act.push(list[curr].value);
-                curr = *list[curr].next.borrow();
+                curr = list[curr].next;
                 if curr == head {
                     break;
                 }
@@ -122,30 +117,30 @@ mod tests {
 // tag::item[]
 #[derive(Debug, Eq, PartialEq)]
 pub struct Item {
-    next: RefCell<usize>,
-    low: RefCell<usize>,
+    next: usize,
+    low: usize,
     value: usize,
 }
 
 impl Item {
     fn new(value: usize) -> Self {
-        Item { value, next: RefCell::new(0), low: RefCell::new(0) }
+        Item { value, next: 0, low: 0 }
     }
 
     pub fn from(data: &[usize], len: usize) -> (Vec<Item>, usize, usize) {
         // build list of items
-        let list: Vec<_> = (0..len)
+        let mut list: Vec<_> = (0..len)
             .map(|k| if k >= data.len() { k + 1 } else { data[k] })
             .map(|v| Item::new(v)).collect();
 
         // set next links
         for k in 0..len {
-            list[k].next.replace((k + 1) % len);
+            list[k].next = (k + 1) % len;
         }
 
         // set low links for tail part, which is sorted
         for k in data.len() + 1..len {
-            list[k].low.replace(k - 1);
+            list[k].low = k - 1;
         }
 
         // set low links for head part, which is unsorted
@@ -153,7 +148,7 @@ impl Item {
             let pos = list.iter().position(|v|
                 v.value == if list[k].value == 1 { list.len() } else { list[k].value - 1 })
                 .unwrap();
-            list[k].low.replace(pos);
+            list[k].low = pos;
         }
 
         let low = list.iter().position(|v| v.value == 1).unwrap();

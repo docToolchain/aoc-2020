@@ -1,0 +1,33 @@
+== Day 24: Lobby Layout ==
+
+Rust solution for https://adventofcode.com/2020/day/24[AoC 2020, Day 24]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+I use `(x, y)` coordinates where adjacent columns (east/west) have a distance of two and adjacent rows have a distance of 1 in `y` direction and all tiles have an offset of +/- 1 in `x` direction.
+
+The first step is to read the input and map every line to the coordinates the path leads to:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=get_coords]
+----
+
+For part one, I add all the coordinates to a set.
+If a coordinate is seen for the second time, it is removed again.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=flip_tiles]
+----
+
+For part two, I apply update steps repeatedly.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=update_step]
+----
