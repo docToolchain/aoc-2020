@@ -26,9 +26,6 @@ include::src/lib.rs[tags=flip_tiles]
 ----
 
 For part two, I apply update steps repeatedly.
-An obvious optimization potential is to only consider valid coordinates.
-My first attempt to do so failed.
-Maybe for another day.
 
 [source,rust,numbered]
 ----
