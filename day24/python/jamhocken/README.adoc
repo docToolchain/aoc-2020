@@ -1,0 +1,27 @@
+
+Day 24 of year 2020
+https://adventofcode.com/2020/day/24
+
+== What I learned
+
+. Non-orthogonal axes.
+
+== Approach
+
+. I read in the data and "process" it.
+.. I just regex over the 6 directions and each line into a list.
+.. I define the direction "east" to be x and "northeast" to be y.
+"northwest" and "southeast" can be built with combos of ne and sw.
+. Problem 1:
+.. You just follow the patterns to find the (x=e, y=ne) tiles. Then put that list into a set.
+And if the patterns in that set are present 1 time (mod 2) then you count them.
+. Problem 2:
+.. Modified my previous Game of Life code. Each tile now has 6 neighbors.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....
