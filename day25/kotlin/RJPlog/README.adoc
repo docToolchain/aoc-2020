@@ -1,0 +1,20 @@
+== Day 19: Monster Messages ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/25
+
+ $ kotlin day2025_1.kts
+ 
+=== First Star
+
+How does it work: +
+
+With the public keys and the subject number as an in put calculate card_loop_size and door_loop_size be step by step increasing loop size, until public keys are meet. 
+
+With the loop size known, encryption key can be evaluated.
+
+[source, kotlin, numbered]
+....
+include::day2025_1.kts[tags=part_1]
+....
