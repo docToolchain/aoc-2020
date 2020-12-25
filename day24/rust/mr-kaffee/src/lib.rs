@@ -2,6 +2,9 @@ use regex::Regex;
 use std::collections::HashSet;
 use std::cmp::{max, min};
 
+// search directions
+const DLTS: [(i32, i32); 6] = [(2, 0), (1, 1), (1, -1), (-2, 0), (-1, -1), (-1, 1)];
+
 // tag::get_coords[]
 pub fn get_coords(content: &str) -> Vec<(i32, i32)> {
     let re = Regex::new(r"(e)|(se)|(sw)|(w)|(nw)|(ne)")
@@ -39,37 +42,26 @@ pub fn update_step(blacks: &HashSet<(i32, i32)>) -> HashSet<(i32, i32)> {
                   (min(min_x, *x), max(max_x, *x + 1),
                    min(min_y, *y), max(max_y, *y + 1)));
 
-    // closure to check whether tile at coordinate is black
-    // check whether it is in range first
-    let is_black = |(x, y)| x >= min_x && x < max_x && y >= min_y && y < max_x &&
-        blacks.contains(&(x, y));
+    // closure to check whether tile at coordinate is black, pre-check range
+    let is_black = |(x, y)| (min_x..max_x).contains(&x)
+        && (min_y..max_y).contains(&y) && blacks.contains(&(x, y));
 
-    // valid coordinates: even row -> even column, odd row -> odd column
-    // in even rows, start from largest even x which is less than min_x
-    // in odd rows, start from largest odd xx which is less then min_x
-    let d = if min_x & 1 == 0 { [-2, -1] } else { [-1, -2] };
+    // even row: lowest even x >= min_x - 1; odd row: lowest odd x >= min_x - 1
+    let off_min_x = if min_x & 1 == 0 { [0, 1] } else { [1, 0] };
 
     let mut blacks_upd = HashSet::new();
 
-    // search directions
-    let dlts = [(2, 0), (1, 1), (1, -1), (-2, 0), (-1, -1), (-1, 1)];
-
     for y in min_y - 1..max_y + 1 {
-        for x in (min_x + d[(y & 1) as usize]..max_x + 1).step_by(2) {
+        for x in (min_x - off_min_x[(y & 1) as usize]..max_x + 1).step_by(2) {
             // is currently black
             let black = is_black((x, y));
 
-            // count black adjacents
-            let cnt = dlts.iter()
-                .filter(|&(dx, dy)| is_black((x + dx, y + dy)))
-                .count();
+            // count black adjacents; if 3 found stop counting
+            let cnt = DLTS.iter()
+                .filter(|&(dx, dy)| is_black((x + dx, y + dy))).take(3).count();
 
             // apply update rules
-            if black && cnt > 0 && cnt <= 2 {
-                blacks_upd.insert((x, y));
-            } else if !black && cnt == 2 {
-                blacks_upd.insert((x, y));
-            }
+            if (black && cnt == 1) || cnt == 2 { blacks_upd.insert((x, y)); }
         }
     }
 
@@ -78,11 +70,7 @@ pub fn update_step(blacks: &HashSet<(i32, i32)>) -> HashSet<(i32, i32)> {
 // end::update_step[]
 
 pub fn update(blacks: &HashSet<(i32, i32)>, rounds: usize) -> HashSet<(i32, i32)> {
-    let mut blacks_upd = blacks.clone();
-    for _ in 0..rounds {
-        blacks_upd = update_step(&blacks_upd);
-    }
-    blacks_upd
+    (0..rounds).fold(blacks.clone(), |blacks, _| update_step(&blacks))
 }
 
 #[cfg(test)]
