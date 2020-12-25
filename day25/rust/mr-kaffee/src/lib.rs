@@ -1,5 +1,5 @@
 pub const SUBJECT: usize = 7;
-pub const MOD: usize = 20201227;
+pub const MOD: usize = 20_201_227;
 
 /// parse two public keys from two lines of text
 pub fn get_public_keys(content: &str) -> (usize, usize) {
@@ -11,12 +11,24 @@ pub fn get_public_keys(content: &str) -> (usize, usize) {
 
 // tag::solution[]
 /// transform: `subject -> (subject^loop_size) % `[`MOD`]
+///
+/// Just because it is possible, I implemented a recursive O(log(n)) solution.
 pub fn transform(subject: usize, loop_size: usize) -> usize {
-    (0..loop_size).fold(1, |val, _| (val * subject) % MOD)
+    if loop_size == 0 {
+        return 1;
+    }
+
+    let mut result = transform(subject, loop_size >> 1);
+    result = (result * result) % MOD;
+    if loop_size & 1 > 0 {
+        result = (result * subject) % MOD;
+    }
+    result
 }
 
 /// find the loop size which transforms the given `subject` to the given `result`
-/// this is somehow `(log_subject(result)) % `[`MOD`]
+///
+/// See [Discrete Logarithm](https://en.wikipedia.org/wiki/Discrete_logarithm) on Wikipedia
 pub fn find_loop_size(subject: usize, result: usize) -> usize {
     let mut cnt = 1;
     let mut val = subject;
