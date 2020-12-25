@@ -1,0 +1,22 @@
+== Day 25: Combo Breaker ==
+
+Rust solution for https://adventofcode.com/2020/day/25[AoC 2020, Day 25]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+50 Stars collected! Vacation on that nice tropical island ready to start!
+
+1. Read two public keys from a file
+2. Determine the loop size for the second public key with linear search (function `find_loop_size`)
+3. Transform the first public key with that loop size (function `transform`)
+
+The last two steps are combined in function `get_encryption_key`
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=solution]
+----
