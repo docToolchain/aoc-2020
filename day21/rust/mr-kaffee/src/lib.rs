@@ -66,7 +66,7 @@ pub fn reduce_allergen_map<'a>(mut map: HashMap<&'a str, HashSet<&'a str>>)
                 reduced.insert(allergen, ingredients.iter().next().unwrap());
                 changed = true;
             } else if ingredients.len() == 0 {
-                panic!(format!("No remaining ingredients for {}", allergen));
+                panic!("No remaining ingredients for {}", allergen);
             }
         }
 
@@ -83,22 +83,11 @@ pub fn reduce_allergen_map<'a>(mut map: HashMap<&'a str, HashSet<&'a str>>)
 // tag::assemble_list[]
 /// Build the _canonical dangerous ingredient list_
 pub fn assemble_list(map: &HashMap<&str, &str>) -> String {
-    let mut flat: Vec<_> = map.iter()
-        .map(|(allergen, ingredient)| (*allergen, *ingredient))
-        .collect();
+    let mut flat: Vec<_> = map.iter().collect();
 
     flat.sort_by(|(a, _), (b, _)| a.cmp(b));
 
-    let mut list = flat.iter()
-        .fold(String::new(), |mut list, (_, ingredient)| {
-            list.extend(ingredient.chars());
-            list.push(',');
-            list
-        });
-    // remove trailing ','
-    list.truncate(list.len() - 1);
-
-    list
+    flat.iter().map(|(_, ingredient)| **ingredient).collect::<Vec<_>>().join(",")
 }
 // end::assemble_list[]
 

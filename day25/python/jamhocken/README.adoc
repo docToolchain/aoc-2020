@@ -1,0 +1,19 @@
+
+Day 25 of year 2020
+https://adventofcode.com/2020/day/25
+
+== What I learned
+
+. A star for free! Merry Christmas!
+
+== Approach
+
+. You just read in the 2 values and follow the instructions.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

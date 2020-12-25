@@ -1,0 +1,48 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC-21: Allergen Assessment
+https://adventofcode.com/2020/day/21
+
+=== Info
+
+Find allergens in garbled ingredient list
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+Prepare 
+
+* food list with [{ingredients}, [english allergenes]]
+* all_foods set with all collective ingredients
+* all_allergenes set with all collective english allergenes
+
+.Star1: Count allergen-free ingredients total
+. Identify allergenes by getting all intersections of the food list's food sets
+. Reduce allergenes to unique map by filtering from existing unique relations
+. Generate set of allergene free food
+. Sum up the intersection length of food list's food sets with free food set
+
+.Star2: Name alien allergens and sort them according to ENGLISH SPELLING
+. Generate and sort english allergene list
+. Generate alien allergenes string from allergene dict, based on sorted english list
+
+
+=== Learned today
+
+* RTFM, lost minute by first sorting the allergenes along alien spelling
+* Not all is lost, after two days of running into family timeout...
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

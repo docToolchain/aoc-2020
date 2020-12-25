@@ -1,0 +1,33 @@
+== Day 23: Crab Cups ==
+
+Rust solution for https://adventofcode.com/2020/day/23[AoC 2020, Day 23]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+After solving the puzzle in Java, I now also have a solution in Rust.
+
+Linked Lists does not seem to be a concept Rustacians like a lot.
+Googling for linked lists in Rust, you find a lot of explanations why you should not use them...
+
+To avoid trouble with Rusts ownership and borrowing system, I do not link list items directly, but keep a Vec of all items and only store the indices into this Vector in my items.
+In my first attempt, I wrapped the `next` and `low` pointers in `RefCell` smart pointers only to realize later on that this is not required if I completely work on pointers and never borrow items from the list.
+
+The solution is mostly the same to my Java solution.
+
+Items in the list are implemented as follows:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=item]
+----
+
+A single round is played as follows:
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=play_round]
+----

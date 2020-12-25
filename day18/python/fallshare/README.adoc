@@ -1,0 +1,7 @@
+== Day 18: Operation Order
+I slowly start to like recursion :)
+
+[source, python]
+....
+include::solution.py[]
+....

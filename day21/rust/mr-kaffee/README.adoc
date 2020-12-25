@@ -10,7 +10,7 @@ Run tests with `cargo test`
 
 After two days which were quite challenging for me, an easier one today.
 
-After parsing the input, first build a map with allergens as keys and candidate ingredients of values by checking for every allergen which ingredients are contained in all foods that contain the allergen:
+After parsing the input, first build a map with allergens as keys and lists of candidate ingredients as values by checking for every allergen which ingredients are contained in all foods that contain the allergen:
 
 [source,rust,numbered]
 ----
@@ -25,7 +25,7 @@ include::src/lib.rs[tags=count_without_allergens]
 ----
 
 In the next step, the allergen map is reduced to map each allergen to exactly one ingredient iteratively.
-In each iteration, the ingredients mapped to settled allergens are removed from the candidate lists and the allergens with candidate lists of length 1 are settled.
+In each iteration, the ingredients mapped to settled allergens are removed from the candidate lists, and the allergens with candidate lists of length 1 are settled.
 
 [source,rust,numbered]
 ----

@@ -1,0 +1,25 @@
+== Day 23: Crab Cups ==
+
+Java solution for https://adventofcode.com/2020/day/23[AoC 2020, Day 23]
+
+=== Solution ===
+
+Java solution today, since I had troubles creating linked lists in Rust.
+
+Solution idea: create a linked list where each item has a reference to the next item, and the item with the next lower value.
+The reference to the next item is updated in the game.
+The references to the next lower value is kept to find the destination element quickly in each round.
+
+This solution is much easier than copying around parts of arrays...
+
+[source,rust,numbered]
+----
+include::Day23.java[tags=solve]
+----
+
+The list items are a separate class.
+
+[source,rust,numbered]
+----
+include::Day23.java[tags=item]
+----

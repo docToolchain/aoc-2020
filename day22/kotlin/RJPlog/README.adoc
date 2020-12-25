@@ -1,0 +1,45 @@
+== Day 22: Crab Combat ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/22
+
+ $ kotlin day2022_1_2.kts
+ 
+=== First Star
+
+How does it work: +
+
+Yesterday after a review of day21's code, Peter showed me some ways to better use functions. Here I tried to separate reading puzzle input in a own function, return both decks in a pair. The decks are input of the solving algorithm itself.
+
+[source, kotlin, numbered]
+....
+include::day2022_1_2.kts[tags=read_puzzle]
+....
+
+In the solving algorithm each turn cards are taken out of the deck and attached to the end of the winners deck, until one deck is empty. After that the result is calculated and returned
+
+[source, kotlin, numbered]
+....
+include::day2022_1_2.kts[tags=crab_combat]
+....
+
+=== Second Star
+
+How does it work: +
+
+For the second part Imodified the sovling algorithm by transfering an additional value for the level of the recursive game, but this is not really needed, I used it in a starting version for printing out the level. 
+I added to more rules, the infinite termination and the second rule for both players having at least the number of cards in thier deck as there current card shows. 
+
+For each three rules, the winner is calculated and cards put to the winners deck. For one rule, a subgame is started.
+
+[source, kotlin, numbered]
+....
+include::day2022_1_2.kts[tags=crab_combat_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2022_1_2.kts[tags=output]
+....

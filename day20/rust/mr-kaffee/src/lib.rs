@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 pub const MONSTER: &str = r"                  _ \    /\    /\    /o> \  /  \  /  \  /   ";
 pub const MONSTER_WIDTH: usize = 20;
 
@@ -81,8 +83,8 @@ impl Tile {
     }
 
     // tag::match[]
-    pub fn matches(&self, other: &Self, t: usize, side: usize) -> Option<usize> {
-        if self.n != other.n {
+    pub fn matches(&self, tile: &Self, t: usize, side: usize) -> Option<usize> {
+        if self.n != tile.n {
             return None;
         }
 
@@ -95,7 +97,7 @@ impl Tile {
         };
 
         (0..8).find(|t_other| (0..self.n).all(|k|
-            self.get(f1.0 + f1.1 * k, t) == other.get(f2.0 + f2.1 * k, *t_other)))
+            self.get(f1.0 + f1.1 * k, t) == tile.get(f2.0 + f2.1 * k, *t_other)))
     }
     // end::match[]
 
@@ -184,6 +186,77 @@ pub fn corners_checksum(width: usize, solution: &[(Tile, usize)]) -> usize {
     checksum *= solution[width * width - 1].0.id;
     checksum
 }
+
+// tag::solution_variant[]
+/// Appends tiles to solution until no more tile is found
+///
+/// Works in two directions, depending on argument `fwd`
+///
+/// If solution length is larger than `w`, next tiles are checked against neighbor in row above
+/// if `fwd` is `true` or row below if `fwd` is false.
+///
+/// If neighbor from other row matches and direct neighbor does not match, new row is assumed. The
+/// function does not check that each row actually has `width` elements, which should be the case
+/// for a well formed problem.
+fn append(solution: &mut VecDeque<(Tile, usize)>, tiles: &mut Vec<Tile>, w: usize, fwd: bool) {
+    // determine search directions
+    let (s_n, s_o) = if fwd { (1, 2) } else { (3, 0) };
+    while !tiles.is_empty() {
+        // neighbor and other row elements
+        let ((tile_n, t_n), other) = if fwd {
+            (solution.back().unwrap(), solution.iter().rev().skip(w - 1).next())
+        } else {
+            (solution.front().unwrap(), solution.iter().skip(w - 1).next())
+        };
+
+        // find matching tile with transformation
+        // there are three cases when an element matches
+        // a) neighbor matches, there is no other -> add in first row
+        // b) neighbor and other match with same transformation -> add in same row
+        // c) neighbor does not match, other matches -> add in next row
+        match tiles.iter().enumerate()
+            .filter_map(|(pos, tile)| match (
+                tile_n.matches(tile, *t_n, s_n),
+                other.map(|(tile_o, t_o)| tile_o.matches(tile, *t_o, s_o)).flatten()
+            ) {
+                (Some(ta), None) if other.is_none() => Some((pos, ta)),
+                (Some(ta), Some(tb)) if ta == tb => Some((pos, ta)),
+                (None, Some(tb)) => Some((pos, tb)),
+                _ => None,
+            }).next().map(|(pos, t)| (tiles.remove(pos), t))
+        {
+            Some(value) if fwd => solution.push_back(value),
+            Some(value) => solution.push_front(value),
+            _ => break,
+        }
+    }
+}
+
+pub fn solve_variant(tiles: &[Tile]) -> (usize, Vec<(Tile, usize)>) {
+    let mut tiles: Vec<_> = tiles.iter().cloned().collect();
+
+    // determine puzzle dimension
+    let width = (0..tiles.len()).find(|width| {
+        width * width == tiles.len()
+    }).expect("No valid puzzle dimensions");
+
+    // start solution from an arbitrary tile and extend backward and forward
+    let mut solution = VecDeque::with_capacity(width * width);
+    solution.push_front((tiles.pop().unwrap(), 0));
+    append(&mut solution, &mut tiles, width, false);
+    append(&mut solution, &mut tiles, width, true);
+    // may need to iterate because row wrap may not work in the first round
+    append(&mut solution, &mut tiles, width, false);
+
+    // all tiles shall be consumed here
+    assert_eq!(tiles.len(), 0);
+
+    // convert from VecDeque<VecDeque<_>> to flat Vec<_>
+    let solution = solution.into_iter().collect();
+
+    (width, solution)
+}
+// end::solution_variant[]
 
 // tag::solve[]
 pub fn solve(tiles: &[Tile]) -> (usize, Vec<(Tile, usize)>) {
@@ -491,5 +564,22 @@ Tile 3079:
         let (monsters, t) = find_monsters(&picture, MONSTER, MONSTER_WIDTH);
         let picture = substitute_monsters(&picture, t, &monsters, MONSTER, MONSTER_WIDTH);
         assert_eq!(picture.data.iter().filter(|c| **c == '#').count(), 273);
+    }
+
+    #[test]
+    fn test_solve_variant() {
+        let tiles = Tile::parse(CONTENT);
+        let (width, solution) = solve_variant(&tiles);
+        assert_eq!(corners_checksum(width, &solution), 20_899_048_083_289);
+    }
+
+    #[test]
+    fn test_tile_find_monsters_variant() {
+        let tiles = Tile::parse(CONTENT);
+        let (width, solution) = solve_variant(&tiles);
+        let picture = get_picture(width, &solution);
+        let (monsters, _) = find_monsters(&picture, MONSTER, MONSTER_WIDTH);
+        assert_eq!(monsters.len(), 2);
+        assert_eq!(get_roughness(&picture, monsters.len()), 273);
     }
 }

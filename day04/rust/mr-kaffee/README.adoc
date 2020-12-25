@@ -3,3 +3,24 @@
 Run solution with `cargo run`
 
 Run tests on example data with `cargo test`
+
+=== Solution ===
+
+Today I was struggling with the question: how to implement the singleton pattern in Rust.
+The ownership and borrowing system does not make this an easy task.
+I wanted to only compile the regular expressions I use for passport validity checking once ..., and I kind of failed to do so.
+
+The compromise I ended up with was to define a `Checker` struct, which I re-use to check all the passports.
+Not really a singleton though.
+
+[source,rust,numbered]
+----
+include::src/main.rs[tags=count_valid]
+----
+
+Here's the implementation for Checker:
+
+[source,rust,numbered]
+----
+include::src/main.rs[tags=checker]
+----
