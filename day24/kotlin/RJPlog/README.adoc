@@ -1,0 +1,42 @@
+== Day 24: Lobby Layout ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/24
+
+ $ kotlin day2024_1_2.kts
+ 
+=== First Star
+
+How does it work: +
+
+First part is reading and preparing the puzzle input. Each tile is stored with it's position in a map and the value of it's occurency in the instructions. 
+
+[source, kotlin, numbered]
+....
+include::day2024_1_2.kts[tags=read_puzzle_input_24]
+....
+
+After that, you only have to count all positions with uneven occurency.
+
+[source, kotlin, numbered]
+....
+include::day2024_1_2.kts[tags=lobby_layout]
+....
+
+=== Second Star
+
+How does it work: +
+
+For the second part I reused the algorithm of day17, enhance grid by additional positions at the edge, then apply the rules. After 100 repetitions, count all black tiles.
+
+[source, kotlin, numbered]
+....
+include::day2024_1_2.kts[tags=lobby_layout_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2024_1_2.kts[tags=output]
+....
