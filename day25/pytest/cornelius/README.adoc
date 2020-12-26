@@ -1,0 +1,34 @@
+== Day 25: Combo Breaker
+
+This solution is written as test using pytest.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/25.
+
+For execution enter `pytest` on the command line (your working directory has to be this directory where the test is). It will pick up all files where the filename starts with `test_`.
+
+=== Find loop size
+
+The puzzle has two examples how to find the loop size for a given public key. Write them as test, then implement the method according to the described algorithm.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=loop_size]
+----
+
+=== Transform
+
+The puzzle has another two examples how to apply the transformation for given subject numbers and loop sizes. Write them as tests as well and implement a method to make the tests pass.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=transform]
+----
+
+=== First Star
+
+With the puzzle input (as it's only two numbers we don't read it from the file but just paste it in our code) we run the transformation using the public keys to get the encryption key. The test fails at first run, but gives us the number we are looking for. Submit it, add it to the test, and everything is green.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star1]
+----
