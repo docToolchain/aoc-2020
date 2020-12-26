@@ -1,7 +1,7 @@
-Day 20 of year 2020
-https://adventofcode.com/2020/day/20
+Day 24 of year 2020
+https://adventofcode.com/2020/day/24
 
-TIP: Use Backtracking algorithm.
+TIP: Flip.
 
 === First Star
 
