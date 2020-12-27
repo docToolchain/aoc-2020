@@ -1,0 +1,40 @@
+Puzzle: https://adventofcode.com/2020/day/18[Operation Order]
+
+== Part 1
+
+Implemented a custom calculation method that uses recursion to handle parenthesis.
+Because no multi-digit numbers occur in the equation it is easy to treat each character in the string as an opcode.
+
+* remove all spaces
+* step through each character
+* if it is an operator, store it for next iteration
+* when finding a new number, apply the operator with the new number and previous result
+* when finding an open parentheses, call function itself with a break condition `stopAtParanthesesClose` that makes it return early in case it finds a closing parenthesis
+
+== Part 2
+
+For part2 I chose an approach where I replace parts of the equation step by step using regular expressions.
+
+* remove all spaces
+* solve all `a+b` that do not include parentheses (regex yay)
+* remove all `(a)` useless brackets
+* solve all `(a*b)` (regex yay)
+* remove all `(a)` useless brackets
+* for all parts within parentheses, call itself recursively
+* remove all `(a)` useless brackets
+
+Loop the entire thing until the equation itself is only a number.
+
+== Solution
+
+[source, ruby]
+....
+include::solution.rb[]
+....
+
+=== Test cases
+
+[source, ruby]
+....
+include::solution_test.rb[]
+....

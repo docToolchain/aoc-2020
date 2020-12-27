@@ -1,0 +1,66 @@
+== Day 11
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+Today's task reminds me of Convay's Game of Life,
+i.e. we should program the simulation of a cellular automaton.
+We read in a game like this (using the numpy "genfromtxt"-function with a fixed-width of 1):
+
+```python
+    string_board = np.genfromtxt(input, delimiter=1, dtype=str)
+    string_board_1 = np.char.replace(string_board, 'L', '0')
+    string_board_2 = np.char.replace(string_board_1, '.', '2')
+    board = string_board_2.astype(int)
+```
+
+=== First Star
+For the "regular" 3x3 neighborhood we can use the very neat "scipy ndimage.generic_filter"-function.
+
+```python
+    result_stable = iterate_until_stable(board, update_board_1)
+    num_occupied = result_stable[result_stable == 1].sum()
+    print('{} seats occupied (star 1).'.format(num_occupied))
+```
+
+```python
+def result_state_regular(values, threshold = 4):
+  arr = np.reshape(values, (3,3))
+  if arr[1,1] == 0:
+    return all([x in [0, 2] for x in values])*1
+  elif arr[1,1] == 1:
+    arr_real = arr[arr != 2]
+    return ((arr_real.sum() - 1) < threshold)*1
+  else:
+    return 2
+
+def update_board_1(board):
+  return scipy.ndimage.generic_filter(board, result_state_regular, size=3, cval=2, mode='constant')
+
+def iterate_until_stable(board, step_function):
+  new_board = step_function(board)
+  stable = (board == new_board).sum() == board.shape[0]*board.shape[1]
+  board = new_board
+  while not stable:
+    new_board = step_function(board)
+    stable = (board == new_board).sum() == board.shape[0]*board.shape[1]
+    board = new_board
+  return new_board
+```
+
+=== Second Star
+
+With some additions the solution is similar to the first:
+- We precompute (once) for each seat its neighborhood (<= 8 locations).
+- We define a function that executes exactly one update for each of
+the seats on the board (the "step_function" used as input to the iterate_until_stable-function).
+- We iterate the update-function until the board does not change any more (the "iterate_until_stable" function).
+
+
+[source, python]
+....
+include::solution.py[]
+....

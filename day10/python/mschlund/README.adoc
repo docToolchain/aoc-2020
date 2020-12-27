@@ -71,4 +71,7 @@ the simple recursion:
 $a_n = a_{n-1} + a_{n-2} + a_{n-3}$ to compute the number of arrangements yielded by a block of length n.
 
 
-
+[source, python]
+....
+include::solution.py[]
+....

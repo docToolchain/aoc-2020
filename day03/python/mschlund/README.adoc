@@ -18,3 +18,9 @@ calculating the x-position modulo the length of a line.
 === Second Star
 Using th parametrized function from the first star as subroutine,
 this exercise is simplified -- we just call it for each slope and multiply the results.
+
+
+[source, python]
+....
+include::solution.py[]
+....

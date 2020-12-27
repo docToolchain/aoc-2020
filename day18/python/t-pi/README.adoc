@@ -1,0 +1,52 @@
+++++
+<style> 
+    ul p, ol p, ul>li p, ol>li p { 
+        line-height: 1.2;
+        margin-top: 0; 
+        margin-bottom: 0;
+    }   
+</style>
+++++
+
+== AoC - Day 18: Operation Order
+https://adventofcode.com/2020/day/18
+
+=== Info
+
+Math homework with special evaluation spoiling known math functions - parentheses still run first
+
+=== HowTo
+
+Data is read from the file 'input<two-digit-day>.txt' line by line.
+
+.Star1: Sum up line results with parentheses first, then straight left-to-right evaluation
+. Took me some time to wrap my head around
+. Get "shadow expression" with parenthesis level at all positions
+. Then take first parenthesis at highest level and resolve with straight "left-to-right" evaluation
+. Replace resolved parenthesis in expression with string result and re-iterate the level evaluation of the whole expression
+. Return last expression result with no more parenthesis from straight evaluation
+
+.Star2: Replace straight left-to-right evaluation with "sums first"
+. Add evaluation function which 
+.. takes the next sum in expression and resolves it
+.. replaces the sum expression with the result and iterates again with the new reduced expression
+.. evaluates the remaining expression (with only '*') via the straight evaluation from star 1
+. Switch evaluation function depending on star parameter
+
+.Star2 smarter: Inspiration from repo colleagues after finding own approach
+. Of course interpretation of parenthesis levels is much easier and straightforward starting with closing parenthesis 🙄
+. Thanks once more to the repo and the other participants, in this case I looked up asung's repo first!
+
+=== Learned today
+
+* Assignment in while loop condition possible from python 3.8 on with ':='
+* Parsing nested structures
+** A more efficient approach to parse parentheses
+* If you split by ' ', keep them while reducing the expression...
+
+=== Source
+
+[source, python]
+....
+include::solution.py[]  
+....

@@ -1,0 +1,23 @@
+== Day 21
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+* functools for the reduce function 
+
+=== Idea
+
+The idea for part one is to use sets to find ingredients that cannot be allergenes.
+
+
+=== What I learned
+
+* I learned how useful comprehensions are to not only create lists but also sets of dicts.
+* Useign mutable sets you can really shot yourself in the foot!
+
+=== How to run
+
+Run using:
+`$ python day21 --help`

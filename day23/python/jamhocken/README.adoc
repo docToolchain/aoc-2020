@@ -1,0 +1,27 @@
+
+Day 23 of year 2020
+https://adventofcode.com/2020/day/23
+
+== What I learned
+
+. Linked Lists! I used those the last time back in the 90's. Flashback.
+. I also tried out the deque. This worked well for problem 1, but searching is way too expensive for problem 2.
+
+== Approach
+
+. I hardcoded my input into the program as a string.
+. Problem 1:
+.. I used a deque and rotated it to make the operations obvious. Straightforward but expensive.
+. Problem 2:
+.. 2 data structures. A dictionary to hash my cup objects. And a linked list to connect the cups.
+.. I struggled for a while at the beginning. I was sure that I needed a dictionary for the search, but was unsure how to set up the ring.
+.. I googled around a bit and realized that linked lists are a pretty cheap way to do the removal and insertion.
+.. It runs in about 20 seconds on my laptop. You could certainly improve, but I think it's ok.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

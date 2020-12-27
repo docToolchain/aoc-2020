@@ -1,0 +1,21 @@
+== Day 15
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* The collections library for the defaultdict
+
+=== Idea
+
+The idea for part one is to use a dict to store the memory of the game. 
+The idea for part two is brute force. Fortunately, this worked....
+
+=== What I learned
+
+I really start to like to represent data in python as dicts.
+
+=== How to run
+
+Run using:
+`$ python day15 --help`

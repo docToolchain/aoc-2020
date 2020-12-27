@@ -1,0 +1,11 @@
+== Day 16: Ticket Translation
+
+=== Star 1
+Quite straight forward. Reminded me of day 2.
+=== Star 2
+There are for sure more elegant solutions but this gets the job done.
+
+[source, python]
+....
+include::solution.py[]
+....

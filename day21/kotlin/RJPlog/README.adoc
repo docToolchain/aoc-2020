@@ -1,0 +1,35 @@
+== Day 21: Allergen Assessment ==
+
+This solution is written in Kotlin.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/21
+
+ $ kotlin day2021_1_2.kts
+ 
+=== First Star
+
+How does it work: +
+
+Today I did not really get a good grip on the puzzle, I guess my problem lies in not defining a clear data structure, so the access to the data needed a lot of copying and steps in between to prepare the data.
+
+[source, kotlin, numbered]
+....
+include::day2021_1_2.kts[tags=allergen]
+....
+
+=== Second Star
+
+How does it work: +
+
+After part 1 was finished, this was easy, since I already hat the allergens in a Map, I just needed to sort them by key and put all values together in a string.
+
+[source, kotlin, numbered]
+....
+include::day2021_1_2.kts[tags=allergen_2]
+....
+
+Finally, print out the solution for both puzzles:
+[source, kotlin, numbered]
+....
+include::day2021_1_2.kts[tags=output]
+....

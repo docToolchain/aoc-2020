@@ -16,3 +16,7 @@ if it is in the "missing amounts" (target - number), if so we have found our two
 
 The simplest solution is similar to the one looking for two numbers, but this time we iterate through all pairs of numbers in the input (this could be optimized still -- but there is a quadratic lower bound on the runtime so quadratic is ok ^^).
 
+[source, python]
+....
+include::solution.py[]
+....

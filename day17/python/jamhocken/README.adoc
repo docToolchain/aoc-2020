@@ -1,0 +1,32 @@
+
+Day 17 of year 2020
+https://adventofcode.com/2020/day/17
+
+== What I learned
+
+. Reusing and refactoring my code from Day 11 worked fairly well.
+
+== Approach
+
+. Major modifications w.r.t "day 11, problem 1".
+.. Added the z and w dimensions to the front of my tuple key.
+.. The find_neighbors function now also has a 4D vector.
+.. Implemented the new logic (2 or 3 neighbors, respectively exactly 3 neighbors)
+.. "Padded" the window before checking neighbor with '.' in all dimensions.
+. Problem 1
+.. After I modified the code for problem 2, I needed to make 2 small tweaks.
+.. Find neighbors does not consider "w" dimension, if problem = 1. (max_w = 0)
+.. When doing the counting, only count one slice in the w dimension (w=0)
+
+In general, it's not very optimized since my window on the infinite plane is constantly
+growing. I think another approach altogether could avoid this. Alternatively,
+I could trim away any lines or columns that are empty in all other dimensions (z, respectivelly z and w).
+However, I've spent enough time on this today. :-)
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

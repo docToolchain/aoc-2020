@@ -1,0 +1,42 @@
+== Day 19: Monster Messages ==
+
+Rust solution for https://adventofcode.com/2020/day/19[AoC 2020, Day 19]
+
+Run solution with `cargo run` (or `cargo run --release` to see the effect of compiler optimization)
+
+Run tests with `cargo test`
+
+=== Solution ===
+
+Again one that caused some headaches.
+I had a solution working from the text to match backwards to rule zero, which worked on the small examples but caused my program to exit with out-of-memory-errors on the real input.
+I tried to simplify the set of rules by eliminating all rules without pipes by substituting them into the rules with pipes.
+Did not really help.
+
+Then I started to look at the solution manually from rule zero to the value to match.
+This helped to find may way... (But I was still not thinking about regular expressions)
+
+Here is my solution, which actually works for both, part 1 and part 2.
+
+First, I parse the rules into an enum type Rule with three variants for the different rules that exist in the Puzzle.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=rule]
+----
+
+The actual solution expands the first symbol of a search pattern repeatedly by applying the corresponding rule (possibly resulting in multiple branches) until the first symbol of the pattern is a leaf (later I learned that this would be called a terminal symbol in a formal grammar).
+Then there are two cases:
+
+1. The leaf's value matches the first character of the text to match.
+In this case the character is settled, and the algorithm moves on to the next symbol/character of both pattern and text to match.
+If there are no more symbols, the value is confirmed to match.
+2. The leaf's value does not match the first character of the text to match.
+In this case the algorithm rejects the pattern and discards this branch of the search.
+
+No changes of the algorithm were required for part 2. Just replaced the rules.
+
+[source,rust,numbered]
+----
+include::src/lib.rs[tags=match_int]
+----

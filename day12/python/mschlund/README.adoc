@@ -1,0 +1,45 @@
+== Day 12
+
+This solution is written in python.
+
+Run using:
+
+$ python solution.py
+
+We do not have to store the map explicitly.
+The only things that change are the current position and the direction.
+We do all computations on python tuples (although numpy arrays would be slightly more comfortable at times).
+We let the ship start at position (0,0).
+To convert from character-directions to indices and vice versa we use a global constant-list:
+
+```python
+DIRS = ['E', 'S', 'W', 'N']
+```
+
+
+=== First Star
+The code is very far from elegant. We extract a movement command and number from each input-line:
+```python
+  cmd = line[0]
+  num = int(line[1:])
+```
+and then have a big if-elif-cascade distinguishing the cases for "cmd".
+On the positive-side we do not use global variables and our functions have no side-effects.
+
+=== Second Star
+Instead of a 4-valued direction, the direction now is a vector (called "stride" in our code).
+Essentially all functions are straightforward except rotating a direction (left or right).
+See https://stackoverflow.com/questions/4780119/2d-euclidean-vector-rotations for a discussion.
+
+```python
+def turn_left(stride):
+  return (-stride[1], stride[0])
+
+def turn_right(stride):
+  return (stride[1], -stride[0])
+```
+
+[source, python]
+....
+include::solution.py[]
+....

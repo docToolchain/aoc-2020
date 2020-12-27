@@ -1,0 +1,42 @@
+
+Day 18 of year 2020
+https://adventofcode.com/2020/day/18
+
+== What I learned
+
+. I experimented further with pytest. It really helped for the transition
+from problem 1 to problem 2.
+. I also tried out some more list comprehensions.
+
+== Approach
+
+. I read in the data and "process" it. In this case, that means just stripping
+out of the whitespace and the line returns. Put the result into a list.
+. Problem 1:
+.. I used a recursive approach. Starting from the right, I just look at
+each character.
+... If it is a parenthesis, I find the opening parenthesis that
+belongs to it and send the contained expression to the do_math function. And
+either multiple or add it to the next entry (reading right to left).
+... Otherwise, it is a digit and I either add or multiply it by the next entry.
+If there is no next entry, I just return the digit.
+.. I then just go through all of the homework problems and add their results.
+. Problem 2:
+.. Unfortunately, the approach from problem 1 doesn't work, but I could reuse parts.
+.. I again look for any closing parantheses (reading right to left). Then I evaluate
+the expression contained therein and put it back into the string in place of
+the expression in parentheses.
+.. When all of the parantheses are solved, the result is just a bunch of numbers
+separated by "+" and "*". I split the string along the "*". Add up those fragments.
+And then multiple those sums together.
+.. The final number is calculated like in Problem 1.
+. I am sure that problem 1 is also solvable in the same manner as problem 2, but I saw
+no real value in refactoring it.
+
+== Run script
+Run the solution with `python solution.py`
+
+[source, python]
+....
+include::solution.py[]
+....

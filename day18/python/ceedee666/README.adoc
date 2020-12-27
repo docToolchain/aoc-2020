@@ -1,0 +1,24 @@
+== Day 17
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* Typer (https://typer.tiangolo.com/) to generate a nice command line interface
+* pathlib (https://docs.python.org/3/library/pathlib.html) to work with file paths
+
+=== Idea
+
+The idea is to convert the expressions into the reverse polish notation
+and evalute the result. Due to the missing precedence of the operations
+this conversion is simple. 
+
+https://en.wikipedia.org/wiki/Shunting-yard_algorithm
+
+=== What I learned
+
+I learned about the shunting yard algorithm.
+
+=== How to run
+
+Run using:
+`$ python day18 --help`
