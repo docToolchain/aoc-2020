@@ -15,7 +15,7 @@ This is Conway's game of life in three dimensions. There is an example we'll use
 include::test_solution.py[tags=test_example]
 ----
 
-To get the test to pass we implement a straightforward implementation of this particular case. We represent the data in the `World` class and the rules of the game in the `Life` class. Some nested loops to do all the counting and we have a result.
+To get the test to pass we implement a straightforward implementation of this particular case. We represent the data in the `SimpleWorld` class and the rules of the game in the `SimpleLife` class. Some nested loops do all the counting and we have a result.
 
 [source,python,linenums]
 ----
