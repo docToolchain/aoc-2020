@@ -1,0 +1,57 @@
+== Day 17: Conway Cubes
+
+This solution is written as test using pytest.
+
+The original puzzle can be found at https://adventofcode.com/2020/day/17.
+
+For execution enter `pytest` on the command line (your working directory has to be this directory where the test is). It will pick up all files where the filename starts with `test_`.
+
+=== Game of Simple Life
+
+This is Conway's game of life in three dimensions. There is an example we'll use as test.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=test_example]
+----
+
+To get the test to pass we implement a straightforward implementation of this particular case. We represent the data in the `World` class and the rules of the game in the `Life` class. Some nested loops to do all the counting and we have a result.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=example]
+----
+
+=== First Star
+
+Now that the example works we'll feed in the puzzle data and get the answer for the first star.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star1]
+----
+
+=== Going Recursive
+
+The second star demands an expansion to the fourth dimension. One way would be to special case that as well and do some more nested loops. But instead we'll try to generalize our world and life implementations to handle both, 3 and 4 dimensions, and possibly even an arbirtrary number of dimensions. We have test data for 3 dimensions from the example for the first star and have some new test data for 4 dimensions from the example for the second star.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=test_recursive_example]
+----
+
+Now the implementation. Here the result is shown. It did take a few steps of refactoring to get there. The generalized classes are `MultiWorld` which handles a given number of dimensions and `RecursiveLife` which deals with such a world by parametrizing the number of dimensions and replacing the nested loops by recursive method calls.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=recursive_example]
+----
+
+=== Second Star
+
+Now that the examples work, we'll feed in the puzzle data again and get the answer for the second star.
+
+[source,python,linenums]
+----
+include::test_solution.py[tags=star2]
+----
