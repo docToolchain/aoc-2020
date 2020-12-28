@@ -211,7 +211,7 @@ class Life:
             self.world = new_world
 #end::hex_example[]
 
-#def::star2[]
+#tag::star2[]
 def test_star2():
     life = create_hex_life(read_input())
     life.execute_cycle(100)

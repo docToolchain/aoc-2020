@@ -16,7 +16,7 @@ def test_example():
     assert create_life(SimpleWorld(), example_input, SimpleLife) == 112
 #end::test_example[]
 
-#def::example[]
+#tag::example[]
 class SimpleWorld:
     def __init__(self):
         self.clear()
@@ -81,7 +81,7 @@ class SimpleLife:
             self.world = new_world
 #end::example[]
 
-#def::star1[]
+#tag::star1[]
 def read_input():
     with Path("input.txt").open() as f:
         return f.read()
@@ -90,13 +90,13 @@ def test_answer1():
     assert create_life(SimpleWorld(), read_input(), SimpleLife) == 336
 #end::star1[]
 
-#def::test_recursive_example[]
+#tag::test_recursive_example[]
 def test_recursive_example():
     assert create_life(MultiWorld(3), example_input, RecursiveLife) == 112
     assert create_life(MultiWorld(4), example_input, RecursiveLife) == 848
 #end::test_recursive_example[]
 
-#def::recursive_example[]
+#tag::recursive_example[]
 class MultiWorld:
     def __init__(self, dimensions):
         self.dimensions = dimensions
@@ -193,7 +193,7 @@ class RecursiveLife:
             self.world = new_world
 #end::recursive_example[]
 
-#def::star2[]
+#tag::star2[]
 def test_star2():
     assert create_life(MultiWorld(4), read_input(), RecursiveLife) == 2620
 #end::star2[]
