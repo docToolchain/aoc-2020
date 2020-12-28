@@ -8,7 +8,7 @@ For execution enter `pytest` on the command line (your working directory has to 
 
 === Conway's World in Hex
 
-The lobby looks a bit like the world we did on https://github.com/docToolchain/aoc-2020/tree/main/day08/pytest/cornelius[day 17]. It's two-dimensional and the elements are hexagonal, but otherwise it can be represented in the same way with a slight reinterpretation of the coordinate system.
+The lobby looks a bit like the world we did on https://github.com/docToolchain/aoc-2020/tree/main/day17/pytest/cornelius[day 17]. It's two-dimensional and the elements are hexagonal, but otherwise it can be represented in the same way with a slight reinterpretation of the coordinate system.
 
 image::coordinate-system.png[Coordinate System]
 
