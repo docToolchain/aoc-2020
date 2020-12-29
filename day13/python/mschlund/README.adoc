@@ -1,0 +1,36 @@
+== Day 13
+
+This solution is written in python.
+
+Run using:
+
+$ pipenv install
+$ pipenv shell
+$ python solution.py
+
+This day it is all about modular arithmetic --
+we use the "sympy" library to make our solution very short.
+
+=== First Star
+For the first star, just note that for timestamp t, we have to compute
+-t modulo the bus-id (for all bus ids) and take the minimum.
+The "-" is important since we want to see when the NEXT bus will arrive.
+
+[source, python]
+....
+include::solution.py[tags=starOne]
+....
+
+=== Second Star
+
+This is almost exactly the statement of the Chinese Remainder Theorem: We are
+looking for the smallest x such that 
+$x \equiv v_i\ (\mathrm{mod} n_i)$ for coprime n_i.
+Using sympy.ntheory.modular this solution is one call to "crt".
+Note again that the v_i are the negatives of the positions in the bus-sequence.
+The output of the crt-function will be the solution x and the lcm of the moduli.
+
+[source, python]
+....
+include::solution.py[tags=main]
+....

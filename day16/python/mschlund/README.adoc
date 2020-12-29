@@ -1,0 +1,65 @@
+== Day 16
+
+This solution is written in python.
+We use pipenv for dependency-management.
+
+Run using:
+
+$ pipenv install
+$ pipenv shell
+$ python solution.py
+
+
+=== First Star
+Rather straightforward -- we read in the specifications and the tickets and check for each ticket
+if if satisfies at least one specification using the "any"-function:
+We also record in a boolean flag whether the ticket was erroneous and return the valid tickets (used in star 2)
+
+```python
+def check_other_tickets(section, ranges):
+  lines = section.split('\n')[1:]
+  error_rate = 0
+  valid_tickets = []
+  for line in lines:
+    numbers = line.split(',')
+    ticket_erroneous = False
+    for n in numbers:
+      num_int = int(n)
+      flattened_vals = [x for l in ranges.values() for x in l]
+      res = [m <= num_int and num_int <= M for (m,M) in flattened_vals]
+      if not any(res):
+        error_rate += num_int
+        ticket_erroneous = True
+    if not ticket_erroneous:
+      valid_tickets.append(line)
+  return error_rate, valid_tickets
+```
+
+=== Second Star
+The solution is a bit lenghty and not very elegant.
+For each specification, we record the potential positions it can appear.
+To this end, we start with the full-range (0..19) and throw out a position,
+if the number at that position violates the spec (we iterate over all specs).
+It is important to only start with valid tickets computed in the previous part (star 1)
+-- this cost me a lot of time to figure out.
+After identifying the potential positions for each field, we make a bipartite graph
+with edges (field--position) and compute a perfect matching in that graph (using networkx).
+From this matching we extract only the nodes that start with "departure" and compute the product
+of the corresponding numbers on our ticket:
+```python
+    positions = get_field_positions(valid_tickets, ranges)
+    G = nx.Graph()
+    for f in positions.keys():
+      for v in positions[f]:
+        G.add_edge(f, v)
+    matching = nx.algorithms.bipartite.hopcroft_karp_matching(G)
+    departure_indices = [matching[x] for x in matching.keys() if type(x)==str and x.startswith('departure')]
+    print(departure_indices)
+    my_ticket = [int(x) for x in input_split[1].split('\n')[1].split(',')]
+    print('Product of all departure-fields: {}'.format(math.prod([my_ticket[i] for i in departure_indices])))
+```
+
+[source, python]
+....
+include::solution.py[]
+....

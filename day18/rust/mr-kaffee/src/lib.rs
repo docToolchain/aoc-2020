@@ -13,19 +13,15 @@ pub enum Token {
 impl Token {
     pub fn parse(content: &str) -> Vec<Vec<Self>> {
         let re = Regex::new(r"\s*(\d+|[+*()])").expect("Illegal regular expression");
-        let mut token_lines = Vec::new();
-        for line in content.lines() {
-            token_lines.push(re.captures_iter(line).map(|v| {
-                match &v[1] {
-                    "+" => Token::Plus,
-                    "*" => Token::Times,
-                    "(" => Token::Open,
-                    ")" => Token::Close,
-                    val => Token::Value(val.parse().expect("Could not parse value")),
-                }
-            }).collect());
-        }
-        token_lines
+        content.lines().map(|line| re.captures_iter(line).map(|v| {
+            match &v[1] {
+                "+" => Token::Plus,
+                "*" => Token::Times,
+                "(" => Token::Open,
+                ")" => Token::Close,
+                val => Token::Value(val.parse().expect("Could not parse value")),
+            }
+        }).collect()).collect()
     }
 }
 // end::token[]
@@ -61,53 +57,45 @@ pub fn evaluate2(tokens: &[Token]) -> isize {
 
 // tag::to_expression[]
 fn to_expression(tokens: &[Token], greedy: bool, precedence: bool) -> (Expression, usize) {
-    let mut tree = Expression::Nil;
-
-    let mut k = 0;
-    while k < tokens.len() {
-        tree = match tokens[k] {
-            Token::Value(v) => Expression::Leaf(v),
+    let mut upd = (Expression::Nil, 0);
+    while upd.1 < tokens.len() {
+        upd = match tokens[upd.1] {
+            Token::Value(v) => (Expression::Leaf(v), upd.1 + 1),
             Token::Times => {
                 let (rhs, k_int) = to_expression(
-                    &tokens[k + 1..], precedence, precedence);
-                k += k_int;
-                Expression::Prod(Box::new(tree), Box::new(rhs))
+                    &tokens[upd.1 + 1..], precedence, precedence);
+                (Expression::Prod(Box::new(upd.0), Box::new(rhs)), upd.1 + k_int + 1)
             }
             Token::Plus => {
                 let (rhs, k_int) = to_expression(
-                    &tokens[k + 1..], false, precedence);
-                k += k_int;
-                Expression::Sum(Box::new(tree), Box::new(rhs))
+                    &tokens[upd.1 + 1..], false, precedence);
+                (Expression::Sum(Box::new(upd.0), Box::new(rhs)), upd.1 + k_int + 1)
             }
             Token::Open => {
                 let mut idx = None;
                 let mut level = 1;
-                for l in k+1 .. tokens.len() {
+                for l in upd.1 + 1..tokens.len() {
                     level = match tokens[l] {
                         Token::Open => level + 1,
-                        Token::Close => level - 1,
-                        _ => level,
+                        Token::Close if level > 1 => level - 1,
+                        Token::Close => {
+                            idx = Some(l);
+                            break;
+                        }
+                        _ => { continue; }
                     };
-                    if level == 0 {
-                        idx = Some(l);
-                        break;
-                    }
                 }
                 let idx = idx.expect("No matching bracket");
                 let (rhs, k_int) = to_expression(
-                    &tokens[k + 1..idx], true, precedence);
-                k += k_int + 1;
-                rhs
+                    &tokens[upd.1 + 1..idx], true, precedence);
+                (rhs, upd.1 + k_int + 2)
             }
-            Token::Close => {
-                panic!("What should I do here?")
-            }
+            Token::Close => panic!("What should I do here?"),
         };
-        k += 1;
         if !greedy { break; }
     }
 
-    (tree, k)
+    upd
 }
 // end::to_expression[]
 

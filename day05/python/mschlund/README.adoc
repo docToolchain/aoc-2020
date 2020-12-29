@@ -29,3 +29,7 @@ We simply sort the list of IDs and look for a pair of IDs that
 differs by exactly 2 (if the exercise is framed correctly,
 there should only be exactly one of them and we check this.
 
+[source, python]
+....
+include::solution.py[]
+....

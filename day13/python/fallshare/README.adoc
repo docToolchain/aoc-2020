@@ -1,0 +1,23 @@
+== Day 13: Shuttle Search
+ 
+=== Star 1
+This was quite straight forward.
+For some reason I did not think of using the modulo operator to get the waiting time.
+
+=== Star 2
+Oh boy. I spent a lot of time with this task.
+Brutforcing/itterating it? Does not work due to runtime.
+Optimzing the runtime? Does not help.
+I then tried to use some math based on the smallest common multiple to figure out how often two lines fullfill the matching criteria.
+It was my idea to concatenate those values to get the final result.
+But I got something wrong and it did not fully work out.
+In the end I had to look at other solutions. Thanks to https://twitter.com/jamhocken[@jamhocken] I finally was able to solve it.
+But I think my intial approach was already getting close.
+
+
+    
+
+[source, python]
+....
+include::solution.py[]
+....

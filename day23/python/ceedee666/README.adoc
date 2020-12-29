@@ -1,0 +1,23 @@
+== Day 23
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* none for this puzzle 
+
+=== Idea
+
+I implemented part one using simple list with lots of searches. 
+This was not god enough for part two. So I reimplemented it using the `list` as a linked list.
+
+However, I had a bug in the linked list that I coudn't find. So I implemented it a third
+time using a `dict`. And finally it worked....
+
+
+=== What I learned
+
+
+=== How to run
+
+Run using:
+`$ python day23 --help`

@@ -1,0 +1,21 @@
+== Day 24
+
+This solution is written in python.
+
+The following libraries are used to implement the solution::
+* none for this puzzle 
+
+=== Idea
+
+I had to look up how to represent hexagonal grids first. I found this very comprehensive
+blog: https://www.redblobgames.com/grids/hexagons/ about the topic. The solution is
+based on the axial coordiantes described in the blog,
+
+=== What I learned
+
+How to represent hexagonal grids.
+
+=== How to run
+
+Run using:
+`$ python day24 --help`

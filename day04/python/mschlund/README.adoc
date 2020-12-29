@@ -47,3 +47,8 @@ hence we have to make sure that we see a newline after the pid:
             return False
 [...]
 ```
+
+[source, python]
+....
+include::solution.py[]
+....

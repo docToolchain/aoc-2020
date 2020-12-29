@@ -1,8 +1,8 @@
 
 :mschlund-avatar: https://avatars1.githubusercontent.com/u/3297755
-:mschlund-twitter: -
+:mschlund-twitter: maximilian_scl
 :mschlund-realName: Maximilian Schlund
-:mschlund-blog: -
+:mschlund-blog: https://maximilianschlund.wordpress.com/
 
 
 //tag::free-form[]
@@ -23,8 +23,8 @@ endif::[]
 
 === About me
 
-
-Find more info on https://maximilianschlund.wordpress.com/.
+First time participant in AoC.
+Find more info on my blog :)
 
 //end::free-form[]
 

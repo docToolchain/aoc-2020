@@ -1,6 +1,6 @@
 == Day 17: Conway Cubes ==
 
-Rust solution for https://adventofcode.com/2020/day/16[AoC 2020, Day 16]
+Rust solution for https://adventofcode.com/2020/day/17[AoC 2020, Day 17]
 
 Run solution with `cargo run` in sub-directory `./var1/` (or `cargo run --release` to see the effect of compiler optimization)
 
