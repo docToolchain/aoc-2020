@@ -1,7 +1,7 @@
 import org.apache.commons.lang3.StringUtils
 
-// testPart1()
-// testPart2()
+testPart1()
+testPart2()
 solve()
 
 void solve() {
