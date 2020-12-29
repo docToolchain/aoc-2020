@@ -6,26 +6,22 @@ import java.util.stream.Stream;
 
 public class Day11 {
 
-//tag::constants[]
+//tag::main[]
     public static final char EMPTY = 'L';
     public static final char OCCUPIED = '#';
-//end::constants[]
 
     public static void main(String[] args) throws IOException {
-
-//tag::part1[]
         String input = String.join("\n", Files.readAllLines(Path.of("day11.txt")));
 
         Day11 solver = new Day11();
 
         int result = solver.solvePart1(input);
         System.out.println(result);
-//end::part1[]
-
 
         result = solver.solvePart2(input);
         System.out.println(result);
     }
+//end::main[]
 
 //tag::solvePart1[]
     public int solvePart1(String input) {
@@ -56,10 +52,10 @@ public class Day11 {
     int countOccupiedAdjacent(char[][] seatArea, int row, int col) {
         int count = 0;
         if (row > 0) {
-            count = occupiedInRow(col, count, seatArea[row - 1]);
+            count += occupiedInRow(col, seatArea[row - 1]);
         }
         if (row < seatArea.length - 1) {
-            count = occupiedInRow(col, count, seatArea[row + 1]);
+            count += occupiedInRow(col, seatArea[row + 1]);
         }
         if (col > 0 && seatArea[row][col - 1] == OCCUPIED) {
             count++;
@@ -70,7 +66,8 @@ public class Day11 {
         return count;
     }
 
-    private int occupiedInRow(int col, int count, char[] row) {
+    private int occupiedInRow(int col, char[] row) {
+        int count = 0;
         if (col > 0 && row[col - 1] == OCCUPIED) {
             count++;
         }
