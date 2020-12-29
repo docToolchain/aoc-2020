@@ -54,13 +54,13 @@ public class Day11 {
         if (row > 0) {
             count += occupiedInRow(col, seatArea[row - 1]);
         }
-        if (row < seatArea.length - 1) {
+        if (row + 1 < seatArea.length) {
             count += occupiedInRow(col, seatArea[row + 1]);
         }
         if (col > 0 && seatArea[row][col - 1] == OCCUPIED) {
             count++;
         }
-        if (col < seatArea[row].length - 1 && seatArea[row][col+1] == OCCUPIED) {
+        if (col + 1 < seatArea[row].length && seatArea[row][col+1] == OCCUPIED) {
             count++;
         }
         return count;
@@ -74,7 +74,7 @@ public class Day11 {
         if (row[col] == OCCUPIED) {
             count++;
         }
-        if (col < (row.length - 1) && row[col + 1] == OCCUPIED) {
+        if (col + 1 < row.length && row[col + 1] == OCCUPIED) {
             count++;
         }
 
