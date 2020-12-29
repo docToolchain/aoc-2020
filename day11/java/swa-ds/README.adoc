@@ -1,0 +1,37 @@
+:day: Day11
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Part 1
+
+Constants used in solutions:
+[source,java, linenums]
+----
+include::{day}.java[tags=constants]
+----
+Main method:
+[source,java, linenums]
+----
+include::{day}.java[tags=part1]
+----
+
+Solution of Part 1
+[source,java, linenums]
+----
+include::{day}.java[tags=solvePart1]
+----
+
+Common functions:
+[source,java, linenums]
+----
+include::{day}.java[tags=common]
+----
+
+== Part 2
+Solution of Part 2
+[source,java, linenums]
+----
+include::{day}.java[tags=solvePart2]
+----
