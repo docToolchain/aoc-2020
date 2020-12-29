@@ -1,0 +1,35 @@
+:day: Day15
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Part I
+
+
+[source,java, linenums]
+----
+include::{day}.java[tags=mainPart1]
+----
+
+In part I we just look up the last occurrence by going back in the array until we find it:
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part1]
+----
+
+== Part II
+
+[source,java, linenums]
+----
+include::{day}.java[tags=mainPart2]
+----
+
+The brute force version from Part I does not work since it takes way too long.
+Therefore another approach is used where the turn number of the number's last occurrence is saved in a map:
+
+[source,java, linenums]
+----
+include::{day}.java[tags=part2]
+----
