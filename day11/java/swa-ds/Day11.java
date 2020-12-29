@@ -150,6 +150,20 @@ public class Day11 {
 //end::solvePart2[]
 
 //tag::common[]
+    char[][] fromString(String str) {
+        return Stream.of(str.split("\n"))
+                .map(String::toCharArray)
+                .toArray(char[][]::new);
+    }
+
+    char[][] copy(char[][] waitingArea) {
+        char[][] copy = new char[waitingArea.length][];
+        for (int i = 0; i < waitingArea.length; i++) {
+            copy[i] = Arrays.copyOf(waitingArea[i], waitingArea[i].length);
+        }
+        return copy;
+    }
+
     private int countAllOccupied(char[][] seatArea) {
         int count = 0;
         for (char[] seats : seatArea) {
@@ -169,20 +183,6 @@ public class Day11 {
             }
         }
         return true;
-    }
-
-    char[][] copy(char[][] waitingArea) {
-        char[][] copy = new char[waitingArea.length][];
-        for (int i = 0; i < waitingArea.length; i++) {
-            copy[i] = Arrays.copyOf(waitingArea[i], waitingArea[i].length);
-        }
-        return copy;
-    }
-
-    char[][] fromString(String str) {
-        return Stream.of(str.split("\n"))
-                .map(String::toCharArray)
-                .toArray(char[][]::new);
     }
 //end::common[]
 
