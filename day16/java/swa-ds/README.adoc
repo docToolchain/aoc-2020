@@ -1,0 +1,20 @@
+:day: Day16
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Solution
+
+Part I was easy, but Part II has given me quite some headaches.
+There was one nasty ticket whose only invalid value was 0.
+Since first I decided to treat all tickets as valid whose sum of invalid values is > 0,
+this invalid ticket wasn't filtered out and I got stuck in an endless loop in the evaluation of the fields.
+
+After I had figured that out, the solution was still incorrect! :-(
+However this was an easy one: don't use int when multiplying several big numbers!! Switching to long did the trick. :-D
+
+[source,java, linenums]
+----
+include::{day}.java[]
+----
