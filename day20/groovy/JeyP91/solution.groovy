@@ -2,7 +2,7 @@ testPart1()
 testPart2()
 solve()
 
-void solve() {
+static void solve() {
     // tag::splitInput[]
     ArrayList<String> input = Arrays.asList(new File('input.txt').text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
     println("Solution Part 1: " + solvePart1(input))
@@ -10,7 +10,7 @@ void solve() {
     // end::splitInput[]
 }
 
-Long solvePart1(ArrayList<String> input) {
+static Long solvePart1(ArrayList<String> input) {
     // tag::solvePart1[]
     Long solution = 1
     HashMap<Integer, Tile> tiles = convertToTiles(input)
@@ -21,10 +21,85 @@ Long solvePart1(ArrayList<String> input) {
     // end::solvePart1[]
 }
 
-Long solvePart2(ArrayList<String> input) {
+static Long solvePart2(ArrayList<String> input) {
     // tag::solvePart2[]
     HashMap<Integer, Tile> tiles = convertToTiles(input)
+    ArrayList<ArrayList> picture = createPicture(tiles)
+//    printPicture(picture)
+    removeBorders(picture)
+    Tile pictureAsTile = convertPictureToTile(picture)
+    orientateForSeaMonsters(pictureAsTile)
+//    pictureAsTile.print()
+    return pictureAsTile.countNonMonsterBlack()
+    // end::solvePart2[]
+}
 
+static void orientSecondTile(Tile first, Tile second) {
+    for (int i = 0; i < 8; i++) {
+        if(i == 4) second.flipAroundHorizontalAxis()
+        if(orientationMatches(first, second)) {
+            break
+        }
+        second.rotateClockwise()
+    }
+}
+
+static boolean orientationMatches(Tile tile1, Tile tile2) {
+    boolean match = false
+    if(tile1.getTop() == tile2.getBottom().reverse()) { match = true }
+    else if(tile1.getRight() == tile2.getLeft().reverse()) { match = true }
+    else if(tile1.getBottom() == tile2.getTop().reverse()) { match = true }
+    else if(tile1.getLeft() == tile2.getRight().reverse()) { match = true }
+    return match
+}
+
+static void printPicture(ArrayList<ArrayList> picture) {
+    println("Assambled picture:")
+    picture.forEach{ArrayList<Tile> row ->
+        for(int i = 0; i < row.get(0).getLeft().length(); i++){
+            row.forEach{Tile currentTile ->
+                print(currentTile.getRows().get(i) + " ")
+            }
+            print(System.lineSeparator())
+        }
+        print(System.lineSeparator())
+    }
+    print(System.lineSeparator())
+}
+
+static void removeBorders(ArrayList<ArrayList> picture) {
+    picture.forEach{ArrayList row ->
+        row.forEach{Tile tile ->
+            tile.removeBorders()
+        }
+    }
+}
+
+static Tile convertPictureToTile(ArrayList<ArrayList> picture) {
+    String pictureAsString = ""
+    picture.forEach{ArrayList<Tile> row ->
+        for(int i = 0; i < row.get(0).getLeft().length(); i++){
+            row.forEach{Tile currentTile ->
+                pictureAsString += currentTile.getRows().get(i)
+            }
+            pictureAsString += System.lineSeparator()
+        }
+    }
+    pictureAsString = pictureAsString.trim()
+    return new Tile(0, pictureAsString.trim())
+}
+
+static Tile getCorner(HashMap tiles) {
+    Tile corner = null
+    tiles.values().forEach{Tile tile ->
+        if(tile.getNumberOfMatchingTiles(tiles) == 2) {
+            corner = tile
+        }
+    }
+    return corner
+}
+
+static ArrayList<ArrayList> createPicture(HashMap<Integer, Tile> tiles) {
     ArrayList<ArrayList> picture = new ArrayList<>()
 
     // Get any corner to start creating the picture
@@ -45,28 +120,7 @@ Long solvePart2(ArrayList<String> input) {
         lastLeftTile = nextLeftTile
     }
 
-    printPicture(picture)
-
-    // end::solvePart2[]
-}
-
-void orientSecondTile(Tile first, Tile second) {
-    if(first.getRight() == second.getLeft().reverse()) { /* nothing to do */}
-    else if (true) {}
-}
-
-void printPicture(ArrayList<ArrayList> picture) {
-    println(picture)
-}
-
-static Tile getCorner(HashMap tiles) {
-    Tile corner = null
-    tiles.values().forEach{Tile tile ->
-        if(tile.getNumberOfMatchingTiles(tiles) == 2) {
-            corner = tile
-        }
-    }
-    return corner
+    return picture
 }
 
 static ArrayList<Tile> getRowOfTiles(Tile leftTile, HashMap<Integer, Tile> tiles) {
@@ -91,7 +145,20 @@ static HashMap<Integer, Tile> convertToTiles(ArrayList<String> tileStrings) {
     return tiles
 }
 
-void testPart1() {
+static void orientateForSeaMonsters(Tile tile) {
+    for (int i = 0; i < 8; i++) {
+        if(i == 4) tile.flipAroundHorizontalAxis()
+
+        // Real data contains one sea monster for wrongly orientated picture. Therefore I try to find more than one sea monster.
+        if(tile.countSeaMonsters() > 1) {
+            break
+        }
+
+        tile.rotateClockwise()
+    }
+}
+
+static void testPart1() {
     ArrayList<String> input = Arrays.asList(new File("input_test_1.txt").text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
     HashMap<Integer, Tile> tiles = convertToTiles(input)
     assert tiles.get(2311).getTileNumber() == 2311
@@ -114,7 +181,7 @@ void testPart1() {
     assert solvePart1(input) == 20899048083289
 }
 
-void testPart2() {
+static void testPart2() {
     ArrayList<String> input = Arrays.asList(new File("input_test_1.txt").text.split(System.getProperty("line.separator") + System.getProperty("line.separator")))
 
     HashMap<Integer, Tile> tiles
@@ -124,6 +191,9 @@ void testPart2() {
     testFlipping(tiles)
     tiles = convertToTiles(input)
     testDirectionalMatching(tiles)
+    tiles = convertToTiles(input)
+    testRemoveBorders(tiles)
+    testCountSeamonsters()
 
     assert solvePart2(input) == 273
 }
@@ -183,6 +253,43 @@ static void testDirectionalMatching(HashMap<Integer,Tile> tiles) {
     assert tile.getLeftMatchingTile(tiles).getTileNumber() == 2729
 }
 
+static void testRemoveBorders(HashMap<Integer,Tile> tiles) {
+    Tile tile = tiles.get(2311)
+
+    assert tile.getTop() == "..##.#..#."
+    assert tile.getRight() == "...#.##..#"
+    assert tile.getBottom() == "###..###.."
+    assert tile.getLeft() == ".#..#####."
+
+    tile.removeBorders()
+
+    assert tile.getTop() == "#..#...."
+    assert tile.getRight() == ".#.###.#"
+    assert tile.getBottom() == "#.#...##"
+    assert tile.getLeft() == "#.####.#"
+}
+
+static void testCountSeamonsters() {
+    String tileMonster = "                  # " + System.lineSeparator() +
+            "#    ##    ##    ###" + System.lineSeparator() +
+            " #  #  #  #  #  #   "
+    Tile tile = new Tile(0, tileMonster)
+    assert tile.countSeaMonsters() == 1
+    assert tile.countBlack() == 15
+    assert tile.countNonMonsterBlack() == 0
+
+    tileMonster = "#                 # " + System.lineSeparator() +
+            "#    ##    ##    ###" + System.lineSeparator() +
+            " #  #  #  #  #  #   " + System.lineSeparator() +
+            "                  # " + System.lineSeparator() +
+            "#    ##    ##    ###" + System.lineSeparator() +
+            " #  #  #  #  #  #   "
+    tile = new Tile(0, tileMonster)
+    assert tile.countSeaMonsters() == 2
+    assert tile.countBlack() == 31
+    assert tile.countNonMonsterBlack() == 1
+}
+
 class Tile {
     static final int NOT = 0
     static final int TOP = 1
@@ -191,7 +298,7 @@ class Tile {
     static final int LEFT = 4
 
     private int tileNumber
-    private ArrayList<String> rows
+    ArrayList<String> rows
     private String top
     private String right
     private String bottom
@@ -202,6 +309,13 @@ class Tile {
 
         this.rows = tile.split(System.getProperty("line.separator"))
         this.rows.remove(0)
+        initTopRightBottomLeft()
+    }
+
+    Tile(int tileNumber, String tile) {
+        this.tileNumber = tileNumber
+
+        this.rows = tile.split(System.getProperty("line.separator"))
         initTopRightBottomLeft()
     }
 
@@ -331,5 +445,74 @@ class Tile {
             this.rows.set(i, this.rows.get(i).reverse())
         }
         initTopRightBottomLeft()
+    }
+
+    void removeBorders() {
+        rows.remove(0)
+        rows.remove(rows.size() - 1)
+        for (int i = 0; i < rows.size(); i++) {
+            rows.set(i, rows.get(i).substring(1, rows.get(i).length()-1))
+        }
+        initTopRightBottomLeft()
+    }
+
+    int countSeaMonsters() {
+        int seaMonsters = 0
+        for (int column = 0; column <= this.rows.get(0).length() - 20; column++) {
+            for (int row = 0; row <= this.rows.size() - 3; row++) {
+                String pos1 = this.rows.get(row).substring(column+18, column+19)
+                String pos2 = this.rows.get(row + 1).substring(column, column+1)
+                String pos3 = this.rows.get(row + 1).substring(column+5, column+6)
+                String pos4 = this.rows.get(row + 1).substring(column+6, column+7)
+                String pos5 = this.rows.get(row + 1).substring(column+11, column+12)
+                String pos6 = this.rows.get(row + 1).substring(column+12, column+13)
+                String pos7 = this.rows.get(row + 1).substring(column+17, column+18)
+                String pos8 = this.rows.get(row + 1).substring(column+18, column+19)
+                String pos9 = this.rows.get(row + 2).substring(column+1, column+2)
+                String pos10 = this.rows.get(row + 2).substring(column+4, column+5)
+                String pos11 = this.rows.get(row + 2).substring(column+7, column+8)
+                String pos12 = this.rows.get(row + 2).substring(column+10, column+11)
+                String pos13 = this.rows.get(row + 2).substring(column+13, column+14)
+                String pos14 = this.rows.get(row + 2).substring(column+16, column+17)
+                if(
+                    pos1 == "#" &&
+                    pos2 == "#" &&
+                    pos3 == "#" &&
+                    pos4 == "#" &&
+                    pos5 == "#" &&
+                    pos6 == "#" &&
+                    pos7 == "#" &&
+                    pos8 == "#" &&
+                    pos9 == "#" &&
+                    pos10 == "#" &&
+                    pos11 == "#" &&
+                    pos12 == "#" &&
+                    pos13 == "#" &&
+                    pos14 == "#"
+                ) {
+                    seaMonsters++
+                }
+            }
+        }
+        return seaMonsters
+    }
+
+    int countBlack() {
+        int black = 0
+        this.rows.forEach{String row ->
+            black += row.count("#")
+        }
+        return black
+    }
+
+    int countNonMonsterBlack() {
+        return countBlack() - countSeaMonsters() * 15
+    }
+
+    void print() {
+        println("Tile:")
+        this.rows.forEach{String row ->
+            println(row)
+        }
     }
 }
