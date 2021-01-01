@@ -15,6 +15,9 @@ static Long solvePart1(ArrayList<String> input) {
     Long solution = 1
     HashMap<Integer, Tile> tiles = convertToTiles(input)
     tiles.values().forEach{Tile tile ->
+
+        // Corners only have two matching tiles next to them.
+        // Therefore iterate over all tiles and look for the 4 tiles, which only have two matching tiles next to them.
         if(tile.getNumberOfMatchingTiles(tiles) == 2) solution *= tile.getTileNumber() as Long
     }
     return solution
