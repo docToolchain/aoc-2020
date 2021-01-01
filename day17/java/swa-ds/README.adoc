@@ -1,0 +1,46 @@
+:day: Day17
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Part I
+
+[source,java, linenums]
+----
+include::{day}.java[tag=mainPart1]
+----
+[source,java, linenums]
+----
+include::{day}.java[tag=part1]
+----
+
+Solving this problem was nearly straightforward.
+Where I struggled the most was getting the toString() methods right which I needed for debugging.
+
+Compared to my solution of Day 11, which is a similar problem,
+I chose not to change the states in copies of the multi-dimensional arrays, but
+
+<1> to collect the state transistions in a list instead
+<2> which are applied after evaluation of all necessary transitions.
+
+The other difference is in counting the active neighbours.
+
+<3> Instead of calling a method for any direction (e.g. all combinations of -1, 0, 1 for x, y, z),
+this is now done using a 3-fold (or 4-fold in the 4D version) nested loop.
+In the 4D version at the latest, calling a method for each of the 80 directions whould have been very tedious and nasty.
+
+== Part II
+
+For part 2 I just copied the solution from part 1 and added the 4th dimension.
+
+[source,java, linenums]
+----
+include::{day}.java[tag=mainPart2]
+----
+[source,java, linenums]
+----
+include::{day}.java[tag=part2]
+----
+
+
