@@ -44,12 +44,14 @@ class PocketDimension3D {
     private char[][][] cubes;
 
     private int a;
-    private int offset;
+    private int offsetXY;
+    private int offsetZ;
 
     public void init(int a, List<String> initialState) {
         this.a = a;
         int height = initialState.size();
-        offset = (a - height - 1) / 2;
+        offsetXY = (a - height - 1) / 2;
+        offsetZ = (a-1) / 2;
         cubes = new char[a][a][a];
         for (int x = 0; x < a; x++) {
             for (int y = 0; y < a; y++) {
@@ -72,7 +74,7 @@ class PocketDimension3D {
     }
 
     private void setWithOffset(int x, int y, int z, char state) {
-        cubes[x + offset][y + offset][z + offset] = state;
+        cubes[x + offsetXY][y + offsetXY][z + offsetZ] = state;
     }
 
     public void transition() {
@@ -132,7 +134,7 @@ class PocketDimension3D {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int z = 0; z < a; z++) {
-            StringBuilder sbsquare = new StringBuilder("z=" + (z - offset) + "\n");
+            StringBuilder sbsquare = new StringBuilder("z=" + (z - offsetXY) + "\n");
             boolean hasActive = false;
             for (int y = 0; y < a; y++) {
                 for (int x = 0; x < a; x++) {
@@ -176,12 +178,14 @@ class PocketDimension4D {
     private char[][][][] cubes;
 
     private int a;
-    private int offset;
+    private int offsetXY;
+    private int offsetZW;
 
     public void init(int a, List<String> initialState) {
         this.a = a;
         int height = initialState.size();
-        offset = (a - height - 1) / 2;
+        offsetXY = (a - height - 1) / 2;
+        offsetZW = (a-1) / 2;
         cubes = new char[a][a][a][a];
         for (int x = 0; x < a; x++) {
             for (int y = 0; y < a; y++) {
@@ -207,7 +211,7 @@ class PocketDimension4D {
     }
 
     private void setWithOffset(int x, int y, int z, int w, char state) {
-        cubes[x + offset][y + offset][z + offset][w + offset] = state;
+        cubes[x + offsetXY][y + offsetXY][z + offsetZW][w + offsetZW] = state;
     }
 
     public void transition() {
@@ -274,7 +278,7 @@ class PocketDimension4D {
         StringBuilder sb = new StringBuilder();
         for (int w = 0; w < a; w++) {
             for (int z = 0; z < a; z++) {
-                StringBuilder sbsquare = new StringBuilder("z=" + (z - offset) + " + w=" + (w - offset) + ":\n");
+                StringBuilder sbsquare = new StringBuilder("z=" + (z - offsetXY) + " + w=" + (w - offsetXY) + ":\n");
                 boolean hasActive = false;
                 for (int y = 0; y < a; y++) {
                     for (int x = 0; x < a; x++) {
