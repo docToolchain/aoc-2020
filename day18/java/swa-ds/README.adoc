@@ -1,0 +1,51 @@
+:day: Day18
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Part I
+
+My first (self invented) approach was to just iterate over the expression
+and do the + / * calculations when encountered. This works since they have the same operator precedence.
+If a paranthesis is encountered, the sub-expression which it surroundeds is evaluated first recursively.
+
+[source,java, linenums]
+----
+include::{day}.java[tag=part1main]
+----
+
+[source,java, linenums]
+----
+include::{day}.java[tag=part1]
+----
+
+== Part II
+
+In part 2 I reused the solution of part I,
+but before an expression is evaluated, parantheses are added around each addition operation.
+Getting this right was a little tricky.
+
+[source,java, linenums]
+----
+include::{day}.java[tag=part2main]
+----
+
+[source,java, linenums]
+----
+include::{day}.java[tag=part2]
+----
+
+== Part I and II using Shunting Yard algorithm and Reverse Polish Notation
+
+After stumbling upon the "Shunting Yard algorithm" when checking other solutions,
+I created another solution: `Day18_ShuntingYard.java`.
+
+Launch it with `java Day18_ShuntingYard.java`.
+
+The difference between part 1 and 2 is just the operator precedences passed into the ReversePolishNotation object.
+
+[source,java, linenums]
+----
+include::Day18_ShuntingYard.java[]
+----
