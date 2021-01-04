@@ -1,0 +1,50 @@
+:day: Day19
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== The solution
+
+=== Part 1
+By resolving the rules recursively, a big regular expression is created which is then used for validating the messages.
+
+=== Part 2
+
+After studying some other solutions I was able to adapt my solution from part 1 by creating a list of n (1 \<= n \<= 4) regular expressions of the form `rule42{n+1,}rule31{n}`.
+
+[source,java, linenums]
+----
+include::{day}.java[tag=examples]
+----
+
+The messages are validated against each of the regexes and counted as valid if any of them matches.
+
+== What I learned
+
+Working with regular expressions in Java (`java.util.regex.*`) is not so bad from a performance point of view as I had expected due to their reputation. The regex generated for Part 1 is 2104 characters long (which could be shortened to 1400 chars by deduplicating rule no. 42, or possibly even more), and looks like this:
+```
+(b(a(b((((ba|bb)b|(a|b)(a|b)a)a|(abb|(aa|ba)a)b)b|(((ba|bb)b|(b(a|b)|ab)a)a|(bb|ab)(a|b)b)a)|a(((a(b(a|b)|aa)|b(ba|bb))b|(b(ba|bb)|abb)a)b|((a|b)(aa|ba)a|(b(ba|bb)|abb)b)a))|b((b(b((ab|ba)a|(aa|ba)b)|a(aaa|(b(a|b)|ab)b))|a(((bb|ab)b|baa)a|(aaa|(b(a|b)|ab)b)b))a|(a(a((aa|(a|b)b)b|baa)|b((b(a|b)|ab)a|(a|b)(a|b)b))|b(a(a(ab|ba)|b(b(a|b)|aa))|b(bba|(b(a|b)|ab)b)))b))|a(((((abb|bab)a|((b(a|b)|ab)b|aba)b)a|(b((b(a|b)|ab)a|bab)|a(a(b(a|b)|aa)|baa))b)b|(a(((b(a|b)|ab)b|aba)a|(a(b(a|b)|ab)|b(b(a|b)|aa))b)|b(a(ba|bb)a|b(a(a|b)(a|b)|b(bb|ab))))a)b|((b((b(ba|bb)|a(ab|ba))b|(b(ba|bb)|abb)a)|a((abb|bab)b|((aa|ba)a|bbb)a))b|((a((b(a|b)|aa)b|baa)|b(a(b(a|b)|ab)|bba))b|(a((ba|bb)a|abb)|b((b(a|b)|aa)a|(aa|ba)b))a)a)a))(b(a(b((((ba|bb)b|(a|b)(a|b)a)a|(abb|(aa|ba)a)b)b|(((ba|bb)b|(b(a|b)|ab)a)a|(bb|ab)(a|b)b)a)|a(((a(b(a|b)|aa)|b(ba|bb))b|(b(ba|bb)|abb)a)b|((a|b)(aa|ba)a|(b(ba|bb)|abb)b)a))|b((b(b((ab|ba)a|(aa|ba)b)|a(aaa|(b(a|b)|ab)b))|a(((bb|ab)b|baa)a|(aaa|(b(a|b)|ab)b)b))a|(a(a((aa|(a|b)b)b|baa)|b((b(a|b)|ab)a|(a|b)(a|b)b))|b(a(a(ab|ba)|b(b(a|b)|aa))|b(bba|(b(a|b)|ab)b)))b))|a(((((abb|bab)a|((b(a|b)|ab)b|aba)b)a|(b((b(a|b)|ab)a|bab)|a(a(b(a|b)|aa)|baa))b)b|(a(((b(a|b)|ab)b|aba)a|(a(b(a|b)|ab)|b(b(a|b)|aa))b)|b(a(ba|bb)a|b(a(a|b)(a|b)|b(bb|ab))))a)b|((b((b(ba|bb)|a(ab|ba))b|(b(ba|bb)|abb)a)|a((abb|bab)b|((aa|ba)a|bbb)a))b|((a((b(a|b)|aa)b|baa)|b(a(b(a|b)|ab)|bba))b|(a((ba|bb)a|abb)|b((b(a|b)|aa)a|(aa|ba)b))a)a)a))(a(a((b((aaa|(b(a|b)|ab)b)b|(abb|(aa|ba)a)a)|a(a(b(aa|(a|b)b)|a(a(a|b)|ba))|b(aab|bab)))b|(a(b(b(ab|ba)|a(a|b)(a|b))|a(a(b(a|b)|aa)|b(aa|(a|b)b)))|b((aba|b(ab|ba))a|(a(ab|ba)|b(aa|(a|b)b))b))a)|b(b(b(((aa|ba)a|(bb|aa)b)b|(ba|bb)aa)|a((aab|bab)b|((a|b)(a|b)b|(bb|ab)a)a))|a(a(b(b(bb|ab)|a(b(a|b)|ab))|a((b(a|b)|ab)a|(a|b)(a|b)b))|b(((aa|ba)a|(bb|aa)b)a|((bb|ab)a|bbb)b))))|b((((((bb|aa)b|(aa|(a|b)b)a)b|(a|b)(a(a|b)|ba)a)b|(b(b(ab|ba)|a(aa|(a|b)b))|abaa)a)a|(a((aab|(a|b)(a|b)a)a|(a|b)(aa|ba)b)|b(((bb|aa)a|bbb)b|(a(b(a|b)|ab)|baa)a))b)a|(((b(bbb|(a|b)(a|b)a)|aa(a(a|b)|ba))a|((a(a(a|b)|ba)|b(bb|aa))a|(aba|baa)b)b)a|(a((aba|b(bb|ab))a|(bbb|(a|b)(a|b)a)b)|b((b(ab|ba)|aab)a|baab))b)b))
+```
+Nevertheless the evaluation of all messages is done in an instant; so fast that I didn't bother to measure the duration or simplify the regex.
+
+Same for Part 2 which uses a list of (although shorter) regular expressions instead of only one.
+
+== Main method
+
+The main method parses the rules and messages from the input file.
+Then a `MessageValidator` is instantiated for each part in corresponding mode (`Part.ONE` or `Part.TWO`), which is used to validate the messages.
+
+[source,java, linenums]
+----
+include::{day}.java[tag=main]
+----
+
+== The Message Validator
+
+
+
+[source,java, linenums]
+----
+include::{day}.java[tag=msgValidator]
+----
