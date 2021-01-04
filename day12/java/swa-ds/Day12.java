@@ -119,12 +119,8 @@ class Ship {
         } else if (move.direction == 'L') {
             rotateWp(move.units, false);
         } else if (move.direction == 'F') {
-            int deltaX = wpX - x;
-            int deltaY = wpY - y;
-            x += deltaX * move.units;
-            y += deltaY * move.units;
-            wpX += deltaX * move.units;
-            wpY += deltaY * move.units;
+            x += wpX * move.units;
+            y += wpY * move.units;
         } else {
             Direction dir = Direction.of(move.direction);
             if (dir == Direction.NORTH) {
@@ -140,8 +136,6 @@ class Ship {
     }
 
     private void rotateWp(int degrees, boolean clockwise) {
-        wpX = wpX - x;
-        wpY = wpY - y;
         for (int i = 0; i < degrees / 90; i++) {
             if (clockwise) {
                 int wpXOld = wpX;
@@ -153,8 +147,6 @@ class Ship {
                 wpY = wpXdOld;
             }
         }
-        wpX = wpX + x;
-        wpY = wpY + y;
     }
 }
 
