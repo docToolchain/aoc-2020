@@ -1,0 +1,13 @@
+{
+    "include": [
+        "src/**/*"
+    ],
+    "compilerOptions": {
+        "strict": true,   
+        "noImplicitAny": true,
+        "target": "ES2019",
+        "outDir": "dist",
+        "sourceMap": true,
+        "moduleResolution": "node"
+    }
+}
