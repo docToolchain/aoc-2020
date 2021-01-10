@@ -1,0 +1,37 @@
+:day: Day22
+= {day}
+
+To run the program, you need JDK 11.
+Thanks to http://openjdk.java.net/jeps/330[JEP 330], launching is as easy as `java {day}.java`.
+
+== Part 1
+
+Solving part 1 was easy and straightforward.
+
+[source,java, linenums]
+----
+include::{day}.java[tag=mainPart1]
+----
+
+The main logic is in the class `CombatGame`:
+
+[source,java, linenums]
+----
+include::{day}.java[tag=part1]
+----
+
+== Part 2
+
+[source,java, linenums]
+----
+include::{day}.java[tag=mainPart2]
+----
+
+For part 2 I created the class `RecursiveCombatGame` which extends the `CombatGame` class. The methods `play()` and `playRound()` are overwritten.
+
+Solving this part again gave me a lot of headache, because the program would run forever with tens of thousands of sub-games. It took me quite a while to realize that I had overseen a requirement... namely that in a sub-game each player would get only the number of cards equal to the number of their last drawn card. Instead, the sub-games were started with the complete decks of both players... Having fixed this, it worked like a charm:
+
+[source,java, linenums]
+----
+include::{day}.java[tag=part2]
+----
